@@ -1,0 +1,28 @@
+{
+  "name": "surveyjs-widgets",
+  "version": "0.12.32",
+  "scripts": {
+    "build_knockout_dev": "webpack --env.buildType dev --env.platform knockout",
+    "build_react_dev": "webpack --env.buildType dev --env.platform react",
+    "build_angular_dev": "webpack --env.buildType dev --env.platform angular",
+    "build_jquery_dev": "webpack --env.buildType dev --env.platform jquery",
+    "build_vue_dev": "webpack --env.buildType dev --env.platform vue",
+    "build_dev": "concurrently \"npm run build_knockout_dev\" \"npm run build_react_dev\" \"npm run build_angular_dev\" \"npm run build_jquery_dev\" \"npm run build_vue_dev\"",
+    "build_knockout_prod": "webpack --env.buildType prod --env.platform knockout",
+    "build_react_prod": "webpack --env.buildType prod --env.platform react",
+    "build_angular_prod": "webpack --env.buildType prod --env.platform angular",
+    "build_jquery_prod": "webpack --env.buildType prod --env.platform jquery",
+    "build_vue_prod": "webpack --env.buildType prod --env.platform vue",
+    "build_prod": "npm run build_dev && concurrently \"npm run build_knockout_prod\" \"npm run build_react_prod\" \"npm run build_angular_prod\" \"npm run build_jquery_prod\" \"npm run build_vue_prod\""
+  },
+  "private": true,
+  "devDependencies": {
+    "friendly-errors-webpack-plugin": "^1.6.1",
+    "survey-angular": "^0.12.31",
+    "survey-jquery": "^0.12.31",
+    "survey-knockout": "^0.12.31",
+    "survey-react": "^0.12.31",
+    "survey-vue": "^0.12.31",
+    "webpack": "^3.6.0"
+  }
+}
