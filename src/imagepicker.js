@@ -1,1 +1,3 @@
-console.log("IMAGEPICKER");
+if (PLATFORM) {
+    console.log("IMAGEPICKER" + PLATFORM);
+}
