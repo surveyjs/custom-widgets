@@ -1,11 +1,25 @@
 import "./utils/surveyjs_importer.js";
 
-Survey.JsonObject.metaData.addProperty("dropdown", {name: "renderAs", default: "standard", choices: ["standard", "select2"]});
-
 var widget = {
+    activatedBy: "property",
     name: "select2",
     htmlTemplate: "<select style='width: 100%;'></select>",
-    isFit : function(question) { return question["renderAs"] === 'select2'; },
+    isFit : function(question) { 
+        if(widget.activatedBy == "property") return question["renderAs"] === 'select2'; 
+        if(widget.activatedBy == "type") return question.getType() === 'dropdown'; 
+        if(widget.activatedBy == "customtype") return question.customType === 'select2';
+        return false;
+    },
+    activatedByChanged: function(activatedBy) {
+        widget.activatedBy = activatedBy;
+        Survey.JsonObject.metaData.removeProperty("dropdown", "renderAs");
+        if(activatedBy == "property") {
+            Survey.JsonObject.metaData.addProperty("dropdown", {name: "renderAs", default: "standard", choices: ["standard", "select2"]});
+        }
+        if(activatedBy == "customtype") {
+            Survey.JsonObject.metaData.addClass("select2", [], null, "dropdown");
+        }
+    },
     afterRender: function(question, el) {
         var $el = $(el).is("select") ? $(el) : $(el).find("select");
         var othersEl = document.createElement("input");
@@ -42,10 +56,10 @@ var widget = {
         question.commentChangedCallback = updateCommentHandler;
         updateValueHandler();
         updateCommentHandler();
+    },
+    willUnmount: function(question, el) {
+        $(el).find("select").off('select2:select').select2("destroy");
     }
-}
-widget.willUnmount = function(question, el) {
-    $(el).find("select").off('select2:select').select2("destroy");
 }
 
 Survey.CustomWidgetCollection.Instance.addCustomWidget(widget);
