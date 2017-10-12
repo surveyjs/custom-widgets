@@ -1,3 +1,1 @@
-if (PLATFORM) {
-    console.log("IMAGEPICKER" + PLATFORM);
-}
+import "./utils/surveyjs_importer.js";

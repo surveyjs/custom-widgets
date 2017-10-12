@@ -1,3 +1,5 @@
+import "./utils/surveyjs_importer.js";
+
 Survey.JsonObject.metaData.addProperty("dropdown", {name: "renderAs", default: "standard", choices: ["standard", "select2"]});
 
 var widget = {
