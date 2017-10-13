@@ -5,9 +5,9 @@ var widget = {
     name: "select2",
     htmlTemplate: "<select style='width: 100%;'></select>",
     isFit : function(question) { 
-        if(widget.activatedBy == "property") return question["renderAs"] === 'select2'; 
+        if(widget.activatedBy == "property") return question["renderAs"] === 'select2' && question.getType() === 'dropdown'; 
         if(widget.activatedBy == "type") return question.getType() === 'dropdown'; 
-        if(widget.activatedBy == "customtype") return question.customType === 'select2';
+        if(widget.activatedBy == "customtype") return question.getType() === 'select2';
         return false;
     },
     activatedByChanged: function(activatedBy) {
