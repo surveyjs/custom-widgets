@@ -23,6 +23,7 @@
     "survey-knockout": "^0.12.31",
     "survey-react": "^0.12.31",
     "survey-vue": "^0.12.31",
+    "virtual-module-webpack-plugin": "^0.3.0",
     "webpack": "^3.6.0"
   }
 }

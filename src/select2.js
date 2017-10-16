@@ -1,10 +1,10 @@
-import "./utils/surveyjs_importer.js";
+import "./surveyjs_importer.js";
 
 var widget = {
     activatedBy: "property",
     name: "select2",
     htmlTemplate: "<select style='width: 100%;'></select>",
-    isFit : function(question) { 
+    isFit : function(question) {
         if(widget.activatedBy == "property") return question["renderAs"] === 'select2' && question.getType() === 'dropdown'; 
         if(widget.activatedBy == "type") return question.getType() === 'dropdown'; 
         if(widget.activatedBy == "customtype") return question.getType() === 'select2';

@@ -3,6 +3,7 @@
 var webpack = require("webpack");
 var path = require("path");
 var FriendlyErrorsWebpackPlugin = require("friendly-errors-webpack-plugin");
+const VirtualModulePlugin = require("virtual-module-webpack-plugin");
 
 var packageJson = require("./package.json");
 var copyright = [
@@ -26,6 +27,7 @@ var platformOptions = {
               amd: 'survey-react'
           }
       },
+      import: 'import * as Survey from "survey-react";',
       dependencies: { 'survey-react': '>=^0.12.32' }
   },
   'knockout': {
@@ -37,6 +39,7 @@ var platformOptions = {
               amd: 'survey-knockout'
           }
       },
+      import: 'import * as Survey from "survey-knockout";',
       dependencies: { 'survey-knockout': '>=^0.12.32' }
   },
   'jquery': {
@@ -48,6 +51,7 @@ var platformOptions = {
               amd: 'survey-jquery'
           }
       },
+      import: 'import * as Survey from "survey-jquery";',
       dependencies: { 'survey-jquery': '>=^0.12.32' }
   },
   'angular': {
@@ -59,6 +63,7 @@ var platformOptions = {
             amd: 'survey-angular'
         }
       },
+      import: 'import * as Survey from "survey-angular";',
       dependencies: { 'survey-angular': '>=^0.12.32' }
   },
   'vue': {
@@ -70,6 +75,7 @@ var platformOptions = {
               amd: 'survey-vue'
           }
       },
+      import: 'import * as Survey from "survey-vue";',
       dependencies: { 'survey-vue': '>=^0.12.32' }
   }
 };
@@ -81,7 +87,7 @@ module.exports = function(options) {
         imagepicker: path.join(__dirname, "./src/imagepicker.js")
     },
     output: {
-      path: path.join(__dirname, `./${outputFolder}/${options.platform}`),
+      path: path.join(__dirname, `./${outputFolder}/survey-cw-${options.platform}`),
       filename: `[name].${options.buildType === "prod" ? "min." : ""}js`,
       library: "[name]",
       libraryTarget: "umd",
@@ -94,13 +100,16 @@ module.exports = function(options) {
       new FriendlyErrorsWebpackPlugin(),
       new webpack.DefinePlugin({
         'PLATFORM': JSON.stringify(options.platform)
+      }),
+      new VirtualModulePlugin({
+        moduleName: 'src/surveyjs_importer.js',
+        contents: platformOptions[options.platform].import
       })
     ],
     devtool: options.buildType === "prod" ? "source-map" : "inline-source-map",
     devServer: {
       contentBase: path.join(__dirname, outputFolder),
-      open: true,
-      port: 1234
+      open: true
     }
   };
 
