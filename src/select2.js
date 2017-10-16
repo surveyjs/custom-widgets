@@ -27,7 +27,7 @@ var widget = {
         othersEl.style.marginTop = "3px";
         othersEl.style.display = "none";
         othersEl.style.width = "100%";
-        $el.parent().get(0).append(othersEl);
+        $el.parent().get(0).appendChild(othersEl);
         var widget = $el.select2({
             theme: "classic"
         });
