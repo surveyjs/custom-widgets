@@ -92,8 +92,9 @@ var platformOptions = {
 
 module.exports = function(options) {
     var packagePath = `./${outputFolder}/survey-cw-${options.platform}`;
+    
     var packagePlatformJson = {
-        'name': packagePath,
+        'name': `survey-cw-${options.platform}`,
         'version': packageJson.version,
         'description': 'Custom widgets for the SurveyJS library',
         'keywords': [
