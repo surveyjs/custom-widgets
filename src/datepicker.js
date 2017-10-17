@@ -11,14 +11,14 @@ var widget = {
     },
     afterRender: function(question, el) {
         var $el = $(el).is(".widget-datepicker") ? $(el) : $(el).find(".widget-datepicker");
-        var widget = $el.datepicker({
+        var pickerWidget = $el.datepicker({
             dateFormat: question.dateFormat,
             onSelect: function(dateText) {
                 question.value = dateText;
             }
         });
         question.valueChangedCallback = function() {
-            widget.datepicker('setDate', new Date(question.value));
+            pickerWidget.datepicker('setDate', new Date(question.value));
         }
         question.valueChangedCallback();
         if(!question.value) question.value = new Date();

@@ -9,7 +9,7 @@ var widget = {
     },
     afterRender: function(question, el) {
         var $el = $(el).is("select") ? $(el) : $(el).find("select");
-        var widget = $el.select2({
+        $el.select2({
             tags: "true",
             theme: "classic"
         });

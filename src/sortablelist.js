@@ -1,7 +1,7 @@
 import "./utils/surveyjs_importer.js";
 
 var widget = {
-    areaStyle: {border: "1px solid #1ab394", width:"100%", minHeight:"50px" },
+    areaStyle: "border: 1px solid #1ab394; width:100%; minHeight:50px",
     itemStyle: "background-color:#1ab394;color:#fff;margin:5px;padding:10px;",
     name: "sortablelist",
     isFit : function(question) { return question.getType() === 'sortablelist'; },
@@ -11,20 +11,18 @@ var widget = {
         Survey.JsonObject.metaData.addProperty("sortablelist", {name: "emptyText", default: "Move items here."});
     },
     afterRender: function(question, el) {
-        var $el = $(el);
-        var style = widget.mainStyle;
-        $el.append(`
-          <div style="width:50%">
-            <div class="result">
-                <span>` + question.emptyText + `</span>
-            </div>
-            <div class="source" style="margin-top:10px;">
-            </div>
-          </div>
-        `);
-        var $source = $el.find(".source").css(widget.areaStyle);
-        var $result = $el.find(".result").css(widget.areaStyle);
-        var $emptyText = $result.find("span");
+        var rootWidget = this;
+        el.style.width = "100%";
+        var resultEl = document.createElement("div");
+        var emptyEl = document.createElement("span");
+        var sourceEl = document.createElement("div");
+        resultEl.style.cssText = rootWidget.areaStyle;
+        emptyEl.innerHTML = question.emptyText;
+        resultEl.appendChild(emptyEl);
+        sourceEl.style.cssText = rootWidget.areaStyle;
+        sourceEl.style.marginTop = "10px";
+        el.appendChild(resultEl);
+        el.appendChild(sourceEl);
         var hasValueInResults = function(val) {
             res = question.value;
             if(!Array.isArray(res)) return false;
@@ -36,23 +34,22 @@ var widget = {
         var isUpdatingQuestionValue = false;
         var updateValueHandler = function() {
             if(isUpdatingQuestionValue) return;
-            $result.html("<span>" + question.emptyText + "</span>");
-            $emptyText = $result.find("span");
-            $source.html("");
+            resultEl.innerHTML = "";
+            resultEl.appendChild(emptyEl);
+            sourceEl.innerHTML = "";
             var wasInResults = false;
             question.activeChoices.forEach(function(choice) {
                 var inResutls = hasValueInResults(choice.value);
                 wasInResults = wasInResults || inResutls;
-                var $el = inResutls ? $result : $source;
-                $el.append(`<div data-value="` + choice.value +  `">
-                                        <div style="` + widget.itemStyle +  `">` + choice.text + `</div>
-                                    </div>`);
+                var srcEl = inResutls ? resultEl : sourceEl;
+                var newEl = document.createElement("div");
+                newEl.innerHTML = "<div style='" + rootWidget.itemStyle +  "'>" + choice.text + "</div>";
+                newEl["data-value"] = choice.value;
+                srcEl.appendChild(newEl);
             });
-            if(wasInResults) {
-                $emptyText.css({display: "none"});
-            }
+            emptyEl.style.display = wasInResults ?  "none" : "";
         };
-        Sortable.create($result[0], {
+        Sortable.create($(resultEl)[0], {
             animation: 150,
             group: {
                   name: 'top3',
@@ -62,9 +59,9 @@ var widget = {
               onSort: function (evt) {
                 var result = [];
                 if (evt.to.children.length === 1) {
-                    $emptyText.css({display: "inline-block"});
+                    emptyEl.style.display = "";
                 } else {
-                    $emptyText.css({display: "none"});
+                    emptyEl.style.display = "none";
                     for (var i = 1; i < evt.to.children.length; i++) {
                         result.push(evt.to.children[i].dataset.value)
                     }
@@ -74,7 +71,7 @@ var widget = {
                 isUpdatingQuestionValue = false;
               }
         });
-        Sortable.create($source[0], {
+        Sortable.create($(sourceEl)[0], {
             animation: 150,
             group: {
                   name: 'top3',

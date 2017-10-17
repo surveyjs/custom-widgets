@@ -4,14 +4,15 @@ var widget = {
     activatedBy: "property",
     name: "select2",
     htmlTemplate: "<select style='width: 100%;'></select>",
-    isFit : function(question) {
-        if(widget.activatedBy == "property") return question["renderAs"] === 'select2' && question.getType() === 'dropdown'; 
-        if(widget.activatedBy == "type") return question.getType() === 'dropdown'; 
-        if(widget.activatedBy == "customtype") return question.getType() === 'select2';
+    isFit : function(question) { 
+        var rootWidget = this;
+        if(rootWidget.activatedBy == "property") return question["renderAs"] === 'select2'; 
+        if(rootWidget.activatedBy == "type") return question.getType() === 'dropdown'; 
+        if(rootWidget.activatedBy == "customtype") return question.getType() === 'select2';
         return false;
     },
     activatedByChanged: function(activatedBy) {
-        widget.activatedBy = activatedBy;
+        this.activatedBy = activatedBy;
         Survey.JsonObject.metaData.removeProperty("dropdown", "renderAs");
         if(activatedBy == "property") {
             Survey.JsonObject.metaData.addProperty("dropdown", {name: "renderAs", default: "standard", choices: ["standard", "select2"]});
@@ -27,8 +28,8 @@ var widget = {
         othersEl.style.marginTop = "3px";
         othersEl.style.display = "none";
         othersEl.style.width = "100%";
-        $el.parent().get(0).appendChild(othersEl);
-        var widget = $el.select2({
+        $el.parent().get(0).append(othersEl);
+        $el.select2({
             theme: "classic"
         });
         var updateValueHandler = function() {
