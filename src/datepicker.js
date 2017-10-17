@@ -1,4 +1,4 @@
-import "./utils/surveyjs_importer.js";
+import "./surveyjs_importer.js";
 
 var widget = {
     name: "datepicker",
