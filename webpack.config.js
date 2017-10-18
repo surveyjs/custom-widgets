@@ -3,7 +3,6 @@
 var webpack = require("webpack");
 var path = require("path");
 var FriendlyErrorsWebpackPlugin = require("friendly-errors-webpack-plugin");
-const VirtualModulePlugin = require("virtual-module-webpack-plugin");
 var CopyWebpackPlugin = require('copy-webpack-plugin');
 var GenerateJsonPlugin = require('generate-json-webpack-plugin');
 
@@ -15,76 +14,31 @@ var copyright = [
 ].join("\n");
 
 var outputFolder = "packages";
-var commonDependencies = {
-  'select2': '>=^4.0.4'
+var commonDependencies = { //TODO add jquery and all widgets
+  'select2': '^4.0.4'
 };
 var widgets = ["select2", "imagepicker", "icheck", "datepicker", "tagbox"];
 var entry = {};
 
 var platformOptions = {
   'react': {
-      externals: {
-          'survey-react': {
-              root: 'Survey',
-              commonjs2: 'survey-react',
-              commonjs: 'survey-react',
-              amd: 'survey-react'
-          }
-      },
-      import: 'import * as Survey from "survey-react";',
-      dependencies: { 'survey-react': '>=^0.12.32' },
+      dependencies: { 'survey-react': '^0.12.32' },
       keywords: ['react', 'react-component']
   },
   'knockout': {
-      externals: {
-          'survey-knockout': {
-              root: 'Survey',
-              commonjs2: 'survey-knockout',
-              commonjs: 'survey-knockout',
-              amd: 'survey-knockout'
-          }
-      },
-      import: 'import * as Survey from "survey-knockout";',
-      dependencies: { 'survey-knockout': '>=^0.12.32' },
+      dependencies: { 'survey-knockout': '^0.12.32' },
       keywords: ['knockout']
   },
   'jquery': {
-      externals: {
-          'survey-jquery': {
-              root: 'Survey',
-              commonjs2: 'survey-jquery',
-              commonjs: 'survey-jquery',
-              amd: 'survey-jquery'
-          }
-      },
-      import: 'import * as Survey from "survey-jquery";',
-      dependencies: { 'survey-jquery': '>=^0.12.32' },
+      dependencies: { 'survey-jquery': '^0.12.32' },
       keywords: ['jquery', 'jquery-plugin']
   },
   'angular': {
-      externals: {
-        'survey-angular': {
-            root: 'Survey',
-            commonjs2: 'survey-angular',
-            commonjs: 'survey-angular',
-            amd: 'survey-angular'
-        }
-      },
-      import: 'import * as Survey from "survey-angular";',
-      dependencies: { 'survey-angular': '>=^0.12.32' },
+      dependencies: { 'survey-angular': '^0.12.32' },
       keywords: ['angular', 'angular-component']
   },
   'vue': {
-      externals: {
-          'survey-vue': {
-              root: 'Survey',
-              commonjs2: 'survey-vue',
-              commonjs: 'survey-vue',
-              amd: 'survey-vue'
-          }
-      },
-      import: 'import * as Survey from "survey-vue";',
-      dependencies: { 'survey-vue': '>=^0.12.32' },
+      dependencies: { 'survey-vue': '^0.12.32' },
       keywords: ['vue']
   }
 };
@@ -142,10 +96,6 @@ module.exports = function(options) {
         new FriendlyErrorsWebpackPlugin(),
         new webpack.DefinePlugin({
         'PLATFORM': JSON.stringify(options.platform)
-        }),
-        new VirtualModulePlugin({
-        moduleName: 'src/surveyjs_importer.js',
-        contents: platformOptions[options.platform].import
         })
     ],
     devtool: options.buildType === "prod" ? "source-map" : "inline-source-map",
