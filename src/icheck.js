@@ -6,11 +6,13 @@ var widget = {
     isFit : function(question) {  var t = question.getType(); return t === 'radiogroup' || t === 'checkbox' || t === 'matrix'; },
     isDefaultRender: true,
     afterRender: function(question, el) {
+        var rootWidget = this;
         var $el = $(el);
-        $(el).find('input').data({"iCheck": undefined});
+        $el.find('input').data({"iCheck": undefined});
+        
         $el.find('input').iCheck({
-          checkboxClass: widget.className,
-          radioClass: widget.className
+          checkboxClass: rootWidget.className,
+          radioClass: rootWidget.className
         });
         var select = function() {
             if(question.getType() != "matrix") {
