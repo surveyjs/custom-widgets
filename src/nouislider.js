@@ -20,6 +20,7 @@ var widget = {
         if(startValue[1] > question.rangeMax) startValue[1] = question.rangeMax;
         question.value = startValue;
 
+        el.style.marginBottom = "50px";
         var slider = noUiSlider.create(el, {
         	start: startValue,
         	connect: true,
