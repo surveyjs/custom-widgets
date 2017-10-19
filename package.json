@@ -2,7 +2,7 @@
   "name": "surveyjs-widgets",
   "version": "0.12.32",
   "scripts": {
-    "start": "webpack-dev-server --env.buildType dev",
+    "start": "npm run build && live-server",
     "build": "webpack --env.buildType dev && webpack --env.buildType prod"
   },
   "private": true,
@@ -17,6 +17,7 @@
     "jquery": "^3.2.1",
     "jquery-bar-rating": "^1.2.2",
     "jquery-ui": "^1.12.1",
+    "live-server": "^1.2.0",
     "nouislider": "^10.1.0",
     "select2": "^4.0.4",
     "signature_pad": "^2.3.2",
