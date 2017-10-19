@@ -5,6 +5,7 @@ var path = require("path");
 var FriendlyErrorsWebpackPlugin = require("friendly-errors-webpack-plugin");
 var CopyWebpackPlugin = require('copy-webpack-plugin');
 var GenerateJsonPlugin = require('generate-json-webpack-plugin');
+var CleanWebpackPlugin = require('clean-webpack-plugin');
 
 var packageJson = require("./package.json");
 
@@ -15,7 +16,31 @@ var copyright = [
 ].join("\n");
 
 var outputFolder = "package";
-var widgets = ["select2", "imagepicker", "icheck", "datepicker", "tagbox"];
+
+var widgets = [
+    "select2",
+    "select2-tagbox",
+    "image-picker",
+    "jquery-ui-datepicker",
+    "inputmask",
+    "icheck",
+    "jquery-bar-rating",
+    "signature_pad",
+    "sortablejs",
+    "nouislider"
+];
+
+var dependencies = {
+    "select2": "^4.0.4",
+    "image-picker": "^0.3.1",
+    "icheck": "^1.0.2",
+    "jquery-ui": "^1.12.1",
+    "sortablejs": "^1.6.1",
+    "signature_pad": "^2.3.2",
+    "nouislider": "^10.1.0",
+    "inputmask": "^3.3.10",
+    "jquery-bar-rating": "^1.2.2"
+};
 var entry = {};
 
 module.exports = function(options) {
@@ -41,7 +66,7 @@ module.exports = function(options) {
             'url': 'https://github.com/surveyjs/widgets.git'
         },
         'dependencies': {
-            'select2': '^4.0.4' //TODO add jquery and all widgets
+            'jquery': '^3.2.1'
         },
         'peerDependencies': {}
     };
@@ -50,8 +75,10 @@ module.exports = function(options) {
         targetPackageJson.files.push(`${widget}.js`);
         targetPackageJson.files.push(`${widget}.min.js`);
         targetPackageJson.files.push(`${widget}.min.js.map`);
-        entry[widget] = path.join(__dirname, `./src/${widget}.js`);
-    })
+        entry[widget] = path.join(__dirname, `./src/${widget}.js`);    
+    });
+
+    targetPackageJson.dependencies = Object.assign(targetPackageJson.dependencies, dependencies);   
 
     var config = {
         entry: entry,
@@ -63,6 +90,7 @@ module.exports = function(options) {
             umdNamedDefine: true
         },
         plugins: [
+            new CleanWebpackPlugin([outputFolder], {verbose: true}),
             new webpack.NoEmitOnErrorsPlugin(),
             new FriendlyErrorsWebpackPlugin()
         ],
