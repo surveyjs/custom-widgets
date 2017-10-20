@@ -3,9 +3,10 @@ function init(Survey) {
         name: "signaturepad",
         title: "Signature pad",
         iconName: "icon-signaturepad",
-        widgetIsLoaded: function() { return SignaturePad; },
+        widgetIsLoaded: function() { return typeof SignaturePad !== undefined; },
         penColor: "1ab394",
         isFit : function(question) { return question.getType() === 'signaturepad'; },
+        htmlTemplate: "<div></div>",
         activatedByChanged: function(activatedBy) {
             Survey.JsonObject.metaData.addClass("signaturepad", [], null, "empty");
             Survey.JsonObject.metaData.addProperties("signaturepad", [{name: "width:number", default: 300}, {name: "height:number", default: 200}]);

@@ -3,7 +3,7 @@ function init(Survey) {
         name: "datepicker",
         title: "Date picker",
         iconName: "icon-datepicker",
-        widgetIsLoaded: function() { return DatePicker; },
+        widgetIsLoaded: function() { return typeof DatePicker !== undefined; },
         isFit : function(question) { return question.getType() === 'datepicker'; },
         htmlTemplate: "<input class='widget-datepicker' type='text' style='width: 100%;'>",
         activatedByChanged: function(activatedBy) {

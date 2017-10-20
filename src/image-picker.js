@@ -3,7 +3,7 @@ function init(Survey) {
         name: "imagepicker",
         title: "Image picker",
         iconName: "icon-imagepicker",
-        widgetIsLoaded: function() { return ImagePicker; },
+        widgetIsLoaded: function() { return typeof ImagePicker !== undefined; },
         isFit : function(question) { return question.getType() === 'imagepicker'; },
         isDefaultRender: true,
         activatedByChanged: function(activatedBy) {

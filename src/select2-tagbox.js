@@ -3,7 +3,8 @@ function init(Survey) {
         name: "tagbox",
         title: "Tag box",
         iconName: "icon-tagbox",
-        widgetIsLoaded: function() { return Select2; },
+        widgetIsLoaded: function() { return typeof Select2 !== undefined; },
+        defaultJSON: {choices: ["Item 1", "Item 2", "Item 3"]},
         htmlTemplate: "<select multiple='multiple' style='width: 100%;'></select>",
         isFit : function(question) { return question.getType() === 'tagbox';  },
         activatedByChanged: function(activatedBy) {
