@@ -1,6 +1,9 @@
 function init(Survey) {
     var widget = {
         name: "nouislider",
+        title: "noUiSlider",
+        iconName: "icon-nouislider",
+        widgetIsLoaded: function() { return noUiSlider; },
         isFit : function(question) { return question.getType() === 'nouislider'; },
         htmlTemplate: "<div></div>",
         activatedByChanged: function(activatedBy) {

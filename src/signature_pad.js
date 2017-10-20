@@ -1,6 +1,9 @@
 function init(Survey) {
     var widget = {
         name: "signaturepad",
+        title: "Signature pad",
+        iconName: "icon-signaturepad",
+        widgetIsLoaded: function() { return SignaturePad; },
         penColor: "1ab394",
         isFit : function(question) { return question.getType() === 'signaturepad'; },
         activatedByChanged: function(activatedBy) {

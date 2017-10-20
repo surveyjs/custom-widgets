@@ -1,6 +1,9 @@
 function init(Survey) {
     var widget = {
         name: "tagbox",
+        title: "Tag box",
+        iconName: "icon-tagbox",
+        widgetIsLoaded: function() { return Select2; },
         htmlTemplate: "<select multiple='multiple' style='width: 100%;'></select>",
         isFit : function(question) { return question.getType() === 'tagbox';  },
         activatedByChanged: function(activatedBy) {

@@ -1,6 +1,9 @@
 function init(Survey) {
     var widget = {
         name: "barrating",
+        title: "Bar rating",
+        iconName: "icon-barrating",
+        widgetIsLoaded: function() { return Barrating; },
         isFit : function(question) { return question.getType() === 'barrating'; },
         isDefaultRender: true,
         activatedByChanged: function(activatedBy) {
