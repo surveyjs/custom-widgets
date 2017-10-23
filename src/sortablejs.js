@@ -10,7 +10,7 @@ function init(Survey) {
         isFit : function(question) { return question.getType() === 'sortablelist'; },
         htmlTemplate: "<div></div>",
         activatedByChanged: function(activatedBy) {
-            Survey.JsonObject.metaData.addClass("sortablelist", [{name:"hasOther", visible: false}], null, "checkbox");
+            Survey.JsonObject.metaData.addClass("sortablelist", [{name:"hasOther", visible: false}, {name:"storeOthersAsComment", visible: false}], null, "checkbox");
             Survey.JsonObject.metaData.addProperty("sortablelist", {name: "emptyText", default: "Move items here."});
         },
         afterRender: function(question, el) {

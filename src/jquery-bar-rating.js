@@ -8,7 +8,9 @@ function init(Survey) {
         isFit : function(question) { return question.getType() === 'barrating'; },
         isDefaultRender: true,
         activatedByChanged: function(activatedBy) {
-            Survey.JsonObject.metaData.addClass("barrating", [ {name: "showValues", default: false}, {name:"hasOther", visible: false}], null, "dropdown");
+            Survey.JsonObject.metaData.addClass("barrating", [ {name: "showValues:boolean", default: false}, 
+            {name:"hasOther", visible: false}, {name: "otherText", visible: false}, {name: "optionsCaption", visible: false}, 
+            {name: "otherErrorText", visible: false}, {name: "storeOthersAsComment", visible: false}, {name: "renderAs", visible: false}], null, "dropdown");
             Survey.JsonObject.metaData.addProperty("barrating", {name: "ratingTheme", default: "fontawesome-stars", choices: ["fontawesome-stars", "css-stars", "bars-pill", "bars-1to10", "bars-movie", "bars-square", "bars-reversed", "bars-horizontal", "bootstrap-stars", "fontawesome-stars-o"]});
         },
         afterRender: function(question, el) {
