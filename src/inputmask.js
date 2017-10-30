@@ -8,6 +8,7 @@ function init(Survey) {
         numericPrefix: '$',
         numericPlaceholder: '0',
         isFit : function(question) { 
+            if(typeof Inputmask == undefined) return false;
             if(question.getType() == "multipletext") return true;
             return question.getType() == "text" && (question.inputMask != "none" || question.inputFormat);
         },

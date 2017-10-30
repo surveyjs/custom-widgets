@@ -1,12 +1,16 @@
 function init(Survey) {
     var widget = {
+        name: "sortablelist",
+        title: "Sortable list",
+        iconName: "icon-sortablelist",
+        widgetIsLoaded: function() { return typeof Sortable !== undefined; },
+        defaultJSON: {choices: ["Item 1", "Item 2", "Item 3"]},
         areaStyle: "border: 1px solid #1ab394; width:100%; minHeight:50px",
         itemStyle: "background-color:#1ab394;color:#fff;margin:5px;padding:10px;",
-        name: "sortablelist",
         isFit : function(question) { return question.getType() === 'sortablelist'; },
         htmlTemplate: "<div></div>",
         activatedByChanged: function(activatedBy) {
-            Survey.JsonObject.metaData.addClass("sortablelist", [{name:"hasOther", visible: false}], null, "checkbox");
+            Survey.JsonObject.metaData.addClass("sortablelist", [{name:"hasOther", visible: false}, {name:"storeOthersAsComment", visible: false}], null, "checkbox");
             Survey.JsonObject.metaData.addProperty("sortablelist", {name: "emptyText", default: "Move items here."});
         },
         afterRender: function(question, el) {
@@ -23,7 +27,7 @@ function init(Survey) {
             el.appendChild(resultEl);
             el.appendChild(sourceEl);
             var hasValueInResults = function(val) {
-                res = question.value;
+                var res = question.value;
                 if(!Array.isArray(res)) return false;
                 for(var i = 0; i < res.length; i ++){
                     if(res[i] == val) return true;

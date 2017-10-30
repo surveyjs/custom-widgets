@@ -3,12 +3,16 @@ import $ from 'jquery';
 function init(Survey) {
     var widget = {
         name: "imagepicker",
+        title: "Image picker",
+        iconName: "icon-imagepicker",
+        widgetIsLoaded: function() { return typeof ImagePicker !== undefined; },
         isFit : function(question) { return question.getType() === 'imagepicker'; },
         isDefaultRender: true,
         activatedByChanged: function(activatedBy) {
             Survey.JsonObject.metaData.addClass("imageitemvalues", [{name: "imageLink"}], null, "itemvalue");
             Survey.JsonObject.metaData.addClass("imagepicker", [{name: "choices:imageitemvalues", onGetValue: function (obj) { return Survey.ItemValue.getData(obj.choices); }, onSetValue: function (obj, value) { obj.choices = value; }}, 
-                {name:"showLabel:boolean", default: false}, {name:"hasOther", visible: false}], null, "dropdown");
+                {name:"showLabel:boolean", default: false}, {name:"hasOther", visible: false}, {name: "otherText", visible: false}, {name: "optionsCaption", visible: false}, 
+                {name: "otherErrorText", visible: false}, {name: "storeOthersAsComment", visible: false}, {name: "renderAs", visible: false}], null, "dropdown");
         },
         afterRender: function(question, el) {
             var $el = $(el).is("select") ? $(el) : $(el).find("select");
