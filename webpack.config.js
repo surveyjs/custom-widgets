@@ -17,8 +17,10 @@ var copyright = [
 
 var outputFolder = "package";
 
+var main = "surveyjs-widgets";
+
 var widgets = [
-    "all",
+    main,
     "select2",
     "select2-tagbox",
     "image-picker",
@@ -42,10 +44,11 @@ var dependencies = {
     "inputmask": "^3.3.10",
     "jquery-bar-rating": "^1.2.2"
 };
+
 var entry = {};
 
 module.exports = function(options) {
-    var packagePath = `./${outputFolder}/surveyjs-widgets`;
+    var packagePath = `./${outputFolder}`;
     
     var targetPackageJson = {
         'name': `surveyjs-widgets`,
@@ -62,6 +65,7 @@ module.exports = function(options) {
         'homepage': 'https://surveyjs.io/',
         'license': 'MIT',
         'files': [],
+        'main': main + '.js',
         'repository': {
             'type': 'git',
             'url': 'https://github.com/surveyjs/widgets.git'
@@ -73,10 +77,17 @@ module.exports = function(options) {
     };
 
     widgets.forEach(function(widget) {
-        targetPackageJson.files.push(`${widget}.js`);
-        targetPackageJson.files.push(`${widget}.min.js`);
-        targetPackageJson.files.push(`${widget}.min.js.map`);
-        entry[widget] = path.join(__dirname, `./src/${widget}.js`);    
+        if (widget !== main) {
+            targetPackageJson.files.push(`widgets/${widget}.js`);
+            targetPackageJson.files.push(`widgets/${widget}.min.js`);
+            targetPackageJson.files.push(`widgets/${widget}.min.js.map`);
+            entry["widgets/" + widget] = path.join(__dirname, `./src/${widget}.js`); 
+        } else {
+            targetPackageJson.files.push(`${widget}.js`);
+            targetPackageJson.files.push(`${widget}.min.js`);
+            targetPackageJson.files.push(`${widget}.min.js.map`);
+            entry[widget] = path.join(__dirname, `./src/${widget}.js`); 
+        }
     });
 
     targetPackageJson.dependencies = Object.assign(targetPackageJson.dependencies, dependencies);   
@@ -89,6 +100,14 @@ module.exports = function(options) {
             library: "[name]",
             libraryTarget: "umd",
             umdNamedDefine: true
+        },
+        externals: {
+            'jquery': {
+                root: 'jQuery',
+                commonjs2: 'jquery',
+                commonjs: 'jquery',
+                amd: 'jquery'
+            }
         },
         plugins: [
             new webpack.NoEmitOnErrorsPlugin(),
