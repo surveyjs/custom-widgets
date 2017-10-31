@@ -1,11 +1,9 @@
-import $ from 'jquery';
-
 function init(Survey) {
     var widget = {
         name: "imagepicker",
         title: "Image picker",
         iconName: "icon-imagepicker",
-        widgetIsLoaded: function() { return typeof ImagePicker !== undefined; },
+        widgetIsLoaded: function() { return !!$.fn.imagepicker; },
         isFit : function(question) { return question.getType() === 'imagepicker'; },
         isDefaultRender: true,
         activatedByChanged: function(activatedBy) {
@@ -17,8 +15,10 @@ function init(Survey) {
         afterRender: function(question, el) {
             var $el = $(el).is("select") ? $(el) : $(el).find("select");
             var options = $el.find('option');
-            for (var i=1; i<options.length; i++) {
-                $(options[i]).data("imgSrc", options[i].imageLink);
+            var choices = question.choices;
+
+            for (var i=1; i < options.length && i-1 < choices.length; i++) {
+                $(options[i]).data("imgSrc", choices[i-1].imageLink);
                 options[i].selected = question.value == options[i].value;
             }
             $el.imagepicker({
