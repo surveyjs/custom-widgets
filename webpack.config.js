@@ -30,7 +30,8 @@ var widgets = [
     "jquery-bar-rating",
     "signature_pad",
     "sortablejs",
-    "nouislider"
+    "nouislider",
+    "ck-editor"
 ];
 
 var dependencies = {
