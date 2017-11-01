@@ -25,11 +25,11 @@ function init(Survey) {
             var mask = surveyElement.inputMask != "none" ? surveyElement.inputMask : surveyElement.inputFormat;
             var options = {};
             if(surveyElement.inputMask != "none") options.inputFormat = surveyElement.inputFormat;
-            if(surveyElement.inputmask == "currency" || surveyElement.inputmask == "decimal") {
+            if(surveyElement.inputMask == "currency" || surveyElement.inputMask == "decimal") {
                 options.groupSeparator = rootWidget.numericGroupSeparator;
                 options.autoGroup = rootWidget.numericAutoGroup;
             }
-            if(surveyElement.inputmask == "currency") {
+            if(surveyElement.inputMask == "currency") {
                 options.digits = rootWidget.numericDigits;
                 options.digitsOptional = rootWidget.numericDigitsOptional;
                 options.prefix = rootWidget.numericPrefix;
