@@ -108,6 +108,12 @@ module.exports = function(options) {
                 commonjs2: 'jquery',
                 commonjs: 'jquery',
                 amd: 'jquery'
+            },
+            'inputmask': {
+                root: 'Inputmask',
+                commonjs2: 'inputmask',
+                commonjs: 'inputmask',
+                amd: 'inputmask'
             }
         },
         plugins: [

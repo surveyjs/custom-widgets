@@ -1,3 +1,5 @@
+import Inputmask from "inputmask";
+
 function init(Survey) {
     var widget = {
         name: "maskedit",
@@ -20,11 +22,12 @@ function init(Survey) {
             Survey.JsonObject.metaData.addProperties("matrixdropdowncolumn", properties);
             Survey.JsonObject.metaData.addProperties("multipletextitem", properties);
         },
-        applyInputMask: function(surveyElement, $el) {
+        applyInputMask: function(surveyElement, el) {
             var rootWidget = this;
             var mask = surveyElement.inputMask != "none" ? surveyElement.inputMask : surveyElement.inputFormat;
             var options = {};
             if(surveyElement.inputMask != "none") options.inputFormat = surveyElement.inputFormat;
+            
             if(surveyElement.inputMask == "currency" || surveyElement.inputMask == "decimal") {
                 options.groupSeparator = rootWidget.numericGroupSeparator;
                 options.autoGroup = rootWidget.numericAutoGroup;
@@ -35,32 +38,37 @@ function init(Survey) {
                 options.prefix = rootWidget.numericPrefix;
                 options.placeholder = rootWidget.numericPlaceholder;
             }
-            $el.inputmask(mask, options);
+            if (surveyElement.inputMask == "datetime") {
+                mask = surveyElement.inputFormat;
+            }
 
-            var updateHandler = function() {
-                $el.inputmask({ setvalue: surveyElement.value });
+            Inputmask(mask, options).mask(el);
+
+            var updateHandler = function() {               
+                el.value = typeof surveyElement.value === "undefined" ? "" : surveyElement.value;
             };
             surveyElement.valueChangedCallback = updateHandler;
             updateHandler();
         },
         afterRender: function(question, el) {
             if(question.getType() != "multipletext") {
-                var $el = $(el).is("input") ? $(el) : $(el).find("input");
-                this.applyInputMask(question, $el);
+                var input = el.querySelector("input") || el;
+                this.applyInputMask(question, input);
             } else {
                 for(var i = 0; i < question.items.length; i ++) {
                     var item = question.items[i];
                     if(item.inputMask != "none" || item.inputFormat) {
-                        var $el =  $(el).find("#" + item.id);
-                        if($el) {
-                            this.applyInputMask(item, $el);
+                        var input =  el.querySelector("#" + item.id);
+                        if (input) {
+                            this.applyInputMask(item, input);
                         }
                     }
                 }
             }
         },
         willUnmount: function(question, el) {
-            $(el).find("input").inputmask('remove');
+            var input = el.querySelector("input") || el;
+            input.inputmask.remove();
         }
     }
 
