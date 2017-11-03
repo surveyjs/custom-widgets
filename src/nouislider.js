@@ -1,3 +1,5 @@
+import noUiSlider from 'nouislider';
+
 function init(Survey) {
     var widget = {
         name: "nouislider",

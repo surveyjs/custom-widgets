@@ -114,6 +114,12 @@ module.exports = function(options) {
                 commonjs2: 'inputmask',
                 commonjs: 'inputmask',
                 amd: 'inputmask'
+            },
+            'noUiSlider': {
+                root: 'noUiSlider',
+                commonjs2: 'nouislider',
+                commonjs: 'nouislider',
+                amd: 'nouislider'
             }
         },
         plugins: [
