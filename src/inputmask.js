@@ -44,6 +44,10 @@ function init(Survey) {
 
             Inputmask(mask, options).mask(el);
 
+            el.oninput = function() {
+                surveyElement.customWidgetData.isNeedRender = true; 
+            }
+
             var updateHandler = function() {               
                 el.value = typeof surveyElement.value === "undefined" ? "" : surveyElement.value;
             };
