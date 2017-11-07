@@ -1,3 +1,5 @@
+import Sortable from 'sortablejs';
+
 function init(Survey) {
     var widget = {
         name: "sortablelist",

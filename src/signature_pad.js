@@ -1,3 +1,5 @@
+import * as SignaturePad from 'signature_pad';
+
 function init(Survey) {
     var widget = {
         name: "signaturepad",

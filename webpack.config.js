@@ -115,11 +115,29 @@ module.exports = function(options) {
                 commonjs: 'inputmask',
                 amd: 'inputmask'
             },
-            'noUiSlider': {
+            'nouislider': {
                 root: 'noUiSlider',
                 commonjs2: 'nouislider',
                 commonjs: 'nouislider',
                 amd: 'nouislider'
+            },
+            'signature_pad': {
+                root: 'SignaturePad',
+                commonjs2: 'signature_pad',
+                commonjs: 'signature_pad',
+                amd: 'signature_pad'
+            },
+            'sortablejs': {
+                root: 'Sortable',
+                commonjs2: 'sortablejs',
+                commonjs: 'sortablejs',
+                amd: 'sortablejs'
+            },
+            'ckeditor': {
+                root: 'CKEDITOR',
+                commonjs2: 'ckeditor',
+                commonjs: 'ckeditor',
+                amd: 'ckeditor'
             }
         },
         plugins: [

@@ -1,3 +1,5 @@
+import CKEDITOR from 'ckeditor';
+
 function init(Survey) {
     var widget = {
         name: "editor",
