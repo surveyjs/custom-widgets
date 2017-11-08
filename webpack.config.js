@@ -132,12 +132,6 @@ module.exports = function(options) {
                 commonjs2: 'sortablejs',
                 commonjs: 'sortablejs',
                 amd: 'sortablejs'
-            },
-            'ckeditor': {
-                root: 'CKEDITOR',
-                commonjs2: 'ckeditor',
-                commonjs: 'ckeditor',
-                amd: 'ckeditor'
             }
         },
         plugins: [
