@@ -1,7 +1,3 @@
-# examples of usage
-es moules examples: https://stackblitz.com/edit/surveyjs-widgets-react 
-
-# widgets
   - select2: [site](https://select2.org/), [repo](https://github.com/select2/select2), license: MIT
   
   - select2tagbox: [site](https://select2.org/), [repo](https://github.com/select2/select2), license: MIT
@@ -23,6 +19,7 @@ es moules examples: https://stackblitz.com/edit/surveyjs-widgets-react
   - sortablejs: [site](http://rubaxa.github.io/Sortable/), [repo](https://github.com/RubaXa/Sortable), license: MIT
   
   - ckeditor: [site](https://ckeditor.com/), [repo](https://github.com/ckeditor/ckeditor-dev), license: https://github.com/ckeditor/ckeditor-dev/blob/major/LICENSE.md
-
-
-
+  
+  
+  # examples of usage
+es moules examples: https://stackblitz.com/edit/surveyjs-widgets-react 
