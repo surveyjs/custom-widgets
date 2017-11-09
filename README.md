@@ -18,7 +18,7 @@
   
   - sortablejs: [site](http://rubaxa.github.io/Sortable/), [repo](https://github.com/RubaXa/Sortable), license: MIT
   
-  - ckeditor: [site](https://ckeditor.com/), [repo](https://github.com/ckeditor/ckeditor-dev), license: https://github.com/ckeditor/ckeditor-dev/blob/major/LICENSE.md
+  - ckeditor: [site](https://ckeditor.com/ckeditor-4/), [repo](https://github.com/ckeditor/ckeditor-dev), license: https://github.com/ckeditor/ckeditor-dev/blob/major/LICENSE.md
   
   
   # examples of usage
