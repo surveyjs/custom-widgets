@@ -15,15 +15,22 @@ function init(Survey) {
             var $el = $(el).is(".widget-datepicker") ? $(el) : $(el).find(".widget-datepicker");
             var pickerWidget = $el.datepicker({
                 dateFormat: question.dateFormat,
+                option: { 
+                    minDate: null,
+                    maxDate: null
+                },
                 onSelect: function(dateText) {
                     question.value = dateText;
                 }
             });
             question.valueChangedCallback = function() {
-                pickerWidget.datepicker('setDate', new Date(question.value));
+                if(question.value) {
+                    pickerWidget.datepicker('setDate', new Date(question.value));
+                } else {
+                    pickerWidget.datepicker('setDate', null);
+                }
             }
             question.valueChangedCallback();
-            if(!question.value) question.value = new Date();
         },
         willUnmount: function(question, el) {
             var $el = $(el).is(".widget-datepicker") ? $(el) : $(el).find(".widget-datepicker");
