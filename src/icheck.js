@@ -4,7 +4,6 @@ function init(Survey) {
         name: "icheck",
         widgetIsLoaded: function() { return typeof $ == 'function' && !!$.fn.iCheck; },
         isFit : function(question) {  
-            if(!this.widgetIsLoaded()) return false;
             var t = question.getType(); return t === 'radiogroup' || t === 'checkbox' || t === 'matrix'; 
         },
         isDefaultRender: true,

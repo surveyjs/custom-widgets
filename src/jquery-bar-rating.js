@@ -8,7 +8,6 @@ function init(Survey) {
         isFit : function(question) { return typeof $ == 'function' && !!$.fn.barrating; },
         isDefaultRender: true,
         activatedByChanged: function(activatedBy) {
-            if(!this.widgetIsLoaded()) return;
             Survey.JsonObject.metaData.addClass("barrating", [ {name: "showValues:boolean", default: false}, 
             {name:"hasOther", visible: false}, {name: "otherText", visible: false}, {name: "optionsCaption", visible: false}, 
             {name: "otherErrorText", visible: false}, {name: "storeOthersAsComment", visible: false}, {name: "renderAs", visible: false}], null, "dropdown");

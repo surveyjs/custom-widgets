@@ -7,7 +7,6 @@ function init(Survey) {
         htmlTemplate: "<select style='width: 100%;'></select>",
         widgetIsLoaded: function() { return typeof $ == 'function' && !!$.fn.select2; },
         isFit : function(question) {
-            if(!this.widgetIsLoaded()) return false;
             if(widget.activatedBy == "property") return question["renderAs"] === 'select2' && question.getType() === 'dropdown'; 
             if(widget.activatedBy == "type") return  typeof Select2 !== undefined && question.getType() === 'dropdown'; 
             if(widget.activatedBy == "customtype") return question.getType() === 'select2';

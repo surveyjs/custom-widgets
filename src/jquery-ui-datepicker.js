@@ -7,7 +7,6 @@ function init(Survey) {
         isFit : function(question) { return question.getType() === 'datepicker'; },
         htmlTemplate: "<input class='widget-datepicker' type='text' style='width: 100%;'>",
         activatedByChanged: function(activatedBy) {
-            if(!this.widgetIsLoaded()) return;
             Survey.JsonObject.metaData.addClass("datepicker", 
                 [{name: "dateFormat", default: "mm/dd/yy", choices: ["mm/dd/yy", "yy-mm-dd", "d M, y", "d MM, y", "DD, d MM, yy", "'day' d 'of' MM 'in the year' yy"]},
                 {name:"inputType", visible: false}, {name:"inputFormat", visible: false}, {name: "inputMask", visible: false}], null, "text");

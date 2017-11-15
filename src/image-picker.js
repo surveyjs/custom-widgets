@@ -7,7 +7,6 @@ function init(Survey) {
         isFit : function(question) { return question.getType() === 'imagepicker'; },
         isDefaultRender: true,
         activatedByChanged: function(activatedBy) {
-            if(!this.widgetIsLoaded()) return;
             Survey.JsonObject.metaData.addClass("imageitemvalues", [{name: "imageLink"}], null, "itemvalue");
             Survey.JsonObject.metaData.addClass("imagepicker", [{name: "choices:imageitemvalues", onGetValue: function (obj) { return Survey.ItemValue.getData(obj.choices); }, onSetValue: function (obj, value) { obj.choices = value; }}, 
                 {name:"showLabel:boolean", default: false}, {name:"hasOther", visible: false}, {name: "otherText", visible: false}, {name: "optionsCaption", visible: false}, 

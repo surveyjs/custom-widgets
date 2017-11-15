@@ -10,7 +10,6 @@ function init(Survey) {
         htmlTemplate: "<select multiple='multiple' style='width: 100%;'></select>",
         isFit : function(question) { return question.getType() === 'tagbox';  },
         activatedByChanged: function(activatedBy) {
-            if(!this.widgetIsLoaded()) return;
             Survey.JsonObject.metaData.addClass("tagbox", [{name:"hasOther", visible: false}], null, "checkbox");
         },
         afterRender: function(question, el) {

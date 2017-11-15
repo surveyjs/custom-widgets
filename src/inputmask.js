@@ -11,13 +11,11 @@ function init(Survey) {
         numericPlaceholder: '0',
         widgetIsLoaded: function() { return typeof Inputmask != "undefined"; },
         isFit : function(question) { 
-            if(!this.widgetIsLoaded()) return false;
             if(question.getType() == "multipletext") return true;
             return question.getType() == "text" && (question.inputMask != "none" || question.inputFormat);
         },
         isDefaultRender: true,
         activatedByChanged: function(activatedBy) {
-            if(!this.widgetIsLoaded()) return;
             if(Survey.JsonObject.metaData.findProperty("text", "inputMask")) return;
             var properties = ["inputFormat", {name: "inputMask", default: "none", choices: ["none", "datetime", "currency", "decimal", "email", "phone", "ip"]}];
             Survey.JsonObject.metaData.addProperties("text", properties);
