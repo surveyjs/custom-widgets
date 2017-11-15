@@ -5,10 +5,11 @@ function init(Survey) {
         name: "nouislider",
         title: "noUiSlider",
         iconName: "icon-nouislider",
-        widgetIsLoaded: function() { return typeof noUiSlider !== undefined; },
+        widgetIsLoaded: function() { return typeof noUiSlider != "undefined"; },
         isFit : function(question) { return question.getType() === 'nouislider'; },
         htmlTemplate: "<div></div>",
         activatedByChanged: function(activatedBy) {
+            if(!this.widgetIsLoaded()) return;
             Survey.JsonObject.metaData.addClass("nouislider", [], null, "empty");
             Survey.JsonObject.metaData.addProperties("nouislider", [{name: "rangeMin:number", default: 0}, {name: "rangeMax:number", default: 100},
             {name: "defaultRangeMin:number", default: 30}, {name: "defaultRangeMax:number", default: 70}]);

@@ -5,13 +5,16 @@ function init(Survey) {
         activatedBy: "property",
         name: "select2",
         htmlTemplate: "<select style='width: 100%;'></select>",
+        widgetIsLoaded: function() { return typeof $ == 'function' && !!$.fn.select2; },
         isFit : function(question) {
+            if(!this.widgetIsLoaded()) return false;
             if(widget.activatedBy == "property") return question["renderAs"] === 'select2' && question.getType() === 'dropdown'; 
             if(widget.activatedBy == "type") return  typeof Select2 !== undefined && question.getType() === 'dropdown'; 
             if(widget.activatedBy == "customtype") return question.getType() === 'select2';
             return false;
         },
         activatedByChanged: function(activatedBy) {
+            if(!this.widgetIsLoaded()) return;
             widget.activatedBy = activatedBy;
             Survey.JsonObject.metaData.removeProperty("dropdown", "renderAs");
             if(activatedBy == "property") {

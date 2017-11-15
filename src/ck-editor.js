@@ -3,12 +3,13 @@ function init(Survey) {
         name: "editor",
         title: "Editor",
         iconName: "icon-editor",
-        widgetIsLoaded: function() { return typeof CKEDITOR !== undefined; },
+        widgetIsLoaded: function() { return typeof CKEDITOR != "undefined"; },
         isFit : function(question) { 
             return question.getType() === 'editor'; 
         },
         htmlTemplate: "<textarea rows='10' cols='80' style: {width:'100%'}></textarea>",
         activatedByChanged: function(activatedBy) {
+            if(!this.widgetIsLoaded()) return;
             Survey.JsonObject.metaData.addClass("editor", [], null, "empty");
             Survey.JsonObject.metaData.addProperty("editor", {name: "height", default: 300});
         },

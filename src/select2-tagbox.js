@@ -5,11 +5,12 @@ function init(Survey) {
         name: "tagbox",
         title: "Tag box",
         iconName: "icon-tagbox",
-        widgetIsLoaded: function() { return typeof Select2 !== undefined; },
+        widgetIsLoaded: function() { return typeof $ == 'function' && !!$.fn.select2; },
         defaultJSON: {choices: ["Item 1", "Item 2", "Item 3"]},
         htmlTemplate: "<select multiple='multiple' style='width: 100%;'></select>",
         isFit : function(question) { return question.getType() === 'tagbox';  },
         activatedByChanged: function(activatedBy) {
+            if(!this.widgetIsLoaded()) return;
             Survey.JsonObject.metaData.addClass("tagbox", [{name:"hasOther", visible: false}], null, "checkbox");
         },
         afterRender: function(question, el) {

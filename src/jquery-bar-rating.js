@@ -3,11 +3,12 @@ function init(Survey) {
         name: "barrating",
         title: "Bar rating",
         iconName: "icon-barrating",
-        widgetIsLoaded: function() { return typeof Barrating !== undefined; },
+        widgetIsLoaded: function() { return !!$.fn.barrating; },
         defaultJSON: {choices: [1, 2, 3, 4, 5]},
-        isFit : function(question) { return question.getType() === 'barrating'; },
+        isFit : function(question) { return typeof $ == 'function' && !!$.fn.barrating; },
         isDefaultRender: true,
         activatedByChanged: function(activatedBy) {
+            if(!this.widgetIsLoaded()) return;
             Survey.JsonObject.metaData.addClass("barrating", [ {name: "showValues:boolean", default: false}, 
             {name:"hasOther", visible: false}, {name: "otherText", visible: false}, {name: "optionsCaption", visible: false}, 
             {name: "otherErrorText", visible: false}, {name: "storeOthersAsComment", visible: false}, {name: "renderAs", visible: false}], null, "dropdown");
