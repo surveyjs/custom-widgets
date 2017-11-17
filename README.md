@@ -26,6 +26,10 @@
 es5 examples: https://surveyjs.io/Examples/Library/?id=custom-widget-select2-tagbox  
 es moules examples: https://stackblitz.com/edit/surveyjs-widgets-react 
 
+Install the library using es5.
+```
+<script src="https://unpkg.com/surveyjs-widgets"></script>
+```
 Install the library using npm.
 
 ```
