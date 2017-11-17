@@ -5,7 +5,7 @@ function init(Survey) {
         name: "sortablelist",
         title: "Sortable list",
         iconName: "icon-sortablelist",
-        widgetIsLoaded: function() { return typeof Sortable !== undefined; },
+        widgetIsLoaded: function() { return typeof Sortable != "undefined"; },
         defaultJSON: {choices: ["Item 1", "Item 2", "Item 3"]},
         areaStyle: "border: 1px solid #1ab394; width:100%; minHeight:50px",
         itemStyle: "background-color:#1ab394;color:#fff;margin:5px;padding:10px;",

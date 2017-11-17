@@ -2,8 +2,8 @@ function init(Survey) {
     var widget = {
         className: "iradio_square-blue",
         name: "icheck",
+        widgetIsLoaded: function() { return typeof $ == 'function' && !!$.fn.iCheck; },
         isFit : function(question) {  
-            if(typeof iCheck == undefined && typeof _iCheck == undefined) return false;
             var t = question.getType(); return t === 'radiogroup' || t === 'checkbox' || t === 'matrix'; 
         },
         isDefaultRender: true,

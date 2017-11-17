@@ -5,7 +5,7 @@ function init(Survey) {
         name: "nouislider",
         title: "noUiSlider",
         iconName: "icon-nouislider",
-        widgetIsLoaded: function() { return typeof noUiSlider !== undefined; },
+        widgetIsLoaded: function() { return typeof noUiSlider != "undefined"; },
         isFit : function(question) { return question.getType() === 'nouislider'; },
         htmlTemplate: "<div></div>",
         activatedByChanged: function(activatedBy) {

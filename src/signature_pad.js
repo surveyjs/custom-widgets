@@ -5,7 +5,7 @@ function init(Survey) {
         name: "signaturepad",
         title: "Signature pad",
         iconName: "icon-signaturepad",
-        widgetIsLoaded: function() { return typeof SignaturePad !== undefined; },
+        widgetIsLoaded: function() { return typeof SignaturePad != "undefined"; },
         penColor: "1ab394",
         isFit : function(question) { return question.getType() === 'signaturepad'; },
         htmlTemplate: "<div></div>",

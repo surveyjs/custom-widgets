@@ -3,9 +3,9 @@ function init(Survey) {
         name: "barrating",
         title: "Bar rating",
         iconName: "icon-barrating",
-        widgetIsLoaded: function() { return typeof Barrating !== undefined; },
+        widgetIsLoaded: function() { return !!$.fn.barrating; },
         defaultJSON: {choices: [1, 2, 3, 4, 5]},
-        isFit : function(question) { return question.getType() === 'barrating'; },
+        isFit : function(question) { return typeof $ == 'function' && !!$.fn.barrating; },
         isDefaultRender: true,
         activatedByChanged: function(activatedBy) {
             Survey.JsonObject.metaData.addClass("barrating", [ {name: "showValues:boolean", default: false}, 

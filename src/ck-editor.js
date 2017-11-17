@@ -3,7 +3,7 @@ function init(Survey) {
         name: "editor",
         title: "Editor",
         iconName: "icon-editor",
-        widgetIsLoaded: function() { return typeof CKEDITOR !== undefined; },
+        widgetIsLoaded: function() { return typeof CKEDITOR != "undefined"; },
         isFit : function(question) { 
             return question.getType() === 'editor'; 
         },

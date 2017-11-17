@@ -9,8 +9,8 @@ function init(Survey) {
         numericDigitsOptional: false,
         numericPrefix: '$',
         numericPlaceholder: '0',
+        widgetIsLoaded: function() { return typeof Inputmask != "undefined"; },
         isFit : function(question) { 
-            if(typeof Inputmask == undefined) return false;
             if(question.getType() == "multipletext") return true;
             return question.getType() == "text" && (question.inputMask != "none" || question.inputFormat);
         },
