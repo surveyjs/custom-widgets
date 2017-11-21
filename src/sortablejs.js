@@ -49,7 +49,7 @@ function init(Survey) {
                     var srcEl = inResutls ? resultEl : sourceEl;
                     var newEl = document.createElement("div");
                     newEl.innerHTML = "<div style='" + rootWidget.itemStyle +  "'>" + choice.text + "</div>";
-                    newEl["data-value"] = choice.value;
+                    newEl.dataset["value"] = choice.value;
                     srcEl.appendChild(newEl);
                 });
                 emptyEl.style.display = wasInResults ?  "none" : "";
