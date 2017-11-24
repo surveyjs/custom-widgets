@@ -1,117 +1,117 @@
-import Inputmask from 'inputmask'
+import Inputmask from "inputmask";
 
 function init(Survey) {
   var widget = {
-    name: 'maskedit',
-    numericGroupSeparator: ',',
+    name: "maskedit",
+    numericGroupSeparator: ",",
     numericAutoGroup: true,
     numericDigits: 2,
     numericDigitsOptional: false,
-    numericPrefix: '$',
-    numericPlaceholder: '0',
+    numericPrefix: "$",
+    numericPlaceholder: "0",
     widgetIsLoaded: function() {
-      return typeof Inputmask != 'undefined'
+      return typeof Inputmask != "undefined";
     },
     isFit: function(question) {
-      if (question.getType() == 'multipletext') return true
+      if (question.getType() == "multipletext") return true;
       return (
-        question.getType() == 'text' &&
-        (question.inputMask != 'none' || question.inputFormat)
-      )
+        question.getType() == "text" &&
+        (question.inputMask != "none" || question.inputFormat)
+      );
     },
     isDefaultRender: true,
     activatedByChanged: function(activatedBy) {
-      if (Survey.JsonObject.metaData.findProperty('text', 'inputMask')) return
+      if (Survey.JsonObject.metaData.findProperty("text", "inputMask")) return;
       var properties = [
-        'inputFormat',
+        "inputFormat",
         {
-          name: 'inputMask',
-          default: 'none',
+          name: "inputMask",
+          default: "none",
           choices: [
-            'none',
-            'datetime',
-            'currency',
-            'decimal',
-            'email',
-            'phone',
-            'ip',
-          ],
-        },
-      ]
-      Survey.JsonObject.metaData.addProperties('text', properties)
+            "none",
+            "datetime",
+            "currency",
+            "decimal",
+            "email",
+            "phone",
+            "ip"
+          ]
+        }
+      ];
+      Survey.JsonObject.metaData.addProperties("text", properties);
       Survey.JsonObject.metaData.addProperties(
-        'matrixdropdowncolumn',
+        "matrixdropdowncolumn",
         properties
-      )
-      Survey.JsonObject.metaData.addProperties('multipletextitem', properties)
+      );
+      Survey.JsonObject.metaData.addProperties("multipletextitem", properties);
     },
     applyInputMask: function(surveyElement, el) {
-      var rootWidget = this
+      var rootWidget = this;
       var mask =
-        surveyElement.inputMask != 'none'
+        surveyElement.inputMask != "none"
           ? surveyElement.inputMask
-          : surveyElement.inputFormat
-      var options = {}
-      if (surveyElement.inputMask != 'none')
-        options.inputFormat = surveyElement.inputFormat
+          : surveyElement.inputFormat;
+      var options = {};
+      if (surveyElement.inputMask != "none")
+        options.inputFormat = surveyElement.inputFormat;
 
       if (
-        surveyElement.inputMask == 'currency' ||
-        surveyElement.inputMask == 'decimal'
+        surveyElement.inputMask == "currency" ||
+        surveyElement.inputMask == "decimal"
       ) {
-        options.groupSeparator = rootWidget.numericGroupSeparator
-        options.autoGroup = rootWidget.numericAutoGroup
+        options.groupSeparator = rootWidget.numericGroupSeparator;
+        options.autoGroup = rootWidget.numericAutoGroup;
       }
-      if (surveyElement.inputMask == 'currency') {
-        options.digits = rootWidget.numericDigits
-        options.digitsOptional = rootWidget.numericDigitsOptional
-        options.prefix = rootWidget.numericPrefix
-        options.placeholder = rootWidget.numericPlaceholder
+      if (surveyElement.inputMask == "currency") {
+        options.digits = rootWidget.numericDigits;
+        options.digitsOptional = rootWidget.numericDigitsOptional;
+        options.prefix = rootWidget.numericPrefix;
+        options.placeholder = rootWidget.numericPlaceholder;
       }
-      if (surveyElement.inputMask == 'datetime') {
-        mask = surveyElement.inputFormat
+      if (surveyElement.inputMask == "datetime") {
+        mask = surveyElement.inputFormat;
       }
 
-      Inputmask(mask, options).mask(el)
+      Inputmask(mask, options).mask(el);
 
       el.oninput = function() {
-        surveyElement.customWidgetData.isNeedRender = true
-      }
+        surveyElement.customWidgetData.isNeedRender = true;
+      };
 
       var updateHandler = function() {
         el.value =
-          typeof surveyElement.value === 'undefined' ? '' : surveyElement.value
-      }
-      surveyElement.valueChangedCallback = updateHandler
-      updateHandler()
+          typeof surveyElement.value === "undefined" ? "" : surveyElement.value;
+      };
+      surveyElement.valueChangedCallback = updateHandler;
+      updateHandler();
     },
     afterRender: function(question, el) {
-      if (question.getType() != 'multipletext') {
-        var input = el.querySelector('input') || el
-        this.applyInputMask(question, input)
+      if (question.getType() != "multipletext") {
+        var input = el.querySelector("input") || el;
+        this.applyInputMask(question, input);
       } else {
         for (var i = 0; i < question.items.length; i++) {
-          var item = question.items[i]
-          if (item.inputMask != 'none' || item.inputFormat) {
-            var input = el.querySelector('#' + item.id)
+          var item = question.items[i];
+          if (item.inputMask != "none" || item.inputFormat) {
+            var input = el.querySelector("#" + item.id);
             if (input) {
-              this.applyInputMask(item, input)
+              this.applyInputMask(item, input);
             }
           }
         }
       }
     },
     willUnmount: function(question, el) {
-      var input = el.querySelector('input') || el
-      input.inputmask.remove()
-    },
-  }
+      var input = el.querySelector("input") || el;
+      input.inputmask.remove();
+    }
+  };
 
-  Survey.CustomWidgetCollection.Instance.addCustomWidget(widget)
+  Survey.CustomWidgetCollection.Instance.addCustomWidget(widget);
 }
 
-if (typeof Survey !== 'undefined') {
-  init(Survey)
+if (typeof Survey !== "undefined") {
+  init(Survey);
 }
 
-export default init
+export default init;
