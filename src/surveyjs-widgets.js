@@ -9,3 +9,4 @@ export { default as select2tagbox } from "./select2-tagbox.js";
 export { default as signaturepad } from "./signature_pad.js";
 export { default as sortablejs } from "./sortablejs.js";
 export { default as ckeditor } from "./ck-editor.js";
+export { default as autocomplete } from "./easy-autocomplete.js";
