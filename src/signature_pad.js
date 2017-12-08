@@ -1,5 +1,30 @@
 import * as SignaturePad from "signature_pad";
 
+function resizeCanvas(canvas) {
+  var context = canvas.getContext("2d");
+  var devicePixelRatio = window.devicePixelRatio || 1;
+  var backingStoreRatio =
+    context.webkitBackingStorePixelRatio ||
+    context.mozBackingStorePixelRatio ||
+    context.msBackingStorePixelRatio ||
+    context.oBackingStorePixelRatio ||
+    context.backingStorePixelRatio ||
+    1;
+
+  var ratio = devicePixelRatio / backingStoreRatio;
+
+  var oldWidth = canvas.width;
+  var oldHeight = canvas.height;
+
+  canvas.width = oldWidth * ratio;
+  canvas.height = oldHeight * ratio;
+
+  canvas.style.width = oldWidth + "px";
+  canvas.style.height = oldHeight + "px";
+
+  context.scale(ratio, ratio);
+}
+
 function init(Survey) {
   var widget = {
     name: "signaturepad",
@@ -25,8 +50,6 @@ function init(Survey) {
     afterRender: function(question, el) {
       var rootWidget = this;
       var canvas = el.children[0].children[0];
-      canvas.width = question.width;
-      canvas.height = question.height;
       var signaturePad = new SignaturePad(canvas);
       if (question.isReadOnly) {
         signaturePad.off();
@@ -37,7 +60,10 @@ function init(Survey) {
         question.value = data;
       };
       var updateValueHandler = function() {
-        //signaturePad.clear();
+        signaturePad.clear();
+        canvas.width = question.width;
+        canvas.height = question.height;
+        resizeCanvas(canvas);
         signaturePad.fromDataURL(question.value);
       };
       question.valueChangedCallback = updateValueHandler;
