@@ -12,7 +12,10 @@ function init(Survey) {
     },
     isDefaultRender: true,
     activatedByChanged: function(activatedBy) {
-      if (Survey.JsonObject.metaData.findProperty("text", "choices") !== null) {
+      if (
+        Survey.JsonObject.metaData.findProperty("text", "choices") !== null ||
+        Survey.JsonObject.metaData.findProperty("text", "choicesByUrl") !== null
+      ) {
         return;
       }
       Survey.JsonObject.metaData.addProperty("text", {
@@ -24,6 +27,19 @@ function init(Survey) {
           obj.choices = value;
         }
       });
+      Survey.JsonObject.metaData.addProperty("text", {
+        name: "choicesByUrl:restfull",
+        className: "ChoicesRestfull",
+        onGetValue: function(obj) {
+          return obj.choicesByUrl.getData();
+        },
+        onSetValue: function(obj, value) {
+          if (!obj.choicesByUrl) {
+            obj.choicesByUrl = new Survey.ChoicesRestfull();
+          }
+          obj.choicesByUrl.setData(value);
+        }
+      });
     },
     afterRender: function(question, el) {
       var $el = $(el).is("input") ? $(el) : $(el).find("input");
@@ -31,6 +47,15 @@ function init(Survey) {
         data: question.choices,
         placeholder: question.placeholder
       };
+      if (!!question.choicesByUrl) {
+        options.url = function(phrase) {
+          return question.choicesByUrl.url;
+        };
+        options.getValue = question.choicesByUrl.valueName;
+        // options.ajaxSettings = {
+        //   dataType: "jsonp"
+        // };
+      }
       $el.easyAutocomplete(options);
     },
     willUnmount: function(question, el) {
