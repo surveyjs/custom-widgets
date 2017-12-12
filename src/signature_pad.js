@@ -70,11 +70,11 @@ function init(Survey) {
       updateValueHandler();
       question.signaturePad = signaturePad;
       if (question.allowClear) {
-        el.children[1].children[0].onclick = function() {
+        el.getElementsByTagName("button")[0].onclick = function() {
           signaturePad.clear();
         };
       } else {
-        el.children[1].children[0].remove();
+        el.getElementsByTagName("button")[0].remove();
       }
     },
     willUnmount: function(question, el) {
