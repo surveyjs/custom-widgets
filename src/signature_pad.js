@@ -49,7 +49,7 @@ function init(Survey) {
     },
     afterRender: function(question, el) {
       var rootWidget = this;
-      var canvas = el.children[0].children[0];
+      var canvas = el.getElementsByTagName("canvas")[0];
       var signaturePad = new SignaturePad(canvas);
       if (question.isReadOnly) {
         signaturePad.off();
