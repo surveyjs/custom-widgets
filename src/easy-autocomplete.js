@@ -21,7 +21,7 @@ function init(Survey) {
       Survey.JsonObject.metaData.addProperty("text", {
         name: "choices:itemvalues",
         onGetValue: function(obj) {
-          return ItemValue.getData(obj.choices);
+          return Survey.ItemValue.getData(obj.choices || []);
         },
         onSetValue: function(obj, value) {
           obj.choices = value;
@@ -31,7 +31,7 @@ function init(Survey) {
         name: "choicesByUrl:restfull",
         className: "ChoicesRestfull",
         onGetValue: function(obj) {
-          return obj.choicesByUrl.getData();
+          return obj && obj.choicesByUrl && obj.choicesByUrl.getData();
         },
         onSetValue: function(obj, value) {
           if (!obj.choicesByUrl) {
