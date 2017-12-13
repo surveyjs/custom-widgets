@@ -1,12 +1,9 @@
 function init(Survey) {
   var widget = {
     name: "autocomplete",
-    title: "Autocomplete",
-    iconName: "icon-autocomplete",
     widgetIsLoaded: function() {
       return typeof $ === "function" && !!$.fn.easyAutocomplete;
     },
-    defaultJSON: {},
     isFit: function(question) {
       return question.getType() === "text";
     },
@@ -64,7 +61,7 @@ function init(Survey) {
     }
   };
 
-  Survey.CustomWidgetCollection.Instance.addCustomWidget(widget, "customtype");
+  Survey.CustomWidgetCollection.Instance.addCustomWidget(widget, "type");
 }
 
 if (typeof Survey !== "undefined") {
