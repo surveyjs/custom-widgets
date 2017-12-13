@@ -22,6 +22,8 @@
   
   - ckeditor: [site](https://ckeditor.com/ckeditor-4/), [repo](https://github.com/ckeditor/ckeditor-dev), license: https://github.com/ckeditor/ckeditor-dev/blob/major/LICENSE.md
   
+  - easyautocomplete: [site](http://easyautocomplete.com/), [repo](https://github.com/pawelczak/EasyAutocomplete), license: https://github.com/pawelczak/EasyAutocomplete/blob/master/LICENSE.txt
+  
   ## Getting started
 es5 examples: https://surveyjs.io/Examples/Library/?id=custom-widget-select2-tagbox  
 es moules examples: https://stackblitz.com/edit/surveyjs-widgets-react 
