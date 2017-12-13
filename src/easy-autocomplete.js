@@ -44,7 +44,9 @@ function init(Survey) {
     afterRender: function(question, el) {
       var $el = $(el).is("input") ? $(el) : $(el).find("input");
       var options = {
-        data: question.choices,
+        data: (question.choices || []).map(function(item) {
+          return item.getData();
+        }),
         placeholder: question.placeholder
       };
       if (!!question.choicesByUrl) {
