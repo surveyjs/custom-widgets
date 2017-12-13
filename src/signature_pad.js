@@ -69,7 +69,7 @@ function init(Survey) {
       question.valueChangedCallback = updateValueHandler;
       updateValueHandler();
       question.signaturePad = signaturePad;
-      if (question.allowClear) {
+      if (question.allowClear && !question.isReadOnly) {
         el.getElementsByTagName("button")[0].onclick = function() {
           signaturePad.clear();
         };
