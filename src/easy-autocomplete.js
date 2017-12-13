@@ -47,6 +47,15 @@ function init(Survey) {
         data: (question.choices || []).map(function(item) {
           return item.getData();
         }),
+        adjustWidth: false,
+        list: {
+          sort: {
+            enabled: true
+          },
+          match: {
+            enabled: true
+          }
+        },
         placeholder: question.placeholder
       };
       if (!!question.choicesByUrl) {
