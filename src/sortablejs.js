@@ -9,7 +9,7 @@ function init(Survey) {
       return typeof Sortable != "undefined";
     },
     defaultJSON: { choices: ["Item 1", "Item 2", "Item 3"] },
-    areaStyle: "border: 1px solid #1ab394; width:100%; minHeight:50px",
+    areaStyle: "border: 1px solid #1ab394; width:100%; min-height:50px",
     itemStyle: "background-color:#1ab394;color:#fff;margin:5px;padding:10px;",
     isFit: function(question) {
       return question.getType() === "sortablelist";
@@ -74,21 +74,18 @@ function init(Survey) {
         });
         emptyEl.style.display = wasInResults ? "none" : "";
       };
-      Sortable.create($(resultEl)[0], {
+      question.resultEl = Sortable.create($(resultEl)[0], {
         animation: 150,
-        group: {
-          name: "top3",
-          pull: true,
-          put: true
-        },
+        group: question.name,
         onSort: function(evt) {
           var result = [];
-          if (evt.to.children.length === 1) {
+          if (resultEl.children.length === 1) {
             emptyEl.style.display = "";
           } else {
             emptyEl.style.display = "none";
-            for (var i = 1; i < evt.to.children.length; i++) {
-              result.push(evt.to.children[i].dataset.value);
+            for (var i = 0; i < resultEl.children.length; i++) {
+              if(typeof resultEl.children[i].dataset.value === 'undefined') continue;
+              result.push(resultEl.children[i].dataset.value);
             }
           }
           isUpdatingQuestionValue = true;
@@ -96,18 +93,17 @@ function init(Survey) {
           isUpdatingQuestionValue = false;
         }
       });
-      Sortable.create($(sourceEl)[0], {
+      question.sourceEl = Sortable.create($(sourceEl)[0], {
         animation: 150,
-        group: {
-          name: "top3",
-          pull: true,
-          put: true
-        }
+        group: question.name
       });
       question.valueChangedCallback = updateValueHandler;
       updateValueHandler();
     },
-    willUnmount: function(question, el) {}
+    willUnmount: function(question, el) {
+      question.resultEl.destroy();
+      question.sourceEl.destroy();
+    }
   };
 
   Survey.CustomWidgetCollection.Instance.addCustomWidget(widget, "customtype");
