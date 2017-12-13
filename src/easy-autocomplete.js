@@ -21,6 +21,9 @@ function init(Survey) {
           return Survey.ItemValue.getData(obj.choices || []);
         },
         onSetValue: function(obj, value) {
+          if (!obj.choices) {
+            obj.choices = obj.createItemValues("choices");
+          }
           obj.choices = value;
         }
       });
