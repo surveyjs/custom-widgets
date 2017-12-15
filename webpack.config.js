@@ -33,7 +33,8 @@ var widgets = [
   "nouislider",
   "ck-editor",
   "easy-autocomplete",
-  "pretty-checkbox"
+  "pretty-checkbox",
+  "bootstrap-slider"
 ];
 
 var dependencies = {
@@ -47,7 +48,8 @@ var dependencies = {
   inputmask: "^3.3.10",
   "jquery-bar-rating": "^1.2.2",
   "easy-autocomplete": "^1.3.5",
-  "pretty-checkbox": "^3.0.3"
+  "pretty-checkbox": "^3.0.3",
+  "bootstrap-slider": "^10.0.0"
 };
 
 var entry = {};
