@@ -37,15 +37,21 @@ function init(Survey) {
       inputEl.setAttribute("data-slider-min", question.rangeMin);
       inputEl.setAttribute("data-slider-max", question.rangeMax);
       inputEl.setAttribute("data-slider-step", question.step);
-      inputEl.setAttribute("data-slider-value", question.value);
+      inputEl.setAttribute("data-slider-value", question.value || question.rangeMin);
       el.appendChild(inputEl);
-      var slider = new Slider(inputEl, {});
+      var slider = new Slider(inputEl, {
+        id: question.name + "_" + question.id,
+        min: question.rangeMin,
+        max: question.rangeMax,
+        step: question.step,
+        value: question.value || question.rangeMin
+      });
 
       slider.on("change", function(valueObj) {
         question.value = slider.getValue();
       });
       var updateValueHandler = function() {
-        slider.setValue(question.value);
+        slider.setValue(question.value || question.rangeMin);
       };
       question.bootstrapSlider = slider;
       question.valueChangedCallback = updateValueHandler;
