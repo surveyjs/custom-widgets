@@ -9,7 +9,7 @@ env:
 dist: trusty
 sudo: required
 addons:
-  firefox: stable
+  firefox: latest
   chrome: stable
 
 before_script:
