@@ -4,16 +4,18 @@ function init(Survey) {
       radiogroup: {
         rootClass: "pretty p-default p-round",
         inputType: "radio",
+        addOn: "",
         titleClass: "state p-success"
       },
       checkbox: {
         rootClass: "pretty p-default",
         inputType: "checkbox",
+        addOn: "",
         titleClass: "state p-success"
       }
     },
     name: "pretty-checkbox",
-    widgetIsLoaded: function () {
+    widgetIsLoaded: function() {
       for (var i = 0; i < document.styleSheets.length; i++) {
         var href = document.styleSheets[i].ownerNode["href"];
         if (!!href && href.indexOf("pretty-checkbox") != -1) {
@@ -23,16 +25,16 @@ function init(Survey) {
       return false;
     },
     htmlTemplate: "<fieldset></fieldset>",
-    isFit: function (question) {
+    isFit: function(question) {
       var type = question.getType();
       return type === "radiogroup" || type === "checkbox"; // || type === "matrix";
     },
     isDefaultRender: false,
-    afterRender: function (question, el) {
+    afterRender: function(question, el) {
       var itemInputs = {};
       var options = this.settings[question.getType()];
       var inChangeHandler = false;
-      var changeHandler = function (event) {
+      var changeHandler = function(event) {
         inChangeHandler = true;
         try {
           var value = arguments[0].target.value;
@@ -55,9 +57,15 @@ function init(Survey) {
           inChangeHandler = false;
         }
       };
-      question.choices.forEach(function (choiceItem, index) {
+      var itemWidth =
+        question.colCount > 0 ? 100 / question.colCount + "%" : "";
+      question.choices.forEach(function(choiceItem, index) {
         var itemRoot = document.createElement("div");
-        itemRoot.className = options.rootClass;
+        itemRoot.className = "sv_cw_pretty_checkbox_" + question.getType();
+        itemRoot.style.display = "inline-block";
+        itemRoot.style.width = itemWidth;
+        var controlRoot = document.createElement("div");
+        controlRoot.className = options.rootClass;
         var input = document.createElement("input");
         input.type = options.inputType;
         input.name =
@@ -69,19 +77,23 @@ function init(Survey) {
         var label = document.createElement("label");
         label.textContent = choiceItem.text;
         titleRoot.appendChild(label);
-        itemRoot.appendChild(input);
-        itemRoot.appendChild(titleRoot);
+        controlRoot.appendChild(input);
+        controlRoot.appendChild(titleRoot);
+        if (!!options.addOn) {
+          titleRoot.insertAdjacentHTML("afterbegin", options.addOn);
+        }
+        itemRoot.appendChild(controlRoot);
         el.appendChild(itemRoot);
 
         itemInputs[choiceItem.value] = input;
       });
-      var updateValueHandler = function (newValue) {
+      var updateValueHandler = function(newValue) {
         if (!inChangeHandler) {
           var checkedItems = newValue || [];
           if (question.getType() === "radiogroup") {
             checkedItems = [newValue];
           }
-          Object.values(itemInputs).forEach(function (inputItem) {
+          Object.values(itemInputs).forEach(function(inputItem) {
             if (checkedItems.indexOf(inputItem.value) !== -1) {
               inputItem.setAttribute("checked", undefined);
             } else {
@@ -93,7 +105,7 @@ function init(Survey) {
       question.valueChangedCallback = updateValueHandler;
       updateValueHandler(question.value);
     },
-    willUnmount: function (question, el) {
+    willUnmount: function(question, el) {
       question.valueChangedCallback = undefined;
     }
   };
