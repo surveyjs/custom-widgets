@@ -15,6 +15,7 @@ function init(Survey) {
       }
     },
     name: "pretty-checkbox",
+    activatedBy: "property",
     widgetIsLoaded: function() {
       for (var i = 0; i < document.styleSheets.length; i++) {
         var href = document.styleSheets[i].ownerNode["href"];
@@ -26,8 +27,31 @@ function init(Survey) {
     },
     htmlTemplate: "<fieldset></fieldset>",
     isFit: function(question) {
-      var type = question.getType();
-      return type === "radiogroup" || type === "checkbox"; // || type === "matrix";
+      var isFitByType =
+        question.getType() === "radiogroup" ||
+        question.getType() === "checkbox";
+      if (widget.activatedBy === "property")
+        return question["renderAs"] === "prettycheckbox" && isFitByType;
+      if (widget.activatedBy === "type") return isFitByType;
+      return false;
+    },
+    activatedByChanged: function(activatedBy) {
+      if (!this.widgetIsLoaded()) return;
+      widget.activatedBy = activatedBy;
+      Survey.JsonObject.metaData.removeProperty("radiogroup", "renderAs");
+      Survey.JsonObject.metaData.removeProperty("checkbox", "renderAs");
+      if (activatedBy === "property") {
+        Survey.JsonObject.metaData.addProperty("radiogroup", {
+          name: "renderAs",
+          default: "standard",
+          choices: ["standard", "prettycheckbox"]
+        });
+        Survey.JsonObject.metaData.addProperty("checkbox", {
+          name: "renderAs",
+          default: "standard",
+          choices: ["standard", "prettycheckbox"]
+        });
+      }
     },
     isDefaultRender: false,
     afterRender: function(question, el) {
