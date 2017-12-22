@@ -134,7 +134,7 @@ function init(Survey) {
     }
   };
 
-  Survey.CustomWidgetCollection.Instance.addCustomWidget(widget, "type");
+  Survey.CustomWidgetCollection.Instance.addCustomWidget(widget, "property");
 }
 
 if (typeof Survey !== "undefined") {
