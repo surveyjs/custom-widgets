@@ -60,7 +60,6 @@ function init(Survey) {
         question.value = data;
       };
       var updateValueHandler = function() {
-        signaturePad.clear();
         canvas.width = question.width;
         canvas.height = question.height;
         resizeCanvas(canvas);
@@ -71,7 +70,7 @@ function init(Survey) {
       question.signaturePad = signaturePad;
       if (question.allowClear && !question.isReadOnly) {
         el.getElementsByTagName("button")[0].onclick = function() {
-          signaturePad.clear();
+          question.value = undefined;
         };
       } else {
         el.getElementsByTagName("button")[0].remove();
