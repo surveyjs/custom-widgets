@@ -68,12 +68,13 @@ function init(Survey) {
       question.valueChangedCallback = updateValueHandler;
       updateValueHandler();
       question.signaturePad = signaturePad;
+      var buttonEl = el.getElementsByTagName("button")[0];
       if (question.allowClear && !question.isReadOnly) {
-        el.getElementsByTagName("button")[0].onclick = function() {
+        buttonEl.onclick = function() {
           question.value = undefined;
         };
       } else {
-        el.getElementsByTagName("button")[0].remove();
+        buttonEl.parentNode.removeChild(buttonEl);
       }
     },
     willUnmount: function(question, el) {
