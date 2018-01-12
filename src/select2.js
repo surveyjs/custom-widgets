@@ -36,6 +36,11 @@ function init(Survey) {
       if (activatedBy == "customtype") {
         Survey.JsonObject.metaData.addClass("select2", [], null, "dropdown");
       }
+      Survey.JsonObject.metaData.addProperty("matrixdropdowncolumn", {
+        name: "renderAs",
+        default: "standard",
+        choices: ["standard", "select2"]
+      });
     },
     afterRender: function(question, el) {
       var $el = $(el).is("select") ? $(el) : $(el).find("select");

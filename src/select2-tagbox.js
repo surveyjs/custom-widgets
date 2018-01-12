@@ -11,15 +11,24 @@ function init(Survey) {
     defaultJSON: { choices: ["Item 1", "Item 2", "Item 3"] },
     htmlTemplate: "<select multiple='multiple' style='width: 100%;'></select>",
     isFit: function(question) {
-      return question.getType() === "tagbox";
+      return (
+        question["renderAs"] === "select2tagbox" &&
+        question.getType() === "checkbox"
+      );
+      return false;
     },
     activatedByChanged: function(activatedBy) {
-      Survey.JsonObject.metaData.addClass(
-        "tagbox",
-        [{ name: "hasOther", visible: false }],
-        null,
-        "checkbox"
-      );
+      if (!this.widgetIsLoaded()) return;
+      Survey.JsonObject.metaData.addProperty("matrixdropdowncolumn", {
+        name: "renderAs",
+        default: "standard",
+        choices: ["standard", "select2tagbox"]
+      });
+      Survey.JsonObject.metaData.addProperty("checkbox", {
+        name: "renderAs",
+        default: "standard",
+        choices: ["standard", "select2tagbox"]
+      });
     },
     afterRender: function(question, el) {
       var $el = $(el).is("select") ? $(el) : $(el).find("select");
@@ -61,7 +70,7 @@ function init(Survey) {
     }
   };
 
-  Survey.CustomWidgetCollection.Instance.addCustomWidget(widget, "customtype");
+  Survey.CustomWidgetCollection.Instance.addCustomWidget(widget);
 }
 
 if (typeof Survey !== "undefined") {
