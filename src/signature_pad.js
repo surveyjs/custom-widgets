@@ -1,4 +1,4 @@
-import * as SignaturePad from "signature_pad";
+import SignaturePad from "signature_pad";
 
 function resizeCanvas(canvas) {
   var context = canvas.getContext("2d");
