@@ -1,10 +1,11 @@
-function init(Survey) {
+function init(Survey, $) {
+  $ = $ || window.$;
   var widget = {
     name: "barrating",
     title: "Bar rating",
     iconName: "icon-barrating",
     widgetIsLoaded: function() {
-      return typeof $ === "function" && !!$.fn.barrating;
+      return !!$.fn.barrating;
     },
     defaultJSON: { choices: [1, 2, 3, 4, 5] },
     isFit: function(question) {
@@ -70,7 +71,7 @@ function init(Survey) {
 }
 
 if (typeof Survey !== "undefined") {
-  init(Survey);
+  init(Survey, window.$);
 }
 
 export default init;

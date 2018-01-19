@@ -1,10 +1,11 @@
-function init(Survey) {
+function init(Survey, $) {
+  $ = $ || window.$;
   var widget = {
     name: "datepicker",
     title: "Date picker",
     iconName: "icon-datepicker",
     widgetIsLoaded: function() {
-      return typeof $ == "function" && !!$.fn.datepicker;
+      return !!$.fn.datepicker;
     },
     isFit: function(question) {
       return question.getType() === "datepicker";
@@ -15,18 +16,6 @@ function init(Survey) {
       Survey.JsonObject.metaData.addClass(
         "datepicker",
         [
-          {
-            name: "dateFormat",
-            default: "mm/dd/yy",
-            choices: [
-              "mm/dd/yy",
-              "yy-mm-dd",
-              "d M, y",
-              "d MM, y",
-              "DD, d MM, yy",
-              "'day' d 'of' MM 'in the year' yy"
-            ]
-          },
           { name: "inputType", visible: false },
           { name: "inputFormat", visible: false },
           { name: "inputMask", visible: false }
@@ -34,6 +23,18 @@ function init(Survey) {
         null,
         "text"
       );
+      Survey.JsonObject.metaData.addProperty("datepicker", {
+        name: "dateFormat",
+        default: "mm/dd/yy",
+        choices: [
+          "mm/dd/yy",
+          "yy-mm-dd",
+          "d M, y",
+          "d MM, y",
+          "DD, d MM, yy",
+          "'day' d 'of' MM 'in the year' yy"
+        ]
+      });
     },
     afterRender: function(question, el) {
       var $el = $(el).is(".widget-datepicker")
@@ -70,7 +71,7 @@ function init(Survey) {
 }
 
 if (typeof Survey !== "undefined") {
-  init(Survey);
+  init(Survey, window.$);
 }
 
 export default init;

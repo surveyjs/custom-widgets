@@ -1,9 +1,10 @@
-function init(Survey) {
+function init(Survey, $) {
+  $ = $ || window.$;
   var widget = {
     className: "iradio_square-blue",
     name: "icheck",
     widgetIsLoaded: function() {
-      return typeof $ == "function" && !!$.fn.iCheck;
+      return !!$.fn.iCheck;
     },
     isFit: function(question) {
       var t = question.getType();
@@ -58,7 +59,7 @@ function init(Survey) {
 }
 
 if (typeof Survey !== "undefined") {
-  init(Survey);
+  init(Survey, window.$);
 }
 
 export default init;

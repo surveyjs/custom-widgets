@@ -1,10 +1,11 @@
-function init(Survey) {
+function init(Survey, $) {
+  $ = $ || window.$;
   var widget = {
     name: "imagepicker",
     title: "Image picker",
     iconName: "icon-imagepicker",
     widgetIsLoaded: function() {
-      return typeof $ == "function" && !!$.fn.imagepicker;
+      return !!$.fn.imagepicker;
     },
     isFit: function(question) {
       return question.getType() === "imagepicker";
@@ -68,7 +69,7 @@ function init(Survey) {
 }
 
 if (typeof Survey !== "undefined") {
-  init(Survey);
+  init(Survey, window.$);
 }
 
 export default init;

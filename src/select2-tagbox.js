@@ -1,6 +1,5 @@
-import $ from "jquery";
-
-function init(Survey) {
+function init(Survey, $) {
+  $ = $ || window.$;
   var widget = {
     name: "tagbox",
     title: "Tag box",
@@ -65,7 +64,7 @@ function init(Survey) {
 }
 
 if (typeof Survey !== "undefined") {
-  init(Survey);
+  init(Survey, window.$);
 }
 
 export default init;

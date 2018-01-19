@@ -1,8 +1,9 @@
-function init(Survey) {
+function init(Survey, $) {
+  $ = $ || window.$;
   var widget = {
     name: "autocomplete",
     widgetIsLoaded: function() {
-      return typeof $ === "function" && !!$.fn.easyAutocomplete;
+      return !!$.fn.easyAutocomplete;
     },
     isFit: function(question) {
       return question.getType() === "text";
@@ -79,7 +80,7 @@ function init(Survey) {
 }
 
 if (typeof Survey !== "undefined") {
-  init(Survey);
+  init(Survey, window.$);
 }
 
 export default init;

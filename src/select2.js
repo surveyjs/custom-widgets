@@ -1,6 +1,5 @@
-import $ from "jquery";
-
-function init(Survey) {
+function init(Survey, $) {
+  $ = $ || window.$;
   var widget = {
     activatedBy: "property",
     name: "select2",
@@ -15,9 +14,7 @@ function init(Survey) {
           question.getType() === "dropdown"
         );
       if (widget.activatedBy == "type")
-        return (
-          typeof Select2 !== undefined && question.getType() === "dropdown"
-        );
+        return typeof question.getType() === "dropdown";
       if (widget.activatedBy == "customtype")
         return question.getType() === "select2";
       return false;
@@ -93,7 +90,7 @@ function init(Survey) {
 }
 
 if (typeof Survey !== "undefined") {
-  init(Survey);
+  init(Survey, window.$);
 }
 
 export default init;

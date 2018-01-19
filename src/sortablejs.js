@@ -74,7 +74,7 @@ function init(Survey) {
         });
         emptyEl.style.display = wasInResults ? "none" : "";
       };
-      question.resultEl = Sortable.create($(resultEl)[0], {
+      question.resultEl = Sortable.create(resultEl, {
         animation: 150,
         group: question.name,
         onSort: function(evt) {
@@ -84,7 +84,8 @@ function init(Survey) {
           } else {
             emptyEl.style.display = "none";
             for (var i = 0; i < resultEl.children.length; i++) {
-              if(typeof resultEl.children[i].dataset.value === 'undefined') continue;
+              if (typeof resultEl.children[i].dataset.value === "undefined")
+                continue;
               result.push(resultEl.children[i].dataset.value);
             }
           }
@@ -93,7 +94,7 @@ function init(Survey) {
           isUpdatingQuestionValue = false;
         }
       });
-      question.sourceEl = Sortable.create($(sourceEl)[0], {
+      question.sourceEl = Sortable.create(sourceEl, {
         animation: 150,
         group: question.name
       });

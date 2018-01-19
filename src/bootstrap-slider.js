@@ -6,7 +6,7 @@ function init(Survey) {
     title: "Bootstrap Slider",
     iconName: "icon-bootstrap-slider",
     widgetIsLoaded: function() {
-      return typeof Slider != "undefined";
+      return typeof Slider !== "undefined";
     },
     isFit: function(question) {
       return question.getType() === "bootstrapslider";
@@ -37,7 +37,10 @@ function init(Survey) {
       inputEl.setAttribute("data-slider-min", question.rangeMin);
       inputEl.setAttribute("data-slider-max", question.rangeMax);
       inputEl.setAttribute("data-slider-step", question.step);
-      inputEl.setAttribute("data-slider-value", question.value || question.rangeMin);
+      inputEl.setAttribute(
+        "data-slider-value",
+        question.value || question.rangeMin
+      );
       el.appendChild(inputEl);
       var slider = new Slider(inputEl, {
         id: question.name + "_" + question.id,
