@@ -141,6 +141,12 @@ module.exports = function(options) {
         commonjs2: "sortablejs",
         commonjs: "sortablejs",
         amd: "sortablejs"
+      },
+      "bootstrap-slider": {
+        root: "Slider",
+        commonjs2: "bootstrap-slider",
+        commonjs: "bootstrap-slider",
+        amd: "bootstrap-slider"
       }
     },
     plugins: [
