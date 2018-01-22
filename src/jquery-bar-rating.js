@@ -16,7 +16,6 @@ function init(Survey, $) {
       Survey.JsonObject.metaData.addClass(
         "barrating",
         [
-          { name: "showValues:boolean", default: false },
           { name: "hasOther", visible: false },
           { name: "otherText", visible: false },
           { name: "optionsCaption", visible: false },
@@ -27,6 +26,10 @@ function init(Survey, $) {
         null,
         "dropdown"
       );
+      Survey.JsonObject.metaData.addProperty("barrating", {
+        name: "showValues:boolean",
+        default: false
+      });
       Survey.JsonObject.metaData.addProperty("barrating", {
         name: "ratingTheme",
         default: "fontawesome-stars",
