@@ -30,6 +30,7 @@ function init(Survey, $) {
         $el.val(question.value).trigger("change");
       };
       var updateChoices = function() {
+        $el.select2().empty();
         $el.select2({
           data: question.visibleChoices.map(function(choice) {
             return { id: choice.value, text: choice.text };

@@ -59,6 +59,7 @@ function init(Survey, $) {
         question.comment = othersEl.value;
       };
       var updateChoices = function() {
+        $el.select2().empty();
         $el.select2({
           data: question.visibleChoices.map(function(choice) {
             return { id: choice.value, text: choice.text };
