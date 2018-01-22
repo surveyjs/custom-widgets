@@ -2,7 +2,7 @@ var Slider = require("bootstrap-slider");
 
 function init(Survey) {
   var widget = {
-    name: "bootstrap-slider",
+    name: "bootstrapslider",
     title: "Bootstrap Slider",
     iconName: "icon-bootstrap-slider",
     widgetIsLoaded: function() {
