@@ -63,7 +63,9 @@ function init(Survey) {
         canvas.width = question.width;
         canvas.height = question.height;
         resizeCanvas(canvas);
-        signaturePad.fromDataURL(question.value);
+        signaturePad.fromDataURL(
+          question.value || "data:image/gif;base64,R0lGODlhAQABAIAAAP"
+        );
       };
       question.valueChangedCallback = updateValueHandler;
       updateValueHandler();
