@@ -14,23 +14,16 @@ function init(Survey, $) {
     activatedByChanged: function(activatedBy) {
       Survey.JsonObject.metaData.addClass(
         "imageitemvalues",
-        [{ name: "imageLink" }],
+        [],
         null,
         "itemvalue"
       );
+      Survey.JsonObject.metaData.addProperty("imagepicker", {
+        name: "imageLink"
+      });
       Survey.JsonObject.metaData.addClass(
         "imagepicker",
         [
-          {
-            name: "choices:imageitemvalues",
-            onGetValue: function(obj) {
-              return Survey.ItemValue.getData(obj.choices);
-            },
-            onSetValue: function(obj, value) {
-              obj.choices = value;
-            }
-          },
-          { name: "showLabel:boolean", default: false },
           { name: "hasOther", visible: false },
           { name: "otherText", visible: false },
           { name: "optionsCaption", visible: false },
@@ -41,6 +34,19 @@ function init(Survey, $) {
         null,
         "dropdown"
       );
+      Survey.JsonObject.metaData.addProperty("imagepicker", {
+        name: "showLabel:boolean",
+        default: false
+      });
+      Survey.JsonObject.metaData.addProperty("imagepicker", {
+        name: "choices:imageitemvalues",
+        onGetValue: function(obj) {
+          return Survey.ItemValue.getData(obj.choices);
+        },
+        onSetValue: function(obj, value) {
+          obj.choices = value;
+        }
+      });
     },
     afterRender: function(question, el) {
       var $el = $(el).is("select") ? $(el) : $(el).find("select");
