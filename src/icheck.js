@@ -21,8 +21,14 @@ function init(Survey, $) {
         radioClass: rootWidget.className
       });
       var select = function() {
-        if (question.getType() != "matrix") {
-          $el.find("input[value=" + question.value + "]").iCheck("check");
+        if (question.getType() !== "matrix") {
+          var values = question.value;
+          if (!Array.isArray(values)) {
+            values = [values];
+          }
+          values.forEach(function(value) {
+            $el.find("input[value=" + value + "]").iCheck("check");
+          });
         } else {
           question.generatedVisibleRows.forEach(function(row, index, rows) {
             if (row.value) {
@@ -36,14 +42,26 @@ function init(Survey, $) {
         }
       };
       $el.find("input").on("ifChecked", function(event) {
-        if (question.getType() != "matrix") {
-          question.value = event.target.value;
-        } else {
+        if (question.getType() === "matrix") {
           question.generatedVisibleRows.forEach(function(row, index, rows) {
             if (row.fullName === event.target.name) {
               row.value = event.target.value;
             }
           });
+        } else if (question.getType() === "checkbox") {
+          var oldValue = question.value || [];
+          question.value = oldValue.concat([event.target.value]);
+        } else {
+          question.value = event.target.value;
+        }
+      });
+      $el.find("input").on("ifUnchecked", function(event) {
+        if (question.getType() === "checkbox") {
+          var oldValue = question.value || [];
+          var index = oldValue.indexOf(event.target.value);
+          if (index >= 0) {
+            question.value = oldValue.splice(index, 1);
+          }
         }
       });
       question.valueChangedCallback = select;
