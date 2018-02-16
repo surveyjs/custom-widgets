@@ -1,35 +1,35 @@
 var Slider = require("bootstrap-slider");
 
-function init(Survey) {
+function init (Survey) {
   var widget = {
     name: "bootstrapslider",
     title: "Bootstrap Slider",
     iconName: "icon-bootstrap-slider",
-    widgetIsLoaded: function() {
+    widgetIsLoaded: function () {
       return typeof Slider !== "undefined";
     },
-    isFit: function(question) {
+    isFit: function (question) {
       return question.getType() === "bootstrapslider";
     },
     htmlTemplate: "<div></div>",
-    activatedByChanged: function(activatedBy) {
+    activatedByChanged: function (activatedBy) {
       Survey.JsonObject.metaData.addClass("bootstrapslider", [], null, "empty");
       Survey.JsonObject.metaData.addProperties("bootstrapslider", [
         {
           name: "step:number",
-          default: 1
+          default: 1,
         },
         {
           name: "rangeMin:number",
-          default: 0
+          default: 0,
         },
         {
           name: "rangeMax:number",
-          default: 100
-        }
+          default: 100,
+        },
       ]);
     },
-    afterRender: function(question, el) {
+    afterRender: function (question, el) {
       var inputEl = document.createElement("input");
       inputEl.id = question.id;
       inputEl.type = "text";
@@ -47,22 +47,22 @@ function init(Survey) {
         min: question.rangeMin,
         max: question.rangeMax,
         step: question.step,
-        value: question.value || question.rangeMin
+        value: question.value || question.rangeMin,
       });
 
-      slider.on("change", function(valueObj) {
+      slider.on("change", (valueObj) => {
         question.value = slider.getValue();
       });
-      var updateValueHandler = function() {
+      var updateValueHandler = function () {
         slider.setValue(question.value || question.rangeMin);
       };
       question.bootstrapSlider = slider;
       question.valueChangedCallback = updateValueHandler;
     },
-    willUnmount: function(question, el) {
+    willUnmount: function (question, el) {
       question.bootstrapSlider.destroy();
       question.bootstrapSlider = null;
-    }
+    },
   };
 
   Survey.CustomWidgetCollection.Instance.addCustomWidget(widget, "customtype");
