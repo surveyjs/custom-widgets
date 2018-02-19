@@ -17,13 +17,7 @@ function init(Survey) {
     name: "pretty-checkbox",
     activatedBy: "property",
     widgetIsLoaded: function() {
-      for (var i = 0; i < document.styleSheets.length; i++) {
-        var href = document.styleSheets[i].ownerNode["href"];
-        if (!!href && href.indexOf("pretty-checkbox") != -1) {
-          return true;
-        }
-      }
-      return false;
+      return true;
     },
     htmlTemplate: "<fieldset></fieldset>",
     isFit: function(question) {
