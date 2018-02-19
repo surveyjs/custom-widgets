@@ -32,7 +32,7 @@ function init(Survey, $) {
       });
       Survey.JsonObject.metaData.addProperty("barrating", {
         name: "ratingTheme",
-        default: "fontawesome-stars",
+        default: "css-stars",
         choices: [
           "fontawesome-stars",
           "css-stars",
