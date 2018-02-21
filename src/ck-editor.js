@@ -1,36 +1,36 @@
-function init(Survey) {
+function init (Survey) {
   var widget = {
     name: "editor",
     title: "Editor",
     iconName: "icon-editor",
-    widgetIsLoaded: function() {
-      return typeof CKEDITOR != "undefined";
+    widgetIsLoaded: function () {
+      return typeof CKEDITOR !== "undefined";
     },
-    isFit: function(question) {
+    isFit: function (question) {
       return question.getType() === "editor";
     },
     htmlTemplate:
       "<textarea rows='10' cols='80' style: {width:'100%'}></textarea>",
-    activatedByChanged: function(activatedBy) {
+    activatedByChanged: function (activatedBy) {
       Survey.JsonObject.metaData.addClass("editor", [], null, "empty");
       Survey.JsonObject.metaData.addProperty("editor", {
         name: "height",
-        default: 300
+        default: 300,
       });
     },
-    afterRender: function(question, el) {
-      CKEDITOR.editorConfig = function(config) {
+    afterRender: function (question, el) {
+      CKEDITOR.editorConfig = function (config) {
         config.language = "es";
         config.height = question.height;
         config.toolbarCanCollapse = true;
       };
       var editor = CKEDITOR.replace(el);
       var isValueChanging = false;
-      var updateValueHandler = function() {
+      var updateValueHandler = function () {
         if (isValueChanging) return;
         editor.setData(question.value);
       };
-      editor.on("change", function() {
+      editor.on("change", () => {
         isValueChanging = true;
         question.value = editor.getData();
         isValueChanging = false;
@@ -38,7 +38,7 @@ function init(Survey) {
       question.valueChangedCallback = updateValueHandler;
       updateValueHandler();
     },
-    willUnmount: function(question, el) {}
+    willUnmount: function (question, el) {},
   };
 
   Survey.CustomWidgetCollection.Instance.addCustomWidget(widget, "customtype");

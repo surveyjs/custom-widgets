@@ -1,5 +1,5 @@
-function init() {
-  //$.material.init();
+function init () {
+  // $.material.init();
 
   var json = {
     questions: [
@@ -8,7 +8,7 @@ function init() {
         renderAs: "select2",
         choicesByUrl: { url: "https://restcountries.eu/rest/v1/all" },
         name: "countries",
-        title: "Please select the country you have arrived from:"
+        title: "Please select the country you have arrived from:",
       },
       {
         name: "date",
@@ -16,7 +16,7 @@ function init() {
         inputType: "date",
         title: "Your favorite date:",
         dateFormat: "mm/dd/yy",
-        isRequired: true
+        isRequired: true,
       },
       {
         name: "autocomplete1",
@@ -32,22 +32,23 @@ function init() {
           "bars-reversed",
           "bars-horizontal",
           "bootstrap-stars",
-          "fontawesome-stars-o"
-        ]
-      }
-    ]
+          "fontawesome-stars-o",
+        ],
+      },
+    ],
   };
 
   Survey.defaultBootstrapCss.navigationButton = "btn btn-primary";
-  //Survey.Survey.cssType = "bootstrapmaterial";
+  // Survey.Survey.cssType = "bootstrapmaterial";
   Survey.Survey.cssType = "bootstrap";
 
   var model = new Survey.Model(json);
   window.survey = model;
 
-  $("#surveyElement").Survey({
-    model: survey
-  });
+  $("#surveyElement")
+    .Survey({
+      model: survey,
+    });
 }
 
 if (!window["%hammerhead%"]) {
