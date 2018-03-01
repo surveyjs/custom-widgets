@@ -13,7 +13,21 @@ function init(Survey) {
       return question.getType() === "microphone";
     },
     htmlTemplate:
-      "<div><button type='button'  title='Record'><i class='fa fa-microphone' aria-hidden='true'></i></button> <button type='button' title='Save'><i class='fa fa-cloud' aria-hidden='true'></i></button></div>",
+		"<div>"+
+		"<button type='button'  title='Record'><i class='fa fa-microphone' aria-hidden='true'></i></button>"+ 
+		"&nbsp;<button type='button' title='Save'><i class='fa fa-cloud' aria-hidden='true'></i></button>"+
+		"&nbsp;<audio style='"+
+		"position:relative; "+
+		"top:16px; "+
+		"left:10px; "+
+		"height:35px;"+
+		"-moz-box-shadow: 2px 2px 4px 0px #006773;"+
+		"-webkit-box-shadow:  2px 2px 4px 0px #006773;"+
+		"box-shadow: 2px 2px 4px 0px #006773;"+
+		"' "+
+		"controls='true' >"+
+		"</audio>"+
+		"</div>",
     activatedByChanged: function(activatedBy) {
       Survey.JsonObject.metaData.addClass("microphone", [], null, "empty");
     },
@@ -22,6 +36,7 @@ function init(Survey) {
       var rootWidget = this;
 	  var buttonStartEl = el.getElementsByTagName("button")[0];
 	  var buttonStopEl = el.getElementsByTagName("button")[1];
+	  var audioEl = el.getElementsByTagName("audio")[0];
 	 
 //////////  RecordRTC logic	
 	  
@@ -52,24 +67,19 @@ function init(Survey) {
 	  var processAudio= function(audioVideoWebMURL) {
 		console.log("processAudio");
 		var recordedBlob = question.survey.recordRTC.getBlob();
-		console.log("Blob size:" + recordedBlob.size);
-		
-		console.log("question.id : " + question.id);
-		console.log("question.name : " + question.name);
-		
 		
 		var fileReader = new FileReader();
         fileReader.onload = function(event){
 		  var dataUri = event.target.result;
 		  console.log("dataUri: " +dataUri);
-          //question.value = (question.value || []).concat([fileReader.result])
 		  question.value = dataUri;
-        };
-        fileReader.readAsDataURL(recordedBlob);
+		  audioEl.src=dataUri;
 
 		console.log("cleaning");
 		question.survey.recordRTC=undefined;
 		question.survey.mystream=undefined;
+	  };
+        fileReader.readAsDataURL(recordedBlob);
 	  };
 
       var startRecording=function() {
@@ -108,8 +118,6 @@ function init(Survey) {
 				}
 				);
 			}
-			
-		    
 		  }
 	  };
 	
@@ -127,6 +135,9 @@ function init(Survey) {
         buttonStopEl.parentNode.removeChild(buttonStartEl);
       }
 	  
+	  
+      audioEl.src=question.value
+      
       var updateValueHandler = function() {
         
       };
