@@ -23,6 +23,7 @@
     "live-server": "^1.2.0",
     "nouislider": "^10.1.0",
     "pretty-checkbox": "^3.0.3",
+    "recordrtc": "^5.4.6",
     "select2": "^4.0.4",
     "signature_pad": "^2.3.2",
     "sortablejs": "^1.6.1",
