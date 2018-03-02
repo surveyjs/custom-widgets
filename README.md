@@ -28,6 +28,8 @@
   
   - bootstrap-slider: [site](http://seiyria.com/bootstrap-slider/), [repo](https://github.com/seiyria/bootstrap-slider), license: https://github.com/seiyria/bootstrap-slider/blob/master/LICENSE.md
   
+  - recordrtc: [site](http://recordrtc.org/), [repo](https://github.com/muaz-khan/RecordRTC), license [MIT](http://spdx.org/licenses/MIT.html)
+  
   ## Getting started
 es5 examples: https://surveyjs.io/Examples/Library/?id=custom-widget-select2-tagbox  
 es modules examples: https://stackblitz.com/edit/surveyjs-widgets-react 
