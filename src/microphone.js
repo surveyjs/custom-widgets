@@ -74,11 +74,11 @@ function init(Survey) {
 		  console.log("dataUri: " +dataUri);
 		  question.value = dataUri;
 		  audioEl.src=dataUri;
-
-		console.log("cleaning");
-		question.survey.recordRTC=undefined;
-		question.survey.mystream=undefined;
-	  };
+		  
+		  console.log("cleaning");
+		  question.survey.recordRTC=undefined;
+		  question.survey.mystream=undefined;
+        };
         fileReader.readAsDataURL(recordedBlob);
 	  };
 
@@ -132,7 +132,7 @@ function init(Survey) {
 	  if (!question.isReadOnly) {
         buttonStopEl.onclick = stopRecording;
       } else {
-        buttonStopEl.parentNode.removeChild(buttonStartEl);
+        buttonStopEl.parentNode.removeChild(buttonStopEl);
       }
 	  
 	  
