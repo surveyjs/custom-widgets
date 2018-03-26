@@ -78,6 +78,7 @@ To build library yourself:
     After that you should have the libraries (angular, jquery, knockout, react and vue) at 'packages' directory.
 
 4.  **Add your own custom widget**
+
     Please go to [this plunker](https://plnkr.co/edit/HdnYE5?p=preview) and select customwidget.js to review the code and comments
     The [same plunker example](https://plnkr.co/edit/fXsLf1R88WxxDFaFEnYx?p=preview), but for SurveyJS Editor/Builder
 
