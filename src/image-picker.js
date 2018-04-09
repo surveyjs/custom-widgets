@@ -49,21 +49,38 @@ function init(Survey, $) {
       });
     },
     afterRender: function(question, el) {
-      var $el = $(el).is("select") ? $(el) : $(el).find("select");
-      var options = $el.find("option");
       var choices = question.choices;
-
-      for (var i = 1; i < options.length && i - 1 < choices.length; i++) {
-        $(options[i]).data("imgSrc", choices[i - 1].imageLink);
-        options[i].selected = question.value == options[i].value;
-      }
-      $el.imagepicker({
-        hide_select: true,
-        show_label: question.showLabel,
-        selected: function(opts) {
-          question.value = opts.picker.select[0].value;
+      if (question.isReadOnly) {
+        $el = $(el);
+        var $ul = $('<ul class="thumbnails image_picker_selector"></ul>');
+        $el.empty();
+        $el.append($ul);
+        for (var i = 0; i < choices.length; i++) {
+          var selected = question.value === choices[i].value ? "selected" : "";
+          $ul.append(
+            '<li><div class="thumbnail ' +
+              selected +
+              '"><img class="image_picker_image" src="' +
+              choices[i].imageLink +
+              '"></div></li>'
+          );
         }
-      });
+      } else {
+        var $el = $(el).is("select") ? $(el) : $(el).find("select");
+        var options = $el.find("option");
+
+        for (var i = 1; i < options.length && i - 1 < choices.length; i++) {
+          $(options[i]).data("imgSrc", choices[i - 1].imageLink);
+          options[i].selected = question.value == options[i].value;
+        }
+        $el.imagepicker({
+          hide_select: true,
+          show_label: question.showLabel,
+          selected: function(opts) {
+            question.value = opts.picker.select[0].value;
+          }
+        });
+      }
     },
     willUnmount: function(question, el) {
       var $el = $(el).find("select");
