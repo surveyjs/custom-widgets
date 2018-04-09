@@ -46,7 +46,7 @@ function init(Survey) {
 			mimeType: 'audio/webm',
 			audioBitsPerSecond: 44100,
 			sampleRate: 44100, 
-			bufferSize: 32768, 
+			bufferSize: 16384, 
 			numberOfAudioChannels: 1
 		};  
 		console.log("successCallback");
