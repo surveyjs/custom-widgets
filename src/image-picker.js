@@ -84,7 +84,9 @@ function init(Survey, $) {
     },
     willUnmount: function(question, el) {
       var $el = $(el).find("select");
-      $el.data("picker").destroy();
+      if ($el.data("picker")) {
+        $el.data("picker").destroy();
+      }
     }
   };
 
