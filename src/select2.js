@@ -4,10 +4,10 @@ function init(Survey, $) {
     activatedBy: "property",
     name: "select2",
     htmlTemplate: "<select style='width: 100%;'></select>",
-    widgetIsLoaded: function() {
+    widgetIsLoaded: function () {
       return typeof $ == "function" && !!$.fn.select2;
     },
-    isFit: function(question) {
+    isFit: function (question) {
       if (widget.activatedBy == "property")
         return (
           question["renderAs"] === "select2" &&
@@ -19,7 +19,7 @@ function init(Survey, $) {
         return question.getType() === "select2";
       return false;
     },
-    activatedByChanged: function(activatedBy) {
+    activatedByChanged: function (activatedBy) {
       if (!this.widgetIsLoaded()) return;
       widget.activatedBy = activatedBy;
       Survey.JsonObject.metaData.removeProperty("dropdown", "renderAs");
@@ -29,12 +29,21 @@ function init(Survey, $) {
           default: "standard",
           choices: ["standard", "select2"]
         });
+        Survey.JsonObject.metaData.addProperty("dropdown", {
+          name: "select2Config",
+          default: {}
+        });
       }
       if (activatedBy == "customtype") {
         Survey.JsonObject.metaData.addClass("select2", [], null, "dropdown");
+        Survey.JsonObject.metaData.addProperty("select2", {
+          name: "select2Config",
+          default: {}
+        });
       }
     },
-    afterRender: function(question, el) {
+    afterRender: function (question, el) {
+      var settings = question.select2Config;
       var $el = $(el).is("select") ? $(el) : $(el).find("select");
       var othersEl = document.createElement("input");
       othersEl.type = "text";
@@ -45,32 +54,39 @@ function init(Survey, $) {
         .parent()
         .get(0)
         .appendChild(othersEl);
-      var widget = $el.select2({
-        theme: "classic"
-      });
-      var updateValueHandler = function() {
+
+      var updateValueHandler = function () {
         $el.val(question.value).trigger("change");
         othersEl.style.display = !question.isOtherSelected ? "none" : "";
       };
-      var updateCommentHandler = function() {
+      var updateCommentHandler = function () {
         othersEl.value = question.comment ? question.comment : "";
       };
-      var othersElChanged = function() {
+      var othersElChanged = function () {
         question.comment = othersEl.value;
       };
-      var updateChoices = function() {
+      var updateChoices = function () {
         $el.select2().empty();
-        $el.select2({
-          data: question.visibleChoices.map(function(choice) {
-            return { id: choice.value, text: choice.text };
-          })
-        });
+
+        if (settings.ajax) {
+          $el.select2(settings);
+        } else {
+          $el.select2({
+            theme: "classic",
+            data: question.visibleChoices.map(function (choice) {
+              return {
+                id: choice.value,
+                text: choice.text
+              };
+            })
+          });
+        }
         updateValueHandler();
         updateCommentHandler();
       };
       question.choicesChangedCallback = updateChoices;
       updateChoices();
-      $el.on("select2:select", function(e) {
+      $el.on("select2:select", function (e) {
         question.value = e.target.value;
       });
       othersEl.onchange = othersElChanged;
@@ -79,7 +95,7 @@ function init(Survey, $) {
       updateValueHandler();
       updateCommentHandler();
     },
-    willUnmount: function(question, el) {
+    willUnmount: function (question, el) {
       $(el)
         .find("select")
         .off("select2:select")
