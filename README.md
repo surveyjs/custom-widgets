@@ -30,6 +30,8 @@
 
 * recordrtc: [site](http://recordrtc.org/), [repo](https://github.com/muaz-khan/RecordRTC), license [MIT](http://spdx.org/licenses/MIT.html)
 
+* imageHotArea [repo](https://github.com/TheNetworg/surveyjs-plugin-hotarea), licence: MIT
+
 ## Getting started
 
 es5 examples: https://surveyjs.io/Examples/Library/?id=custom-widget-select2-tagbox  
