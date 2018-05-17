@@ -31,14 +31,14 @@ function init(Survey, $) {
         });
         Survey.JsonObject.metaData.addProperty("dropdown", {
           name: "select2Config",
-          default: {}
+          default: null
         });
       }
       if (activatedBy == "customtype") {
         Survey.JsonObject.metaData.addClass("select2", [], null, "dropdown");
         Survey.JsonObject.metaData.addProperty("select2", {
           name: "select2Config",
-          default: {}
+          default: null
         });
       }
     },
@@ -68,8 +68,18 @@ function init(Survey, $) {
       var updateChoices = function () {
         $el.select2().empty();
 
-        if (settings.ajax) {
-          $el.select2(settings);
+        if (settings) {
+          if (settings.ajax) {
+            $el.select2(settings);
+          } else {
+            settings.data = question.visibleChoices.map(function (choice) {
+              return {
+                id: choice.value,
+                text: choice.text
+              };
+            });
+            $el.select2(settings);
+          }
         } else {
           $el.select2({
             theme: "classic",
@@ -81,6 +91,7 @@ function init(Survey, $) {
             })
           });
         }
+
         updateValueHandler();
         updateCommentHandler();
       };
