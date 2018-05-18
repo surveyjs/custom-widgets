@@ -100,6 +100,9 @@ function init(Survey, $) {
       $el.on("select2:select", function (e) {
         question.value = e.target.value;
       });
+      $el.on("select2:unselecting", function (e) {
+        question.value = null;
+      });
       othersEl.onchange = othersElChanged;
       question.valueChangedCallback = updateValueHandler;
       question.commentChangedCallback = updateCommentHandler;
