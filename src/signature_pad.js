@@ -30,24 +30,31 @@ function init(Survey) {
     name: "signaturepad",
     title: "Signature pad",
     iconName: "icon-signaturepad",
-    widgetIsLoaded: function() {
+    widgetIsLoaded: function () {
       return typeof SignaturePad != "undefined";
     },
     penColor: "#1ab394",
-    isFit: function(question) {
+    isFit: function (question) {
       return question.getType() === "signaturepad";
     },
-    htmlTemplate:
-      "<div class='sjs_sp_container'><div><canvas></canvas></div><div class='sjs_sp_controls'><button type='button' class='sjs_sp_clear' title='Clear'>✖</button></div></div><style>.sjs_sp_container { position: relative; } .sjs_sp_controls { position: absolute; left: 0; bottom: 0; } .sjs_sp_controls > button { user-select: none; }</style>",
-    activatedByChanged: function(activatedBy) {
+    htmlTemplate: "<div class='sjs_sp_container'><div><canvas></canvas></div><div class='sjs_sp_controls'><button type='button' class='sjs_sp_clear' title='Clear'>✖</button></div></div><style>.sjs_sp_container { position: relative; } .sjs_sp_controls { position: absolute; left: 0; bottom: 0; } .sjs_sp_controls > button { user-select: none; }</style>",
+    activatedByChanged: function (activatedBy) {
       Survey.JsonObject.metaData.addClass("signaturepad", [], null, "empty");
-      Survey.JsonObject.metaData.addProperties("signaturepad", [
-        { name: "allowClear:boolean", default: true },
-        { name: "width:number", default: 300 },
-        { name: "height:number", default: 200 }
+      Survey.JsonObject.metaData.addProperties("signaturepad", [{
+          name: "allowClear:boolean",
+          default: true
+        },
+        {
+          name: "width:number",
+          default: 300
+        },
+        {
+          name: "height:number",
+          default: 200
+        }
       ]);
     },
-    afterRender: function(question, el) {
+    afterRender: function (question, el) {
       var rootWidget = this;
       var canvas = el.getElementsByTagName("canvas")[0];
       var signaturePad = new SignaturePad(canvas);
@@ -55,32 +62,43 @@ function init(Survey) {
         signaturePad.off();
       }
       signaturePad.penColor = rootWidget.penColor;
-      signaturePad.onEnd = function() {
+      signaturePad.onEnd = function () {
         var data = signaturePad.toDataURL();
         question.value = data;
       };
-      var updateValueHandler = function() {
+      var updateValueHandler = function () {
+        var data = question.value;
         canvas.width = question.width;
         canvas.height = question.height;
         resizeCanvas(canvas);
         signaturePad.fromDataURL(
-          question.value || "data:image/gif;base64,R0lGODlhAQABAIAAAP"
+          data || "data:image/gif;base64,R0lGODlhAQABAIAAAP"
         );
       };
       question.valueChangedCallback = updateValueHandler;
       updateValueHandler();
       question.signaturePad = signaturePad;
+      var propertyChangedHandler = function (sender, options) {
+        if (options.name === "width" || options.name === "height") {
+          updateValueHandler();
+        }
+      };
+      question.onPropertyChanged.add(propertyChangedHandler);
+      question.signaturePad.propertyChangedHandler = propertyChangedHandler;
       var buttonEl = el.getElementsByTagName("button")[0];
       if (question.allowClear && !question.isReadOnly) {
-        buttonEl.onclick = function() {
+        buttonEl.onclick = function () {
           question.value = undefined;
         };
       } else {
         buttonEl.parentNode.removeChild(buttonEl);
       }
     },
-    willUnmount: function(question, el) {
+    willUnmount: function (question, el) {
       if (question.signaturePad) {
+        question.onPropertyChanged.remove(
+          question.signaturePad.propertyChangedHandler
+        );
         question.signaturePad.off();
       }
       question.signaturePad = null;
