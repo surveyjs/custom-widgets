@@ -4,46 +4,54 @@ function init(Survey, $) {
     name: "tagbox",
     title: "Tag box",
     iconName: "icon-tagbox",
-    widgetIsLoaded: function() {
+    widgetIsLoaded: function () {
       return typeof $ == "function" && !!$.fn.select2;
     },
-    defaultJSON: { choices: ["Item 1", "Item 2", "Item 3"] },
+    defaultJSON: {
+      choices: ["Item 1", "Item 2", "Item 3"]
+    },
     htmlTemplate: "<select multiple='multiple' style='width: 100%;'></select>",
-    isFit: function(question) {
+    isFit: function (question) {
       return question.getType() === "tagbox";
     },
-    activatedByChanged: function(activatedBy) {
+    activatedByChanged: function (activatedBy) {
       Survey.JsonObject.metaData.addClass(
-        "tagbox",
-        [{ name: "hasOther", visible: false }],
+        "tagbox", [{
+          name: "hasOther",
+          visible: false
+        }],
         null,
         "checkbox"
       );
     },
-    afterRender: function(question, el) {
+    afterRender: function (question, el) {
       var $el = $(el).is("select") ? $(el) : $(el).find("select");
       $el.select2({
         tags: "true",
+        disabled: question.isReadOnly,
         theme: "classic"
       });
-      var updateValueHandler = function() {
+      var updateValueHandler = function () {
         $el.val(question.value).trigger("change");
       };
-      var updateChoices = function() {
+      var updateChoices = function () {
         $el.select2().empty();
         $el.select2({
-          data: question.visibleChoices.map(function(choice) {
-            return { id: choice.value, text: choice.text };
+          data: question.visibleChoices.map(function (choice) {
+            return {
+              id: choice.value,
+              text: choice.text
+            };
           })
         });
         updateValueHandler();
       };
       question.choicesChangedCallback = updateChoices;
       question.valueChangedCallback = updateValueHandler;
-      $el.on("select2:select", function(e) {
+      $el.on("select2:select", function (e) {
         question.value = (question.value || []).concat(e.params.data.id);
       });
-      $el.on("select2:unselect", function(e) {
+      $el.on("select2:unselect", function (e) {
         var index = (question.value || []).indexOf(e.params.data.id);
         if (index !== -1) {
           var val = question.value;
@@ -53,7 +61,7 @@ function init(Survey, $) {
       });
       updateChoices();
     },
-    willUnmount: function(question, el) {
+    willUnmount: function (question, el) {
       $(el)
         .find("select")
         .off("select2:select")

@@ -83,6 +83,7 @@ function init(Survey, $) {
         } else {
           $el.select2({
             theme: "classic",
+            disabled: question.isReadOnly,
             data: question.visibleChoices.map(function (choice) {
               return {
                 id: choice.value,
