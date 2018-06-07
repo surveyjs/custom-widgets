@@ -46,6 +46,15 @@ function init(Survey, $) {
         });
         updateValueHandler();
       };
+
+      var readOnlyUpdater = function (sender, options) {
+        if (options.name === "isReadOnly") {
+          $el.prop("disabled", question.isReadOnly);
+        }
+      }
+      question._readOnlyUpdater = readOnlyUpdater;
+      question.onPropertyChanged.add(readOnlyUpdater);
+
       question.choicesChangedCallback = updateChoices;
       question.valueChangedCallback = updateValueHandler;
       $el.on("select2:select", function (e) {
@@ -66,6 +75,10 @@ function init(Survey, $) {
         .find("select")
         .off("select2:select")
         .select2("destroy");
+      if (!!question._readOnlyUpdater) {
+        question.onPropertyChanged.remove(question._readOnlyUpdater);
+        question._readOnlyUpdater = undefined;
+      }
     }
   };
 
