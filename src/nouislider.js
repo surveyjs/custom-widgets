@@ -30,7 +30,7 @@ function init(Survey) {
       ]);
     },
     afterRender: function(question, el) {
-      question.value = (question.rangeMin+question.rangeMax)/2;
+      question.value = (question.rangeMin + question.rangeMax) / 2;
 
       el.style.marginBottom = "50px";
       var slider = noUiSlider.create(el, {
@@ -40,7 +40,7 @@ function init(Survey) {
         tooltips: true,
         pips: {
           mode: "positions",
-          values: [0,25,50,75,100],
+          values: [0, 25, 50, 75, 100],
           density: 5
         },
         range: {
@@ -54,12 +54,26 @@ function init(Survey) {
       var updateValueHandler = function() {
         slider.set(question.value);
       };
+      if (question.isReadOnly) {
+        el.setAttribute("disabled", true);
+      }
       question.noUiSlider = slider;
+      question.noUiSliderEl = el;
       question.valueChangedCallback = updateValueHandler;
+    },
+    onReadOnlyChanged: function(question) {
+      var el = question.noUiSliderEl;
+      if (!el) return;
+      if (question.isReadOnly) {
+        el.setAttribute("disabled", true);
+      } else {
+        el.removeAttribute("disabled");
+      }
     },
     willUnmount: function(question, el) {
       question.noUiSlider.destroy();
       question.noUiSlider = null;
+      question.noUiSliderEl = null;
     }
   };
 
