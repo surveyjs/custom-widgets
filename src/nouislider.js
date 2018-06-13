@@ -58,22 +58,19 @@ function init(Survey) {
         el.setAttribute("disabled", true);
       }
       question.noUiSlider = slider;
-      question.noUiSliderEl = el;
       question.valueChangedCallback = updateValueHandler;
-    },
-    onReadOnlyChanged: function(question) {
-      var el = question.noUiSliderEl;
-      if (!el) return;
-      if (question.isReadOnly) {
-        el.setAttribute("disabled", true);
-      } else {
-        el.removeAttribute("disabled");
+      question.readOnlyChangedCallback = function() {
+        if (question.isReadOnly) {
+          el.setAttribute("disabled", true);
+        } else {
+          el.removeAttribute("disabled");
+        }
       }
     },
     willUnmount: function(question, el) {
       question.noUiSlider.destroy();
       question.noUiSlider = null;
-      question.noUiSliderEl = null;
+      question.readOnlyChangedCallback = null;
     }
   };
 

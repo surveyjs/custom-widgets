@@ -4,10 +4,10 @@ function init(Survey, $) {
     activatedBy: "property",
     name: "select2",
     htmlTemplate: "<select style='width: 100%;'></select>",
-    widgetIsLoaded: function () {
+    widgetIsLoaded: function() {
       return typeof $ == "function" && !!$.fn.select2;
     },
-    isFit: function (question) {
+    isFit: function(question) {
       if (widget.activatedBy == "property")
         return (
           question["renderAs"] === "select2" &&
@@ -19,7 +19,7 @@ function init(Survey, $) {
         return question.getType() === "select2";
       return false;
     },
-    activatedByChanged: function (activatedBy) {
+    activatedByChanged: function(activatedBy) {
       if (!this.widgetIsLoaded()) return;
       widget.activatedBy = activatedBy;
       Survey.JsonObject.metaData.removeProperty("dropdown", "renderAs");
@@ -42,7 +42,7 @@ function init(Survey, $) {
         });
       }
     },
-    afterRender: function (question, el) {
+    afterRender: function(question, el) {
       var settings = question.select2Config;
       var $el = $(el).is("select") ? $(el) : $(el).find("select");
       var othersEl = document.createElement("input");
@@ -55,24 +55,24 @@ function init(Survey, $) {
         .get(0)
         .appendChild(othersEl);
 
-      var updateValueHandler = function () {
+      var updateValueHandler = function() {
         $el.val(question.value).trigger("change");
         othersEl.style.display = !question.isOtherSelected ? "none" : "";
       };
-      var updateCommentHandler = function () {
+      var updateCommentHandler = function() {
         othersEl.value = question.comment ? question.comment : "";
       };
-      var othersElChanged = function () {
+      var othersElChanged = function() {
         question.comment = othersEl.value;
       };
-      var updateChoices = function () {
+      var updateChoices = function() {
         $el.select2().empty();
 
         if (settings) {
           if (settings.ajax) {
             $el.select2(settings);
           } else {
-            settings.data = question.visibleChoices.map(function (choice) {
+            settings.data = question.visibleChoices.map(function(choice) {
               return {
                 id: choice.value,
                 text: choice.text
@@ -84,7 +84,7 @@ function init(Survey, $) {
           $el.select2({
             theme: "classic",
             disabled: question.isReadOnly,
-            data: question.visibleChoices.map(function (choice) {
+            data: question.visibleChoices.map(function(choice) {
               return {
                 id: choice.value,
                 text: choice.text
@@ -97,20 +97,16 @@ function init(Survey, $) {
         updateCommentHandler();
       };
 
-      var readOnlyUpdater = function (sender, options) {
-        if (options.name === "isReadOnly") {
-          $el.prop("disabled", question.isReadOnly);
-        }
-      }
-      question._readOnlyUpdater = readOnlyUpdater;
-      question.onPropertyChanged.add(readOnlyUpdater);
+      question.readOnlyChangedCallback = function() {
+        $el.prop("disabled", question.isReadOnly);
+      };
 
       question.choicesChangedCallback = updateChoices;
       updateChoices();
-      $el.on("select2:select", function (e) {
+      $el.on("select2:select", function(e) {
         question.value = e.target.value;
       });
-      $el.on("select2:unselecting", function (e) {
+      $el.on("select2:unselecting", function(e) {
         question.value = null;
       });
       othersEl.onchange = othersElChanged;
@@ -119,15 +115,12 @@ function init(Survey, $) {
       updateValueHandler();
       updateCommentHandler();
     },
-    willUnmount: function (question, el) {
+    willUnmount: function(question, el) {
       $(el)
         .find("select")
         .off("select2:select")
         .select2("destroy");
-      if (!!question._readOnlyUpdater) {
-        question.onPropertyChanged.remove(question._readOnlyUpdater);
-        question._readOnlyUpdater = undefined;
-      }
+      question.readOnlyChangedCallback = null;
     }
   };
 

@@ -15,7 +15,7 @@ function init(Survey, $) {
       return question.getType() === "emotionsratings";
     },
     isDefaultRender: false,
-    htmlTemplate: "<div><div></div></div>",
+    htmlTemplate: "<div></div>",
     activatedByChanged: function(activatedBy) {
       Survey.JsonObject.metaData.addClass(
         "emotionsratings",
@@ -57,26 +57,29 @@ function init(Survey, $) {
         bgEmotion: "happy",
         emotions: emotionsArray,
         color: "#FF0066",
-        initialRating: question.value || 0,
-        disabled: question.isReadOnly,
         onUpdate: function(value) {
           question.value = value;
         }
       };
-      $(el)
-        .find("div")
-        .emotionsRating(options);
-      question.valueChangedCallback = function() {
+      initWidget();
+
+      question.valueChangedCallback = initWidget;
+      question.readOnlyChangedCallback = initWidget;
+
+      function initWidget() {
         el.innerHTML = "<div></div>";
-        options.initialRating = question.value;
+        $(el).off();
+        options.initialRating = question.value || 0;
+        options.disabled = question.isReadOnly;
         $(el)
           .find("div")
           .emotionsRating(options);
-      };
+      }
     },
     willUnmount: function(question, el) {
       el.innerHTML = null;
       $(el).off();
+      question.readOnlyChangedCallback = null;
     }
   };
 
