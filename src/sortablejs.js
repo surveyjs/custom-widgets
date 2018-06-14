@@ -33,6 +33,7 @@ function init(Survey) {
     afterRender: function(question, el) {
       var rootWidget = this;
       el.style.width = "100%";
+      var source, result;
       var resultEl = document.createElement("div");
       var emptyEl = document.createElement("span");
       var sourceEl = document.createElement("div");
@@ -74,8 +75,9 @@ function init(Survey) {
         });
         emptyEl.style.display = wasInResults ? "none" : "";
       };
-      question.resultEl = Sortable.create(resultEl, {
+      result = question.resultEl = Sortable.create(resultEl, {
         animation: 150,
+        disabled: question.isReadOnly,
         group: question.name,
         onSort: function(evt) {
           var result = [];
@@ -94,16 +96,27 @@ function init(Survey) {
           isUpdatingQuestionValue = false;
         }
       });
-      question.sourceEl = Sortable.create(sourceEl, {
+      source = question.sourceEl = Sortable.create(sourceEl, {
         animation: 150,
+        disabled: question.isReadOnly,
         group: question.name
       });
       question.valueChangedCallback = updateValueHandler;
+      question.readOnlyChangedCallback = function() {
+        if (question.isReadOnly) {
+          result.options.disabled = true;
+          source.options.disabled = true;
+        } else {
+          result.options.disabled = false;
+          source.options.disabled = false;
+        }
+      };
       updateValueHandler();
     },
     willUnmount: function(question, el) {
       question.resultEl.destroy();
       question.sourceEl.destroy();
+      question.readOnlyChangedCallback = null;
     }
   };
 

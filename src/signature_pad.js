@@ -67,10 +67,12 @@ function init(Survey) {
       question.readOnlyChangedCallback = function() {
         if (question.isReadOnly) {
           signaturePad.off();
-          document.querySelector(".sjs_sp_clear").disabled = true;
+          var clearBtn = document.querySelector(".sjs_sp_clear");
+          clearBtn && (clearBtn.disabled = true);
         } else {
           signaturePad.on();
-          document.querySelector(".sjs_sp_clear").disabled = false;
+          var clearBtn = document.querySelector(".sjs_sp_clear");
+          clearBtn && (clearBtn.disabled = false);
         }
       };
 
