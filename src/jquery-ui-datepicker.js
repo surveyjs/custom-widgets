@@ -24,16 +24,7 @@ function init(Survey, $) {
         "text"
       );
       Survey.JsonObject.metaData.addProperty("datepicker", {
-        name: "dateFormat",
-        default: "mm/dd/yy",
-        choices: [
-          "mm/dd/yy",
-          "yy-mm-dd",
-          "d M, y",
-          "d MM, y",
-          "DD, d MM, yy",
-          "'day' d 'of' MM 'in the year' yy"
-        ]
+        name: "dateFormat"
       });
     },
     afterRender: function(question, el) {
@@ -41,7 +32,7 @@ function init(Survey, $) {
         ? $(el)
         : $(el).find(".widget-datepicker");
       var pickerWidget = $el.datepicker({
-        dateFormat: question.dateFormat,
+        dateFormat: !!question.dateFormat ? question.dateFormat : undefined,
         option: {
           minDate: null,
           maxDate: null
