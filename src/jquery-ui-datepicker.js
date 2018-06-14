@@ -43,7 +43,7 @@ function init(Survey, $) {
       });
       question.valueChangedCallback = function() {
         if (question.value) {
-          pickerWidget.datepicker("setDate", new Date(question.value));
+          pickerWidget.datepicker("setDate", question.value);
         } else {
           pickerWidget.datepicker("setDate", null);
         }
