@@ -25,6 +25,8 @@ function init(Survey) {
         config.toolbarCanCollapse = true;
       };
       var editor = CKEDITOR.replace(el);
+      CKEDITOR.instances.editor1.config.readOnly = question.isReadOnly;
+
       var isValueChanging = false;
       var updateValueHandler = function() {
         if (isValueChanging) return;
@@ -35,10 +37,20 @@ function init(Survey) {
         question.value = editor.getData();
         isValueChanging = false;
       });
+
       question.valueChangedCallback = updateValueHandler;
+      question.readOnlyChangedCallback = function() {
+        if (question.isReadOnly) {
+          editor.setReadOnly(true);
+        } else {
+          editor.setReadOnly(false);
+        }
+      };
       updateValueHandler();
     },
-    willUnmount: function(question, el) {}
+    willUnmount: function(question, el) {
+      question.readOnlyChangedCallback = null;
+    }
   };
 
   Survey.CustomWidgetCollection.Instance.addCustomWidget(widget, "customtype");

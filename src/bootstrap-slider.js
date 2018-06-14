@@ -47,6 +47,7 @@ function init(Survey) {
         min: question.rangeMin,
         max: question.rangeMax,
         step: question.step,
+        enabled: !question.isReadOnly,
         value: question.value || question.rangeMin
       });
 
@@ -56,12 +57,20 @@ function init(Survey) {
       var updateValueHandler = function() {
         slider.setValue(question.value || question.rangeMin);
       };
+      question.readOnlyChangedCallback = function() {
+        if (question.isReadOnly) {
+          slider.disable();
+        } else {
+          slider.enable();
+        }
+      };
       question.bootstrapSlider = slider;
       question.valueChangedCallback = updateValueHandler;
     },
     willUnmount: function(question, el) {
       question.bootstrapSlider.destroy();
       question.bootstrapSlider = null;
+      question.readOnlyChangedCallback = null;
     }
   };
 
