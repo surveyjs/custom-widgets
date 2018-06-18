@@ -30,7 +30,9 @@ function init(Survey) {
       ]);
     },
     afterRender: function(question, el) {
-      question.value = (question.rangeMin + question.rangeMax) / 2;
+      if (question.isEmpty()) {
+        question.value = (question.rangeMin + question.rangeMax) / 2;
+      }
 
       el.style.marginBottom = "50px";
       var slider = noUiSlider.create(el, {
@@ -57,6 +59,7 @@ function init(Survey) {
       if (question.isReadOnly) {
         el.setAttribute("disabled", true);
       }
+      updateValueHandler();
       question.noUiSlider = slider;
       question.valueChangedCallback = updateValueHandler;
       question.readOnlyChangedCallback = function() {
@@ -65,7 +68,7 @@ function init(Survey) {
         } else {
           el.removeAttribute("disabled");
         }
-      }
+      };
     },
     willUnmount: function(question, el) {
       question.noUiSlider.destroy();
