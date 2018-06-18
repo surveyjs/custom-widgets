@@ -3,7 +3,7 @@ function init(Survey, $) {
   var widget = {
     name: "autocomplete",
     widgetIsLoaded: function() {
-      return !!$.fn.easyAutocomplete;
+      return typeof $ == "function" && !!$.fn.easyAutocomplete;
     },
     isFit: function(question) {
       return question.getType() === "text";

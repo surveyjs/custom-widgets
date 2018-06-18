@@ -5,7 +5,7 @@ function init(Survey, $) {
     title: "Image picker",
     iconName: "icon-imagepicker",
     widgetIsLoaded: function() {
-      return !!$.fn.imagepicker;
+      return typeof $ == "function" && !!$.fn.imagepicker;
     },
     isFit: function(question) {
       return question.getType() === "imagepicker";
