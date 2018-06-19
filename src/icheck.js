@@ -3,15 +3,15 @@ function init(Survey, $) {
   var widget = {
     className: "iradio_square-blue",
     name: "icheck",
-    widgetIsLoaded: function () {
-      return !!$.fn.iCheck;
+    widgetIsLoaded: function() {
+      return typeof $ == "function" && !!$.fn.iCheck;
     },
-    isFit: function (question) {
+    isFit: function(question) {
       var t = question.getType();
       return t === "radiogroup" || t === "checkbox" || t === "matrix";
     },
     isDefaultRender: true,
-    afterRender: function (question, el) {
+    afterRender: function(question, el) {
       var rootWidget = this;
       var $el = $(el);
       $el.find("input").data({
@@ -22,17 +22,17 @@ function init(Survey, $) {
         checkboxClass: rootWidget.className,
         radioClass: rootWidget.className
       });
-      var select = function () {
+      var select = function() {
         if (question.getType() !== "matrix") {
           var values = question.value;
           if (!Array.isArray(values)) {
             values = [values];
           }
-          values.forEach(function (value) {
+          values.forEach(function(value) {
             $el.find("input[value=" + value + "]").iCheck("check");
           });
         } else {
-          question.generatedVisibleRows.forEach(function (row, index, rows) {
+          question.generatedVisibleRows.forEach(function(row, index, rows) {
             if (row.value) {
               $(el)
                 .find(
@@ -43,9 +43,9 @@ function init(Survey, $) {
           });
         }
       };
-      $el.find("input").on("ifChecked", function (event) {
+      $el.find("input").on("ifChecked", function(event) {
         if (question.getType() === "matrix") {
-          question.generatedVisibleRows.forEach(function (row, index, rows) {
+          question.generatedVisibleRows.forEach(function(row, index, rows) {
             if (row.fullName === event.target.name) {
               row.value = event.target.value;
             }
@@ -60,7 +60,7 @@ function init(Survey, $) {
           question.value = event.target.value;
         }
       });
-      $el.find("input").on("ifUnchecked", function (event) {
+      $el.find("input").on("ifUnchecked", function(event) {
         if (question.getType() === "checkbox") {
           var oldValue = question.value || [];
           var index = oldValue.indexOf(event.target.value);
@@ -73,7 +73,7 @@ function init(Survey, $) {
       question.valueChangedCallback = select;
       select();
     },
-    willUnmount: function (question, el) {
+    willUnmount: function(question, el) {
       var $el = $(el);
       $el.find("input").iCheck("destroy");
     }

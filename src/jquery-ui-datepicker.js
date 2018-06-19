@@ -5,7 +5,7 @@ function init(Survey, $) {
     title: "Date picker",
     iconName: "icon-datepicker",
     widgetIsLoaded: function() {
-      return !!$.fn.datepicker;
+      return !!$ && !!$.fn.datepicker;
     },
     isFit: function(question) {
       return question.getType() === "datepicker";

@@ -5,7 +5,7 @@ function init(Survey, $) {
     title: "Bar rating",
     iconName: "icon-barrating",
     widgetIsLoaded: function() {
-      return !!$.fn.barrating;
+      return typeof $ == "function" && !!$.fn.barrating;
     },
     defaultJSON: { choices: [1, 2, 3, 4, 5] },
     isFit: function(question) {

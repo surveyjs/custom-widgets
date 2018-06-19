@@ -6,7 +6,7 @@ function init(Survey, $) {
     title: "Emotions Ratings",
     iconName: "icon-emotionsratings",
     widgetIsLoaded: function() {
-      return !!$.fn.emotionsRating;
+      return typeof $ == "function" && !!$.fn.emotionsRating;
     },
     defaultJSON: {
       choices: [1, 2, 3, 4, 5]
