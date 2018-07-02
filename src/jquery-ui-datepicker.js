@@ -10,8 +10,7 @@ function init(Survey, $) {
     isFit: function(question) {
       return question.getType() === "datepicker";
     },
-    htmlTemplate:
-      "<input class='form-control widget-datepicker' type='text' style='width: 100%;'>",
+    htmlTemplate: "<input class='form-control widget-datepicker' type='text'>",
     activatedByChanged: function(activatedBy) {
       Survey.JsonObject.metaData.addClass(
         "datepicker",
@@ -26,21 +25,33 @@ function init(Survey, $) {
       Survey.JsonObject.metaData.addProperty("datepicker", {
         name: "dateFormat"
       });
+      Survey.JsonObject.metaData.addProperty("datepicker", {
+        name: "config",
+        default: null
+      });
     },
     afterRender: function(question, el) {
       var $el = $(el).is(".widget-datepicker")
         ? $(el)
         : $(el).find(".widget-datepicker");
-      var pickerWidget = $el.datepicker({
-        dateFormat: !!question.dateFormat ? question.dateFormat : undefined,
-        option: {
+      var config = question.config || {};
+      if (config.dateFormat === undefined) {
+        config.dateFormat = !!question.dateFormat
+          ? question.dateFormat
+          : undefined;
+      }
+      if (config.option === undefined) {
+        config.option = {
           minDate: null,
           maxDate: null
-        },
-        onSelect: function(dateText) {
+        };
+      }
+      if (config.onSelect === undefined) {
+        config.onSelect = function(dateText) {
           question.value = dateText;
-        }
-      });
+        };
+      }
+      var pickerWidget = $el.datepicker(config);
       question.valueChangedCallback = function() {
         if (question.value) {
           pickerWidget.datepicker("setDate", question.value);
