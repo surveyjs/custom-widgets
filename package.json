@@ -15,7 +15,6 @@
     "friendly-errors-webpack-plugin": "^1.6.1",
     "generate-json-webpack-plugin": "^0.2.2",
     "icheck": "^1.0.2",
-    "image-picker": "^0.3.1",
     "inputmask": "^3.3.10",
     "jquery": "^3.2.1",
     "jquery-bar-rating": "^1.2.2",
