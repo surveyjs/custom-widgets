@@ -23,7 +23,6 @@ var widgets = [
   main,
   "select2",
   "select2-tagbox",
-  "image-picker",
   "jquery-ui-datepicker",
   "inputmask",
   "icheck",
@@ -40,7 +39,6 @@ var widgets = [
 
 var dependencies = {
   select2: "^4.0.4",
-  "image-picker": "^0.3.1",
   icheck: "^1.0.2",
   "jquery-ui": "^1.12.1",
   sortablejs: "^1.6.1",
@@ -51,7 +49,7 @@ var dependencies = {
   "easy-autocomplete": "^1.3.5",
   "pretty-checkbox": "^3.0.3",
   "bootstrap-slider": "^10.0.0",
-  "recordrtc": "^5.4.6"
+  recordrtc: "^5.4.6"
 };
 
 var entry = {};
