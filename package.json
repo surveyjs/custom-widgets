@@ -4,7 +4,8 @@
   "scripts": {
     "start": "npm run build && live-server",
     "prebuild": "webpack --env.buildType dev",
-    "build": "webpack --env.buildType prod"
+    "build": "webpack --env.buildType prod",
+    "release": "standard-version --message \"Release: %s\""
   },
   "private": true,
   "devDependencies": {
@@ -26,6 +27,7 @@
     "select2": "^4.0.4",
     "signature_pad": "^2.3.2",
     "sortablejs": "^1.6.1",
+    "standard-version": "4.0.0",
     "survey-angular": "^1.0.18",
     "survey-jquery": "^1.0.18",
     "survey-knockout": "^1.0.18",
