@@ -6,7 +6,6 @@ before_install:
   - stty cols 80
 
 env:
-dist: trusty
   global:
     secure: jx34zGaqOAi0fej4CAGaFZmC7mXhugGk368XOuMkRwdGTzFIT1AtyT8hIT5lCAz5lSPogJY364BJ5IKHQsbtiYKfmHE6MB5D8wz3+Lg06pbZmRxuDFQgblJISaSpg1ZFtJatHscOT1ZfUmqEMHFWdrcMvMbmsuFEGxv6Yks2g/wmwIWYtfRfvOrcyCL2XWmYc9gctqv1HbpLJb5xfugTgmKnYOSuwYb5CuRIM2imky8vb4pkmveo7QpA48lAlMn2WrgtO5Zk5Vhn06R7YbC8AzACWe4F1TDr6x0h27f8M3nEYtib6/rovRYkh4lz816GjZEqG8nA1N9a/RCGgRHUG5LBO1KFZ0RbECUfBzGdYiJwcG6FUleTeGqJOo5RjxLhIsuk8OLbJ+8bAhNt4D/gAGmnGH+KQHJld+MCqIraKtdvydaO5U1L2El1S7GUD972GNj4bnisk99oqaqxOzvDT0W9HihhgbAh7vjGqVVOmNlio8voEWDZu4ru9HHxPkQ4DNu8fNRaQqIuIGWeFypHBWG3Bt38RzZpxVmxIDhdUkGu1dJdSPZeHuvheDkSJy62eIjAJnnxFGqTn7cTveUozh5Lky2iTjQuiifk5hFcLNroWcZJNHNgJQd915Q0iVYE3VOxVoPlh01urfeyvCKYiXOsFhgLGTfL8rzqk+JvDvs=
 sudo: required
@@ -39,6 +38,7 @@ deploy:
   skip_cleanup: true
   on:
     tags: true
+
 notifications:
   email:
     recipients:
