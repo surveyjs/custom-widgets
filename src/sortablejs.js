@@ -4,7 +4,7 @@ function init(Survey) {
   var widget = {
     name: "sortablelist",
     title: "Sortable list",
-    iconName: "icon-sortablelist",
+    iconName: "icon-sortablejs",
     widgetIsLoaded: function() {
       return typeof Sortable != "undefined";
     },
