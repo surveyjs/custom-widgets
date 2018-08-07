@@ -52,6 +52,13 @@ function init(Survey, $) {
         };
       }
       var pickerWidget = $el.datepicker(config);
+
+      $el.keyup(function(e) {
+        if (e.keyCode == 8 || e.keyCode == 46) {
+          $.datepicker._clearDate(this);
+        }
+      });
+
       question.valueChangedCallback = function() {
         if (question.value) {
           pickerWidget.datepicker("setDate", question.value);
