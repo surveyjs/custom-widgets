@@ -9,7 +9,9 @@ function init(Survey) {
       return typeof Sortable != "undefined";
     },
     defaultJSON: { choices: ["Item 1", "Item 2", "Item 3"] },
-    areaStyle: "border: 1px solid #1ab394; width:100%; min-height:50px",
+    rootStyle: "width:100%:",
+    areaStyle:
+      "border: 1px solid #1ab394; width:100%; min-height:50px; margin-top:10px;",
     itemStyle: "background-color:#1ab394;color:#fff;margin:5px;padding:10px;",
     isFit: function(question) {
       return question.getType() === "sortablelist";
@@ -29,19 +31,35 @@ function init(Survey) {
         name: "emptyText",
         default: "Move items here."
       });
+      Survey.JsonObject.metaData.addProperty("sortablelist", {
+        name: "useDefaultTheme",
+        default: true
+      });
     },
     afterRender: function(question, el) {
-      var rootWidget = this;
-      el.style.width = "100%";
+      var self = this;
+
+      if (!question.useDefaultTheme) {
+        self.rootStyle = "";
+        self.itemStyle = "";
+        self.areaStyle = "";
+      }
+      el.style.cssText = self.rootStyle;
+      el.className = "sjs-sortablejs-root";
       var source, result;
       var resultEl = document.createElement("div");
       var emptyEl = document.createElement("span");
       var sourceEl = document.createElement("div");
-      resultEl.style.cssText = rootWidget.areaStyle;
+
+      resultEl.style.cssText = self.areaStyle;
+      resultEl.className = "sjs-sortablejs-result";
+
       emptyEl.innerHTML = question.emptyText;
       resultEl.appendChild(emptyEl);
-      sourceEl.style.cssText = rootWidget.areaStyle;
-      sourceEl.style.marginTop = "10px";
+
+      sourceEl.style.cssText = self.areaStyle;
+      sourceEl.className = "sjs-sortablejs-source";
+
       el.appendChild(resultEl);
       el.appendChild(sourceEl);
       var hasValueInResults = function(val) {
@@ -65,8 +83,8 @@ function init(Survey) {
           var srcEl = inResutls ? resultEl : sourceEl;
           var newEl = document.createElement("div");
           newEl.innerHTML =
-            "<div style='" +
-            rootWidget.itemStyle +
+            "<div class='sjs-sortablejs-item' style='" +
+            self.itemStyle +
             "'>" +
             choice.text +
             "</div>";
