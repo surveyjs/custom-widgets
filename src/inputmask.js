@@ -9,6 +9,7 @@ function init(Survey) {
     numericDigitsOptional: false,
     numericPrefix: "$",
     numericPlaceholder: "0",
+    autoUnmask: true,
     widgetIsLoaded: function() {
       return typeof Inputmask != "undefined";
     },
@@ -51,7 +52,9 @@ function init(Survey) {
         surveyElement.inputMask != "none"
           ? surveyElement.inputMask
           : surveyElement.inputFormat;
-      var options = {};
+      var options = {
+        autoUnmask: rootWidget.autoUnmask
+      };
       if (surveyElement.inputMask != "none")
         options.inputFormat = surveyElement.inputFormat;
 
