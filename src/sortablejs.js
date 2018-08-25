@@ -70,28 +70,57 @@ function init(Survey) {
         }
         return false;
       };
+      var addChoiceToWidget = function(choice, inResults) {
+        var srcEl = inResults ? resultEl : sourceEl;
+        var newEl = document.createElement("div");
+        newEl.innerHTML =
+          "<div class='sjs-sortablejs-item' style='" +
+          self.itemStyle +
+          "'>" +
+          choice.text +
+          "</div>";
+        newEl.dataset["value"] = choice.value;
+        srcEl.appendChild(newEl);
+      };
+      var getChoicesNotInResults = function() {
+        var res = [];
+        question.activeChoices.forEach(function(choice) {
+          if (!hasValueInResults(choice.value)) {
+            res.push(choice);
+          }
+        });
+        return res;
+      };
+      var getChoicesInResults = function() {
+        var res = [];
+        var val = question.value;
+        if (!Array.isArray(val)) return res;
+        for (var i = 0; i < val.length; i++) {
+          var item = Survey.ItemValue.getItemByValue(
+            question.activeChoices,
+            val[i]
+          );
+          if (!!item) {
+            res.push(item);
+          }
+        }
+        return res;
+      };
       var isUpdatingQuestionValue = false;
       var updateValueHandler = function() {
         if (isUpdatingQuestionValue) return;
         resultEl.innerHTML = "";
         resultEl.appendChild(emptyEl);
         sourceEl.innerHTML = "";
-        var wasInResults = false;
-        question.activeChoices.forEach(function(choice) {
-          var inResutls = hasValueInResults(choice.value);
-          wasInResults = wasInResults || inResutls;
-          var srcEl = inResutls ? resultEl : sourceEl;
-          var newEl = document.createElement("div");
-          newEl.innerHTML =
-            "<div class='sjs-sortablejs-item' style='" +
-            self.itemStyle +
-            "'>" +
-            choice.text +
-            "</div>";
-          newEl.dataset["value"] = choice.value;
-          srcEl.appendChild(newEl);
+        var notInResults = getChoicesNotInResults();
+        var inResults = getChoicesInResults();
+        emptyEl.style.display = inResults.length > 0 ? "none" : "";
+        inResults.forEach(function(choice) {
+          addChoiceToWidget(choice, true);
         });
-        emptyEl.style.display = wasInResults ? "none" : "";
+        notInResults.forEach(function(choice) {
+          addChoiceToWidget(choice, false);
+        });
       };
       result = question.resultEl = Sortable.create(resultEl, {
         animation: 150,
