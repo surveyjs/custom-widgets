@@ -26,6 +26,18 @@ function init(Survey) {
         {
           name: "rangeMax:number",
           default: 100
+        },
+        {
+          name: "pipsMode",
+          default: "positions"
+        },
+        {
+          name: "pipsValues:itemvalues",
+          default: [0, 25, 50, 75, 100]
+        },
+        {
+          name: "pipsDensity:number",
+          default: 5
         }
       ]);
     },
@@ -41,9 +53,9 @@ function init(Survey) {
         step: question.step,
         tooltips: true,
         pips: {
-          mode: "positions",
-          values: [0, 25, 50, 75, 100],
-          density: 5
+          mode: question.pipsMode || "positions",
+          values: question.pipsValues || [0, 25, 50, 75, 100],
+          density: question.pipsDensity || 5
         },
         range: {
           min: question.rangeMin,

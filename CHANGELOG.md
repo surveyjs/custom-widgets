@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.0.41"></a>
+## [1.0.41](https://github.com/surveyjs/widgets/compare/v1.0.40...v1.0.41) (2018-08-29)
+
+
+
+<a name="1.0.40"></a>
+## [1.0.40](https://github.com/surveyjs/widgets/compare/v1.0.39...v1.0.40) (2018-08-28)
+
+
+
 <a name="1.0.39"></a>
 ## [1.0.39](https://github.com/surveyjs/widgets/compare/v1.0.38...v1.0.39) (2018-08-21)
 
