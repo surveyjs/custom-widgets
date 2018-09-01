@@ -106,7 +106,9 @@ function init(Survey) {
     },
     willUnmount: function(question, el) {
       var input = el.querySelector("input") || el;
-      input.inputmask.remove();
+      if (!!input && !!input.inputmask) {
+        input.inputmask.remove();
+      }
     }
   };
 
