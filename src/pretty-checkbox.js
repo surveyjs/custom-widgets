@@ -1,5 +1,5 @@
 function init(Survey) {
-  const widget = {
+  var widget = {
     settings: {
       supportedTypes: ["radiogroup", "checkbox", "boolean"],
       radiogroup: {
@@ -32,7 +32,7 @@ function init(Survey) {
     },
     htmlTemplate: "<fieldset></fieldset>",
     isFit: function(question) {
-      const isFitByType =
+      var isFitByType =
         widget.settings.supportedTypes.indexOf(question.getType()) !== -1;
 
       if (widget.activatedBy === "property") {
@@ -61,24 +61,24 @@ function init(Survey) {
     },
     isDefaultRender: false,
     afterRender: function(question, element) {
-      const itemInputs = {};
-      const questionType = question.getType();
-      const options = this.settings[questionType];
-      const checkboxType = questionType === "checkbox";
-      const radiogroupType = questionType === "radiogroup";
-      const booleanType = questionType === "boolean";
+      var itemInputs = {};
+      var questionType = question.getType();
+      var options = this.settings[questionType];
+      var checkboxType = questionType === "checkbox";
+      var radiogroupType = questionType === "radiogroup";
+      var booleanType = questionType === "boolean";
 
       var inChangeHandler = false;
-      const changeHandler = function(event) {
+      var changeHandler = function(event) {
         inChangeHandler = true;
         try {
-          const target = arguments[0].target;
-          const targetValue = target.value;
-          const targetChecked = target.checked;
+          var target = arguments[0].target;
+          var targetValue = target.value;
+          var targetChecked = target.checked;
 
           if (checkboxType) {
-            const questionValue = question.value || [];
-            const valueIndex = questionValue.indexOf(targetValue);
+            var questionValue = question.value || [];
+            var valueIndex = questionValue.indexOf(targetValue);
             if (targetChecked) {
               if (valueIndex === -1) {
                 questionValue.push(targetValue);
@@ -100,14 +100,14 @@ function init(Survey) {
         }
       };
 
-      const itemWidth =
+      var itemWidth =
         question.colCount > 0 ? 100 / question.colCount + "%" : "";
 
-      const choices = booleanType
+      var choices = booleanType
         ? [{ locText: question.locTitle, value: !!question.value }]
         : question.choices;
       choices.forEach(function(choiceItem, index) {
-        const input = document.createElement("input");
+        var input = document.createElement("input");
         input.type = options.inputType;
         input.name = question.name + (checkboxType ? "" + index : "");
         input.onchange = changeHandler;
@@ -117,20 +117,20 @@ function init(Survey) {
           input.indeterminate = question.defaultValue === "indeterminate";
         }
 
-        const controlRoot = document.createElement("div");
+        var controlRoot = document.createElement("div");
         controlRoot.className = options.rootClass;
         controlRoot.appendChild(input);
 
         options.states.forEach(function(state) {
-          const stateRoot = document.createElement("div");
+          var stateRoot = document.createElement("div");
           stateRoot.className = state.stateClass;
           if (!!state.iconClass) {
-            const icon = document.createElement("i");
+            var icon = document.createElement("i");
             icon.className = state.iconClass;
             stateRoot.appendChild(icon);
           }
 
-          const label = document.createElement("label");
+          var label = document.createElement("label");
           if (choiceItem.locText.hasHtml) {
             label.innerHTML = choiceItem.locText.html;
           } else {
@@ -144,7 +144,7 @@ function init(Survey) {
           }
         });
 
-        const itemRoot = document.createElement("div");
+        var itemRoot = document.createElement("div");
         itemRoot.className = "sv_cw_pretty_checkbox_" + questionType;
         itemRoot.style.display = "inline-block";
         itemRoot.style.width = itemWidth;
@@ -155,7 +155,7 @@ function init(Survey) {
         itemInputs[choiceItem.value] = input;
       });
 
-      const updateValueHandler = function(newValue) {
+      var updateValueHandler = function(newValue) {
         if (!inChangeHandler) {
           var checkedItems = newValue || [];
           if (radiogroupType) {
@@ -171,7 +171,7 @@ function init(Survey) {
           });
         }
       };
-      const readOnlyHandler = function() {
+      var readOnlyHandler = function() {
         Object.values(itemInputs).forEach(function(inputItem) {
           if (question.isReadOnly) {
             inputItem.setAttribute("disabled", true);
