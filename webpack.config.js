@@ -157,23 +157,25 @@ module.exports = function(options) {
     devServer: {
       contentBase: path.join(__dirname, outputFolder),
       open: true
-    }
-  };
-
-  config.module = {
-    rules: [
-      {
-        test: /\.js$/,
-        exclude: /(node_modules|bower_components)/,
-        use: {
-          loader: 'babel-loader',
-          options: {
-            presets: ['@babel/preset-env']
+    },
+    module: {
+      rules: [
+        {
+          test: /\.js$/,
+          exclude: /(node_modules|bower_components)/,
+          use: {
+            loader: 'babel-loader',
+            options: {
+              presets: ['@babel/preset-env']
+            }
           }
         }
-      }
-    ]
-  }
+      ]
+    },
+    optimization: {
+      minimize: false
+    }
+  };
 
   if (options.buildType === "dev") {
     config.plugins = config.plugins.concat([
