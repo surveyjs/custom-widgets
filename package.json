@@ -35,6 +35,12 @@
     "survey-react": "^1.0.18",
     "survey-vue": "^1.0.18",
     "virtual-module-webpack-plugin": "^0.3.0",
-    "webpack": "^3.6.0"
+    "webpack": "^4.17.1"
+  },
+  "dependencies": {
+    "@babel/core": "^7.0.0",
+    "@babel/preset-env": "^7.0.0",
+    "babel-loader": "^8.0.2",
+    "webpack-cli": "^3.1.0"
   }
 }

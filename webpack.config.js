@@ -160,6 +160,21 @@ module.exports = function(options) {
     }
   };
 
+  config.module = {
+    rules: [
+      {
+        test: /\.js$/,
+        exclude: /(node_modules|bower_components)/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['@babel/preset-env']
+          }
+        }
+      }
+    ]
+  }
+
   if (options.buildType === "dev") {
     config.plugins = config.plugins.concat([
       new CleanWebpackPlugin([outputFolder], { verbose: true })
@@ -167,20 +182,9 @@ module.exports = function(options) {
   }
 
   if (options.buildType === "prod") {
-    config.plugins = config.plugins.concat([
-      new webpack.optimize.UglifyJsPlugin({
-        unused: true,
-        dead_code: true
-      }),
-      new webpack.BannerPlugin(copyright),
-      new GenerateJsonPlugin("package.json", targetPackageJson, undefined, 2),
-      new CopyWebpackPlugin([
-        {
-          from: path.join(__dirname, "./src/targetREADME.md"),
-          to: path.join(__dirname, `${packagePath}/README.md`)
-        }
-      ])
-    ]);
+    config.optimization = {
+      minimize: true
+    };
   }
 
   return config;
