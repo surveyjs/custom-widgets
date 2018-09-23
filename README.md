@@ -59,7 +59,7 @@ To build library yourself:
 1.  **Clone the repo from GitHub**
 
     ```
-    git clone https://github.com/surveyjs/surveyjs-widgets.git
+    git clone https://github.com/surveyjs/widgets.git
     cd surveyjs-widgets
     ```
 
