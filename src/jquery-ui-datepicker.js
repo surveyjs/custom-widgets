@@ -59,6 +59,11 @@ function init(Survey, $) {
         }
       });
 
+      question.readOnlyChangedCallback = function() {
+        $el.datepicker("option", "disabled", question.isReadOnly);
+      };
+      question.readOnlyChangedCallback();
+
       question.valueChangedCallback = function() {
         if (question.value) {
           pickerWidget.datepicker("setDate", question.value);
