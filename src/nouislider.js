@@ -54,7 +54,9 @@ function init(Survey) {
         tooltips: true,
         pips: {
           mode: question.pipsMode || "positions",
-          values: question.pipsValues || [0, 25, 50, 75, 100],
+          values: question.pipsValues.map(function(pVal) {
+            return parseInt((pVal.value !== undefined && pVal.value) || pVal);
+          }),
           density: question.pipsDensity || 5
         },
         range: {
