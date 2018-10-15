@@ -36,7 +36,7 @@ function init(Survey, $) {
             if (row.value) {
               $(el)
                 .find(
-                  "input[name='" + row.fullName + "'][value=" + row.value + "]"
+                  "input[name='" + row.fullName + "'][value='" + row.value + "']"
                 )
                 .iCheck("check");
             }
