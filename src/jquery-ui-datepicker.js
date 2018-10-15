@@ -35,6 +35,9 @@ function init(Survey, $) {
         ? $(el)
         : $(el).find(".widget-datepicker");
       var config = question.config || {};
+      if (!!question.placeHolder) {
+        $el.attr("placeholder", question.placeHolder);
+      }
       if (config.dateFormat === undefined) {
         config.dateFormat = !!question.dateFormat
           ? question.dateFormat
