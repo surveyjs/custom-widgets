@@ -13,3 +13,5 @@ export { default as prettycheckbox } from "./pretty-checkbox.js";
 export { default as bootstrapslider } from "./bootstrap-slider.js";
 export { default as microphone } from "./microphone.js";
 export { default as emotionsratings } from "./emotionsratings.js";
+export { default as uml } from "./uml.js";
+export { default as photocapture } from "./photocapture.js";

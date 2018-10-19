@@ -36,5 +36,8 @@
     "survey-vue": "^1.0.18",
     "virtual-module-webpack-plugin": "^0.3.0",
     "webpack": "^3.6.0"
+  },
+  "dependencies": {
+    "pako": "^1.0.6"
   }
 }
