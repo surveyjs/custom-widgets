@@ -2,6 +2,8 @@ function init(Survey, $) {
   $ = $ || window.$;
   var widget = {
     className: "iradio_square-blue",
+    checkboxClass: "iradio_square-blue",
+    radioClass: "iradio_square-blue",
     name: "icheck",
     widgetIsLoaded: function() {
       return typeof $ == "function" && !!$.fn.iCheck;
@@ -19,8 +21,12 @@ function init(Survey, $) {
       });
 
       $el.find("input").iCheck({
-        checkboxClass: rootWidget.className,
-        radioClass: rootWidget.className
+        checkboxClass:
+          question.checkboxClass ||
+          rootWidget.checkboxClass ||
+          rootWidget.className,
+        radioClass:
+          question.radioClass || rootWidget.radioClass || rootWidget.className
       });
       var select = function() {
         if (question.getType() !== "matrix") {
@@ -36,7 +42,11 @@ function init(Survey, $) {
             if (row.value) {
               $(el)
                 .find(
-                  "input[name='" + row.fullName + "'][value='" + row.value + "']"
+                  "input[name='" +
+                    row.fullName +
+                    "'][value='" +
+                    row.value +
+                    "']"
                 )
                 .iCheck("check");
             }
@@ -79,6 +89,8 @@ function init(Survey, $) {
     }
   };
 
+  Survey.JsonObject.metaData.addProperty("radiogroup", "radioClass");
+  Survey.JsonObject.metaData.addProperty("checkbox", "checkboxClass");
   Survey.CustomWidgetCollection.Instance.addCustomWidget(widget, "type");
 }
 
