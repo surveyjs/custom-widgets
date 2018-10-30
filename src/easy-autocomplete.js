@@ -16,18 +16,7 @@ function init(Survey, $) {
       ) {
         return;
       }
-      Survey.JsonObject.metaData.addProperty("text", {
-        name: "choices:itemvalues",
-        onGetValue: function(obj) {
-          return Survey.ItemValue.getData(obj.choices || []);
-        },
-        onSetValue: function(obj, value) {
-          if (!obj.choices) {
-            obj.choices = obj.createItemValues("choices");
-          }
-          obj.choices = value;
-        }
-      });
+      Survey.JsonObject.metaData.addProperty("text", "choices:itemvalues");
       Survey.JsonObject.metaData.addProperty("text", {
         name: "choicesByUrl:restfull",
         className: "ChoicesRestfull",
@@ -44,9 +33,10 @@ function init(Survey, $) {
     },
     afterRender: function(question, el) {
       var $el = $(el).is("input") ? $(el) : $(el).find("input");
+      $el.parents(".sv_qstn")[0].style.overflow = "visible";
       var options = {
         data: (question.choices || []).map(function(item) {
-          return item.getData();
+          return item.text;
         }),
         adjustWidth: false,
         list: {
@@ -69,6 +59,16 @@ function init(Survey, $) {
         // };
       }
       $el.easyAutocomplete(options);
+
+      $el[0].oninput = function() {
+        question.customWidgetData.isNeedRender = true;
+      };
+      var updateHandler = function() {
+        $el[0].value =
+          typeof question.value === "undefined" ? "" : question.value;
+      };
+      question.valueChangedCallback = updateHandler;
+      updateHandler();
     },
     willUnmount: function(question, el) {
       // var $el = $(el).find("input");
