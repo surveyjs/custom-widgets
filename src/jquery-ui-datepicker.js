@@ -52,8 +52,20 @@ function init(Survey, $) {
       if (config.onSelect === undefined) {
         config.onSelect = function(dateText) {
           question.value = dateText;
+          this.fixFocusIE = true;
         };
       }
+      config.fixFocusIE = false;
+      config.onClose = function(dateText, inst) {
+        this.fixFocusIE = true;
+      };
+      config.beforeShow = function(input, inst) {
+        var result = !!navigator.userAgent.match(/Trident\/7\./)
+          ? !this.fixFocusIE
+          : true;
+        this.fixFocusIE = false;
+        return result;
+      };
       var pickerWidget = $el.datepicker(config);
 
       $el.keyup(function(e) {
