@@ -34,6 +34,7 @@ function init(Survey, $) {
       var $el = $(el).is(".widget-datepicker")
         ? $(el)
         : $(el).find(".widget-datepicker");
+      var isSelecting = false;
       var config = question.config || {};
       if (!!question.placeHolder) {
         $el.attr("placeholder", question.placeHolder);
@@ -51,7 +52,9 @@ function init(Survey, $) {
       }
       if (config.onSelect === undefined) {
         config.onSelect = function(dateText) {
+          isSelecting = true;
           question.value = dateText;
+          isSelecting = false;
           this.fixFocusIE = true;
         };
       }
@@ -80,10 +83,13 @@ function init(Survey, $) {
       question.readOnlyChangedCallback();
 
       question.valueChangedCallback = function() {
-        if (question.value) {
-          pickerWidget.datepicker("setDate", question.value);
-        } else {
-          pickerWidget.datepicker("setDate", null);
+        if (!isSelecting) {
+          if (question.value) {
+            pickerWidget.datepicker("setDate", question.value);
+          } else {
+            pickerWidget.datepicker("setDate", null);
+          }
+          $el.blur();
         }
       };
       question.valueChangedCallback();
