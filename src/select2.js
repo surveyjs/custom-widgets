@@ -101,7 +101,12 @@ function init(Survey, $) {
         $el.prop("disabled", question.isReadOnly);
       };
 
-      question.choicesChangedCallback = updateChoices;
+      question.registerFunctionOnPropertyValueChanged(
+        "visibleChoices",
+        function() {
+          updateChoices();
+        }
+      );
       updateChoices();
       $el.on("select2:select", function(e) {
         question.value = e.target.value;

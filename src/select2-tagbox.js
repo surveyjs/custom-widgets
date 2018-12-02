@@ -74,8 +74,12 @@ function init(Survey, $) {
       question.readOnlyChangedCallback = function() {
         $el.prop("disabled", question.isReadOnly);
       };
-
-      question.choicesChangedCallback = updateChoices;
+      question.registerFunctionOnPropertyValueChanged(
+        "visibleChoices",
+        function() {
+          updateChoices();
+        }
+      );
       question.valueChangedCallback = updateValueHandler;
       $el.on("select2:select", function(e) {
         question.value = (question.value || []).concat(e.params.data.id);
