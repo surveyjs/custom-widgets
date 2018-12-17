@@ -46,7 +46,7 @@ function init(Survey) {
         question.value = (question.rangeMin + question.rangeMax) / 2;
       }
 
-      el.style.marginBottom = "50px";
+      el.style.marginBottom = "60px";
       var slider = noUiSlider.create(el, {
         start: question.value,
         connect: [true, false],
