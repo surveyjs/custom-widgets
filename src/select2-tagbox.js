@@ -34,6 +34,8 @@ function init(Survey, $) {
     afterRender: function(question, el) {
       var settings = question.select2Config;
       var $el = $(el).is("select") ? $(el) : $(el).find("select");
+      el.parentElement.querySelector(".select2-search__field").style.border =
+        "none";
       $el.select2({
         tags: "true",
         disabled: question.isReadOnly,
