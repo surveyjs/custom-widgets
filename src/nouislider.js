@@ -42,13 +42,9 @@ function init(Survey) {
       ]);
     },
     afterRender: function(question, el) {
-      if (question.isEmpty()) {
-        question.value = (question.rangeMin + question.rangeMax) / 2;
-      }
-
       el.style.marginBottom = "60px";
       var slider = noUiSlider.create(el, {
-        start: question.value,
+        start: question.value || (question.rangeMin + question.rangeMax) / 2,
         connect: [true, false],
         step: question.step,
         tooltips: true,
@@ -64,7 +60,7 @@ function init(Survey) {
           max: question.rangeMax
         }
       });
-      slider.on("set", function() {
+      slider.on("change", function() {
         question.value = slider.get();
       });
       var updateValueHandler = function() {
