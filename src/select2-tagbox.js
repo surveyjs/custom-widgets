@@ -31,20 +31,25 @@ function init(Survey, $) {
         default: null
       });
     },
+    fixStyles: function(el) {
+      el.parentElement.querySelector(".select2-search__field").style.border =
+        "none";
+    },
     afterRender: function(question, el) {
+      var self = this;
       var settings = question.select2Config;
       var $el = $(el).is("select") ? $(el) : $(el).find("select");
-      var select2Input = el.parentElement.querySelector(
-        ".select2-search__field"
-      );
-      select2Input && (select2Input.style.border = "none");
       $el.select2({
         tags: "true",
         disabled: question.isReadOnly,
         theme: "classic"
       });
+
+      self.fixStyles(el);
+
       var updateValueHandler = function() {
         $el.val(question.value).trigger("change");
+        self.fixStyles(el);
       };
       var updateChoices = function() {
         $el.select2().empty();
