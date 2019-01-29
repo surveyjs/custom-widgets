@@ -28,6 +28,10 @@ function init(Survey) {
           default: 100
         }
       ]);
+      Survey.JsonObject.metaData.addProperty("bootstrapslider", {
+        name: "config",
+        default: null
+      });
     },
     afterRender: function(question, el) {
       var inputEl = document.createElement("input");
@@ -42,14 +46,34 @@ function init(Survey) {
         question.value || question.rangeMin
       );
       el.appendChild(inputEl);
-      var slider = new Slider(inputEl, {
-        id: question.name + "_" + question.id,
-        min: question.rangeMin,
-        max: question.rangeMax,
-        step: question.step,
-        enabled: !question.isReadOnly,
-        value: question.value || question.rangeMin
-      });
+
+      var config = question.config || {};
+
+      if (config.id === undefined) {
+        config.id = question.name + "_" + question.id;
+      }
+
+      if (config.min === undefined) {
+        config.min = question.rangeMin;
+      }
+
+      if (config.max === undefined) {
+        config.max = question.rangeMax;
+      }
+
+      if (config.step === undefined) {
+        config.step = question.step;
+      }
+
+      if (config.enabled === undefined) {
+        config.enabled = !question.isReadOnly;
+      }
+
+      if (config.value === undefined) {
+        config.value = question.value || question.rangeMin;
+      }
+
+      var slider = new Slider(inputEl, config);
 
       slider.on("change", function(valueObj) {
         question.value = slider.getValue();
