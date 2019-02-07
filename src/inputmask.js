@@ -26,6 +26,14 @@ function init(Survey) {
       var properties = [
         "inputFormat",
         {
+          name: "prefix",
+          default: "$"
+        },
+        {
+          name: "autoUnmask:boolean",
+          default: true
+        },
+        {
           name: "inputMask",
           default: "none",
           choices: [
@@ -53,7 +61,10 @@ function init(Survey) {
           ? surveyElement.inputMask
           : surveyElement.inputFormat;
       var options = {
-        autoUnmask: rootWidget.autoUnmask
+        autoUnmask:
+          typeof surveyElement.autoUnmask !== "undefined"
+            ? surveyElement.autoUnmask
+            : rootWidget.autoUnmask
       };
       if (surveyElement.inputMask != "none")
         options.inputFormat = surveyElement.inputFormat;
@@ -68,7 +79,7 @@ function init(Survey) {
       if (surveyElement.inputMask == "currency") {
         options.digits = rootWidget.numericDigits;
         options.digitsOptional = rootWidget.numericDigitsOptional;
-        options.prefix = rootWidget.numericPrefix;
+        options.prefix = surveyElement.prefix || rootWidget.numericPrefix;
         options.placeholder = rootWidget.numericPlaceholder;
       }
       if (surveyElement.inputMask == "datetime") {
