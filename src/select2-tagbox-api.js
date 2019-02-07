@@ -13,7 +13,7 @@ function init(Survey, $) {
   },
   htmlTemplate: "<select multiple='multiple' style='width: 100%;'></select>",
   isFit: function(question) {
-    return question.getType() === "tagbox";
+    return question.getType() === "tagboxapi";
   },
   activatedByChanged: function(activatedBy) {
     Survey.JsonObject.metaData.addClass(
