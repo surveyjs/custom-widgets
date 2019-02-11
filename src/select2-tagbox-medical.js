@@ -1,7 +1,7 @@
 function init(Survey, $) {
   $ = $ || window.$;
   var widget = {
-  name: "tagbox",
+  name: "tagboxmedical",
   title: "Tag box",
   iconName: "icon-tagbox",
   widgetIsLoaded: function() {
@@ -13,18 +13,18 @@ function init(Survey, $) {
   },
   htmlTemplate: "<select multiple='multiple' style='width: 100%;'></select>",
   isFit: function(question) {
-    return question.getType() === "tagboxapi";
+    return question.getType() === "tagboxmedical";
   },
   activatedByChanged: function(activatedBy) {
     Survey.JsonObject.metaData.addClass(
-      "tagbox", [{
+      "tagboxmedical", [{
         name: "hasOther",
         visible: false
       }],
       null,
       "checkbox"
     );
-    Survey.JsonObject.metaData.addProperty("tagbox", {
+    Survey.JsonObject.metaData.addProperty("tagboxmedical", {
       name: "select2Config",
       default: null
     });
@@ -35,27 +35,35 @@ function init(Survey, $) {
   },
   afterRender: function(question, el) {
     var self = this;
-    console.log(question)
+    // console.log(question)
     var settings = {
         minimumInputLength: 3,
         ajax: {
           delay: 250,
-          url: 'https://api.stackexchange.com/2.2/questions',
+          url: 'https://clinicaltables.nlm.nih.gov/api/conditions/v3/search',
           data: function(params) {
             var query = {
-              tagged: params.term,
-              site: 'stackoverflow',
-              order: 'desc',
-              page: params.page || 1
+              terms: params.term,
+              df: "primary_name"
             }
             return query;
           },
           processResults: function(data) {
+
+            var codes = data[1];
+            var conditions = data[3]
+            console.log(conditions)
+            var dataItems = codes.map(
+              function (a, i) {
+                return {"id": a, "text": conditions[i][0] }
+              }
+            )
+
             return {
-              results: data.items.map(function(dataItem) {
+              results: dataItems.map(function(dataItem) {
                 return {
-                  id: dataItem.link,
-                  text: dataItem.title
+                  id: dataItem.id,
+                  text: dataItem.text
                 }
               })
             };
@@ -77,7 +85,7 @@ function init(Survey, $) {
     };
     var updateChoices = function() {
       $el.select2().empty();
-      console.log(settings)
+      // console.log(settings)
 
       if (settings) {
         if (settings.ajax) {

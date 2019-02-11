@@ -23,6 +23,8 @@ var widgets = [
   main,
   "select2",
   "select2-tagbox",
+  "select2-tagbox-medical",
+  "select2-tagbox-drugs",
   "jquery-ui-datepicker",
   "inputmask",
   "icheck",
