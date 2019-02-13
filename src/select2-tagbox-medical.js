@@ -62,7 +62,7 @@ function init(Survey, $) {
             return {
               results: dataItems.map(function(dataItem) {
                 return {
-                  id: dataItem.id,
+                  id: dataItem.text,
                   text: dataItem.text
                 }
               })

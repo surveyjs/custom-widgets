@@ -60,7 +60,7 @@ module.exports = function(options) {
   var packagePath = `./${outputFolder}`;
 
   var targetPackageJson = {
-    name: `surveyjs-widgets`,
+    name: `surveyjs-widgets-willgdjones`,
     version: packageJson.version,
     description: "Custom widgets for the SurveyJS library",
     keywords: [

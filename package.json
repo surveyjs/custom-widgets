@@ -1,5 +1,5 @@
 {
-  "name": "surveyjs-widgets",
+  "name": "surveyjs-widgets-willgdjones",
   "version": "1.0.67",
   "scripts": {
     "start": "npm run build && live-server",
@@ -36,5 +36,21 @@
     "survey-vue": "^1.0.18",
     "virtual-module-webpack-plugin": "^0.3.0",
     "webpack": "^3.6.0"
-  }
+  },
+  "description": "- select2: [site](https://select2.org/), [repo](https://github.com/select2/select2), license: MIT",
+  "main": "webpack.config.js",
+  "directories": {
+    "example": "examples"
+  },
+  "dependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/willgdjones/widgets.git"
+  },
+  "author": "William Jones",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/willgdjones/widgets/issues"
+  },
+  "homepage": "https://github.com/willgdjones/widgets#readme"
 }
