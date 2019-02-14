@@ -56,7 +56,20 @@ function init(Survey, $) {
         .appendChild(othersEl);
 
       var updateValueHandler = function() {
-        $el.val(question.value).trigger("change");
+        var qText = (typeof question.value === "object")
+
+        if ($el.find("option[value='" + question.value + "']").length) {
+          $el.val(question.value).trigger("change");
+        } else {
+          var newOption = new Option(
+            question.value, //TODO if question value is object then need to improve
+            question.value,
+            true,
+            true
+          );
+          $el.append(newOption).trigger("change");
+        }
+
         othersEl.style.display = !question.isOtherSelected ? "none" : "";
       };
       var updateCommentHandler = function() {
