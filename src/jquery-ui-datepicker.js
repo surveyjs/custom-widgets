@@ -102,6 +102,7 @@ function init(Survey, $) {
     }
   };
 
+  Survey.matrixDropdownColumnTypes.datepicker = { properties: ["placeHolder"] };
   Survey.CustomWidgetCollection.Instance.addCustomWidget(widget, "customtype");
 }
 
