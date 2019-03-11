@@ -35,7 +35,6 @@ function init(Survey, $) {
   },
   afterRender: function(question, el) {
     var self = this;
-    // console.log(question)
     var settings = {
         minimumInputLength: 3,
         ajax: {
@@ -52,7 +51,6 @@ function init(Survey, $) {
 
             var codes = data[1];
             var conditions = data[3]
-            console.log(conditions)
             var dataItems = codes.map(
               function (a, i) {
                 return {"id": a, "text": conditions[i][0] }
@@ -77,11 +75,10 @@ function init(Survey, $) {
       theme: "classic"
   });
 
-
-
       var updateValueHandler = function() {
         if ($el.find("option").length) {
           $el.val(question.value).trigger("change");
+
         } else {
           for (var i=0; i<question.value.length; i++) {
             var newOption = new Option(
