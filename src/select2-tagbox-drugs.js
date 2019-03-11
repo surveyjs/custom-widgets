@@ -79,35 +79,23 @@ function init(Survey, $) {
     self.fixStyles(el);
 
     var updateValueHandler = function() {
-      $el.val(question.value).trigger("change");
-      self.fixStyles(el);
-    };
+      if ($el.find("option").length) {
+        $el.val(question.value).trigger("change");
+      } else {
+        for (var i=0; i<question.value.length; i++) {
+          var newOption = new Option(
+              question.value[i], //TODO if question value is object then need to improve
+              question.value[i],
+              true,
+              true
+            )
+          $el.append(newOption)
+        }
+      }
+    }
     var updateChoices = function() {
       $el.select2().empty();
-      // console.log(settings)
-
-      if (settings) {
-        if (settings.ajax) {
-          $el.select2(settings);
-        } else {
-          settings.data = question.visibleChoices.map(function(choice) {
-            return {
-              id: choice.value,
-              text: choice.text
-            };
-          });
-          $el.select2(settings);
-        }
-      } else {
-        $el.select2({
-          data: question.visibleChoices.map(function(choice) {
-            return {
-              id: choice.value,
-              text: choice.text
-            };
-          })
-        });
-      }
+      $el.select2(settings);
 
       updateValueHandler();
     };
