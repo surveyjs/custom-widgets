@@ -49,24 +49,39 @@ function init(Survey, $) {
     },
     afterRender: function(question, el) {
       var $el = $(el).is("select") ? $(el) : $(el).find("select");
-      $el.barrating("show", {
-        theme: question.ratingTheme,
-        initialRating: question.value,
-        showValues: question.showValues,
-        showSelectedRating: false,
-        onSelect: function(value, text) {
-          question.value = value;
-        }
-      });
+      var creator = function() {
+          $el.barrating("show", {
+          theme: question.ratingTheme,
+          initialRating: question.value,
+          showValues: question.showValues,
+          showSelectedRating: false,
+          onSelect: function(value, text) {
+            question.value = value;
+          }
+        });
+      }
+      creator();
       question.valueChangedCallback = function() {
         $(el)
           .find("select")
           .barrating("set", question.value);
       };
+      question.__barratingOnPropertyChangedCallback = function(sender, options) {
+        if (options.name == "ratingTheme") {
+          $el.barrating("destroy");
+          creator();  
+        }
+      };
+      question.onPropertyChanged.add(
+        question.__barratingOnPropertyChangedCallback
+      );
     },
     willUnmount: function(question, el) {
       var $el = $(el).find("select");
       $el.barrating("destroy");
+      question.valueChangedCallback = undefined;
+      question.onPropertyChanged.remove(question.__barratingOnPropertyChangedCallback);
+      question.__barratingOnPropertyChangedCallback = undefined;
     }
   };
 
