@@ -30,6 +30,16 @@ function init(Survey, $) {
         name: "select2Config",
         default: null
       });
+      Survey.matrixDropdownColumnTypes.tagbox = {
+        properties: [
+          "choices",
+          "choicesOrder",
+          "choicesByUrl",
+          "optionsCaption",
+          "otherText",
+          "choicesVisibleIf"
+        ]
+      };
     },
     fixStyles: function(el) {
       el.parentElement.querySelector(".select2-search__field").style.border =
