@@ -49,27 +49,35 @@ function init(Survey, $) {
     },
     afterRender: function(question, el) {
       var $el = $(el).is("select") ? $(el) : $(el).find("select");
+      var valueChangingByWidget = false;
       var creator = function() {
-          $el.barrating("show", {
+        $el.barrating("show", {
           theme: question.ratingTheme,
           initialRating: question.value,
           showValues: question.showValues,
           showSelectedRating: false,
           onSelect: function(value, text) {
+            valueChangingByWidget = true;
             question.value = value;
+            valueChangingByWidget = false;
           }
         });
-      }
+      };
       creator();
       question.valueChangedCallback = function() {
-        $(el)
-          .find("select")
-          .barrating("set", question.value);
+        if (!valueChangingByWidget) {
+          $(el)
+            .find("select")
+            .barrating("set", question.value);
+        }
       };
-      question.__barratingOnPropertyChangedCallback = function(sender, options) {
+      question.__barratingOnPropertyChangedCallback = function(
+        sender,
+        options
+      ) {
         if (options.name == "ratingTheme") {
           $el.barrating("destroy");
-          creator();  
+          creator();
         }
       };
       question.onPropertyChanged.add(
@@ -80,7 +88,9 @@ function init(Survey, $) {
       var $el = $(el).find("select");
       $el.barrating("destroy");
       question.valueChangedCallback = undefined;
-      question.onPropertyChanged.remove(question.__barratingOnPropertyChangedCallback);
+      question.onPropertyChanged.remove(
+        question.__barratingOnPropertyChangedCallback
+      );
       question.__barratingOnPropertyChangedCallback = undefined;
     }
   };
