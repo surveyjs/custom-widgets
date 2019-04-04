@@ -35,7 +35,7 @@ function init(Survey, $) {
         ? $(el)
         : $(el).find(".widget-datepicker");
       var isSelecting = false;
-      var config = question.config || {};
+      var config = $.extend(true, {}, question.config || {});
       if (!!question.placeHolder) {
         $el.attr("placeholder", question.placeHolder);
       }
