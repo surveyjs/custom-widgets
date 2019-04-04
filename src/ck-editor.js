@@ -19,17 +19,25 @@ function init(Survey) {
       });
     },
     afterRender: function(question, el) {
+      var name = question.name;
       CKEDITOR.editorConfig = function(config) {
         config.language = "es";
         config.height = question.height;
         config.toolbarCanCollapse = true;
       };
+      el.name = name;
+
+      if (CKEDITOR.instances[name]) {
+        CKEDITOR.instances[name].removeAllListeners();
+        CKEDITOR.remove(CKEDITOR.instances[name]);
+      }
+
       var editor = CKEDITOR.replace(el);
-      CKEDITOR.instances.editor1.config.readOnly = question.isReadOnly;
+      CKEDITOR.instances[name].config.readOnly = question.isReadOnly;
 
       var isValueChanging = false;
       var updateValueHandler = function() {
-        if (isValueChanging) return;
+        if (isValueChanging || typeof question.value === "undefined") return;
         editor.setData(question.value);
       };
       editor.on("change", function() {
@@ -50,6 +58,8 @@ function init(Survey) {
     },
     willUnmount: function(question, el) {
       question.readOnlyChangedCallback = null;
+      CKEDITOR.instances[name].removeAllListeners();
+      CKEDITOR.remove(CKEDITOR.instances[name]);
     }
   };
 
