@@ -65,7 +65,7 @@ function init(Survey, $) {
       };
       creator();
       question.valueChangedCallback = function() {
-        if (!valueChangingByWidget) {
+        if (!valueChangingByWidget && $(el).find("select")[0].value !== question.value) {
           $(el)
             .find("select")
             .barrating("set", question.value);
