@@ -5,7 +5,7 @@ function init(Survey) {
     name: "sortablelist",
     title: "Sortable list",
     iconName: "icon-sortablejs",
-    widgetIsLoaded: function() {
+    widgetIsLoaded: function () {
       return typeof Sortable != "undefined";
     },
     defaultJSON: { choices: ["Item 1", "Item 2", "Item 3"] },
@@ -13,11 +13,11 @@ function init(Survey) {
     areaStyle:
       "border: 1px solid #1ab394; width:100%; min-height:50px; margin-top:10px;",
     itemStyle: "background-color:#1ab394;color:#fff;margin:5px;padding:10px;",
-    isFit: function(question) {
+    isFit: function (question) {
       return question.getType() === "sortablelist";
     },
     htmlTemplate: "<div></div>",
-    activatedByChanged: function(activatedBy) {
+    activatedByChanged: function (activatedBy) {
       Survey.JsonObject.metaData.addClass(
         "sortablelist",
         [
@@ -35,8 +35,13 @@ function init(Survey) {
         name: "useDefaultTheme",
         default: true
       });
+      Survey.JsonObject.metaData.addProperty("sortablelist", {
+        name: "maxAnswersCount:number",
+        default: -1
+      });
+
     },
-    afterRender: function(question, el) {
+    afterRender: function (question, el) {
       var self = this;
 
       if (!question.useDefaultTheme) {
@@ -62,7 +67,7 @@ function init(Survey) {
 
       el.appendChild(resultEl);
       el.appendChild(sourceEl);
-      var hasValueInResults = function(val) {
+      var hasValueInResults = function (val) {
         var res = question.value;
         if (!Array.isArray(res)) return false;
         for (var i = 0; i < res.length; i++) {
@@ -70,7 +75,7 @@ function init(Survey) {
         }
         return false;
       };
-      var addChoiceToWidget = function(choice, inResults) {
+      var addChoiceToWidget = function (choice, inResults) {
         var srcEl = inResults ? resultEl : sourceEl;
         var newEl = document.createElement("div");
         newEl.innerHTML =
@@ -82,16 +87,16 @@ function init(Survey) {
         newEl.dataset["value"] = choice.value;
         srcEl.appendChild(newEl);
       };
-      var getChoicesNotInResults = function() {
+      var getChoicesNotInResults = function () {
         var res = [];
-        question.activeChoices.forEach(function(choice) {
+        question.activeChoices.forEach(function (choice) {
           if (!hasValueInResults(choice.value)) {
             res.push(choice);
           }
         });
         return res;
       };
-      var getChoicesInResults = function() {
+      var getChoicesInResults = function () {
         var res = [];
         var val = question.value;
         if (!Array.isArray(val)) return res;
@@ -107,7 +112,7 @@ function init(Survey) {
         return res;
       };
       var isUpdatingQuestionValue = false;
-      var updateValueHandler = function() {
+      var updateValueHandler = function () {
         if (isUpdatingQuestionValue) return;
         resultEl.innerHTML = "";
         resultEl.appendChild(emptyEl);
@@ -115,18 +120,23 @@ function init(Survey) {
         var notInResults = getChoicesNotInResults();
         var inResults = getChoicesInResults();
         emptyEl.style.display = inResults.length > 0 ? "none" : "";
-        inResults.forEach(function(choice) {
+        inResults.forEach(function (choice) {
           addChoiceToWidget(choice, true);
         });
-        notInResults.forEach(function(choice) {
+        notInResults.forEach(function (choice) {
           addChoiceToWidget(choice, false);
         });
       };
       result = question.resultEl = Sortable.create(resultEl, {
         animation: 150,
         disabled: question.isReadOnly,
-        group: question.name,
-        onSort: function(evt) {
+        group: {
+          name: question.name,
+          put: function (to) {
+            return question.maxAnswersCount < 0 || to.el.children.length <= question.maxAnswersCount;
+          },
+        },
+        onSort: function (evt) {
           var result = [];
           if (resultEl.children.length === 1) {
             emptyEl.style.display = "";
@@ -149,7 +159,7 @@ function init(Survey) {
         group: question.name
       });
       question.valueChangedCallback = updateValueHandler;
-      question.readOnlyChangedCallback = function() {
+      question.readOnlyChangedCallback = function () {
         if (question.isReadOnly) {
           result.options.disabled = true;
           source.options.disabled = true;
@@ -160,7 +170,7 @@ function init(Survey) {
       };
       updateValueHandler();
     },
-    willUnmount: function(question, el) {
+    willUnmount: function (question, el) {
       question.resultEl.destroy();
       question.sourceEl.destroy();
       question.readOnlyChangedCallback = null;
