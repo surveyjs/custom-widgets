@@ -59,20 +59,23 @@ function init(Survey) {
     afterRender: function(question, el) {
       var rootWidget = this;
       var canvas = el.getElementsByTagName("canvas")[0];
+      var buttonEl = el.getElementsByTagName("button")[0];
       var signaturePad = new SignaturePad(canvas);
       if (question.isReadOnly) {
         signaturePad.off();
       }
 
+      buttonEl.onclick = function() {
+        question.value = undefined;
+      };
+
       question.readOnlyChangedCallback = function() {
-        if (question.isReadOnly) {
+        if (!question.allowClear || question.isReadOnly) {
           signaturePad.off();
-          var clearBtn = document.querySelector(".sjs_sp_clear");
-          clearBtn && (clearBtn.disabled = true);
+          buttonEl.style.display = "none";
         } else {
           signaturePad.on();
-          var clearBtn = document.querySelector(".sjs_sp_clear");
-          clearBtn && (clearBtn.disabled = false);
+          buttonEl.style.display = "block";
         }
       };
 
@@ -92,6 +95,7 @@ function init(Survey) {
       };
       question.valueChangedCallback = updateValueHandler;
       updateValueHandler();
+      question.readOnlyChangedCallback();
       question.signaturePad = signaturePad;
       var propertyChangedHandler = function(sender, options) {
         if (options.name === "width" || options.name === "height") {
@@ -100,14 +104,6 @@ function init(Survey) {
       };
       question.onPropertyChanged.add(propertyChangedHandler);
       question.signaturePad.propertyChangedHandler = propertyChangedHandler;
-      var buttonEl = el.getElementsByTagName("button")[0];
-      if (question.allowClear && !question.isReadOnly) {
-        buttonEl.onclick = function() {
-          question.value = undefined;
-        };
-      } else {
-        buttonEl.parentNode.removeChild(buttonEl);
-      }
     },
     willUnmount: function(question, el) {
       if (question.signaturePad) {
