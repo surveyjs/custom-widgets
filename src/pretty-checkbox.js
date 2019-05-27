@@ -77,7 +77,7 @@ function init(Survey) {
           var targetChecked = target.checked;
 
           if (checkboxType) {
-            var questionValue = question.value || [];
+            var questionValue = question.createValueCopy() || [];
             var valueIndex = questionValue.indexOf(targetValue);
             if (targetChecked) {
               if (valueIndex === -1) {
@@ -188,6 +188,7 @@ function init(Survey) {
     },
     willUnmount: function(question, el) {
       question.valueChangedCallback = undefined;
+      question.readOnlyChangedCallback = undefined;
     }
   };
 
