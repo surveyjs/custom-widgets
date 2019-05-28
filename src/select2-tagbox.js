@@ -49,6 +49,9 @@ function init(Survey, $) {
       var self = this;
       var settings = question.select2Config;
       var $el = $(el).is("select") ? $(el) : $(el).find("select");
+
+      self.willUnmount(question, el);
+
       $el.select2({
         tags: "true",
         disabled: question.isReadOnly,
@@ -90,14 +93,16 @@ function init(Survey, $) {
         updateValueHandler();
       };
 
+      question._propertyValueChangedFnSelect2 = function() {
+        updateChoices();
+      };
+
       question.readOnlyChangedCallback = function() {
         $el.prop("disabled", question.isReadOnly);
       };
       question.registerFunctionOnPropertyValueChanged(
         "visibleChoices",
-        function() {
-          updateChoices();
-        }
+        question._propertyValueChangedFnSelect2
       );
       question.valueChangedCallback = updateValueHandler;
       $el.on("select2:select", function(e) {
@@ -114,11 +119,19 @@ function init(Survey, $) {
       updateChoices();
     },
     willUnmount: function(question, el) {
+      if (!question._propertyValueChangedFnSelect2) return;
+
       $(el)
         .find("select")
         .off("select2:select")
         .select2("destroy");
       question.readOnlyChangedCallback = null;
+      question.valueChangedCallback = null;
+      question.unRegisterFunctionOnPropertyValueChanged(
+        "visibleChoices",
+        question._propertyValueChangedFnSelect2
+      );
+      question._propertyValueChangedFnSelect2 = undefined;
     }
   };
 
