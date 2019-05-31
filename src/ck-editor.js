@@ -56,10 +56,9 @@ function init(Survey) {
       };
       updateValueHandler();
     },
-    willUnmount: function(question, el) {
+    willUnmount: function (question, el) {
       question.readOnlyChangedCallback = null;
-      CKEDITOR.instances[name].removeAllListeners();
-      CKEDITOR.remove(CKEDITOR.instances[name]);
+      CKEDITOR.instances[question.id].destroy(false);
     }
   };
 
