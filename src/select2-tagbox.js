@@ -111,7 +111,7 @@ function init(Survey, $) {
       $el.on("select2:unselect", function(e) {
         var index = (question.value || []).indexOf(e.params.data.id);
         if (index !== -1) {
-          var val = question.value;
+          var val = [].concat(question.value);
           val.splice(index, 1);
           question.value = val;
         }
