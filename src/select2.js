@@ -84,7 +84,7 @@ function init(Survey, $) {
         if (settings) {
           if (settings.ajax) {
             $el.select2(settings);
-            question.clearIncorrectValuesCallback = function () { };
+            question.keepIncorrectValues = true;
           } else {
             settings.data = question.visibleChoices.map(function (choice) {
               return {
@@ -140,7 +140,6 @@ function init(Survey, $) {
         .off("select2:select")
         .select2("destroy");
       question.readOnlyChangedCallback = null;
-      question.clearIncorrectValuesCallback = null;
     }
   };
 
