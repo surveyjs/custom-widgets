@@ -35,7 +35,7 @@ function init(Survey, $) {
             values = [values];
           }
           values.forEach(function(value) {
-            $el.find("input[value=" + value + "]").iCheck("check");
+            $el.find("input[value='" + value + "']").iCheck("check");
           });
         } else {
           question.generatedVisibleRows.forEach(function(row, index, rows) {
