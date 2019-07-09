@@ -88,6 +88,12 @@ function init(Survey) {
 
       Inputmask(mask, options).mask(el);
 
+      el.onblur = function() {
+        if (surveyElement.value === el.inputmask.getemptymask()) {
+          surveyElement.value = "";
+        }
+      };
+
       el.oninput = function() {
         surveyElement.customWidgetData.isNeedRender = true;
       };
