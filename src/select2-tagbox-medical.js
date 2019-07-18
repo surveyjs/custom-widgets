@@ -41,6 +41,7 @@ function init(Survey, $) {
           delay: 250,
           url: 'https://clinicaltables.nlm.nih.gov/api/conditions/v3/search',
           data: function(params) {
+            self.term = params.term
             var query = {
               terms: params.term,
               df: "primary_name"
@@ -57,13 +58,17 @@ function init(Survey, $) {
               }
             )
 
+            var results = dataItems.map(function(dataItem) {
+              return {
+                id: dataItem.text,
+                text: dataItem.text
+              }
+            })
+
+            results.unshift({ id: self.term, text: self.term})
+
             return {
-              results: dataItems.map(function(dataItem) {
-                return {
-                  id: dataItem.text,
-                  text: dataItem.text
-                }
-              })
+              results: results
             };
           }
         },

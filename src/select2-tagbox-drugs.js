@@ -42,6 +42,7 @@ function init(Survey, $) {
           delay: 250,
           url: 'https://clinicaltables.nlm.nih.gov/api/rxterms/v3/search',
           data: function(params) {
+            self.term = params.term
             var query = {
               terms: params.term
             }
@@ -50,21 +51,22 @@ function init(Survey, $) {
           processResults: function(data) {
 
             var conditions = data[1]
-            console.log(conditions)
+
             var dataItems = conditions.map(
               function (a, i) {
                 return {"id": String(i), "text": a }
               }
             )
-            console.log(dataItems)
+            var results = dataItems.map(function(dataItem) {
+              return {
+                id: dataItem.text,
+                text: dataItem.text
+              }
+            })
+            results.unshift({ id: self.term, text: self.term})
 
             return {
-              results: dataItems.map(function(dataItem) {
-                return {
-                  id: dataItem.text,
-                  text: dataItem.text
-                }
-              })
+              results: results
             };
           }
         },
