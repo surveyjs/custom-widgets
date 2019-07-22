@@ -63,7 +63,7 @@ function init(Survey, $) {
                 text: dataItem.text
               }
             })
-            results.unshift({ id: self.term, text: self.term})
+            results.push({ id: self.term, text: self.term})
 
             return {
               results: results
