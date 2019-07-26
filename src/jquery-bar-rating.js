@@ -40,10 +40,8 @@ function init(Survey, $) {
           "bars-pill",
           "bars-1to10",
           "bars-movie",
-          "bars-square",
           "bars-reversed",
           "bars-horizontal",
-          "bootstrap-stars",
           "fontawesome-stars-o"
         ]
       });
