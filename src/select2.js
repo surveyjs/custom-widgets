@@ -26,12 +26,16 @@ function init(Survey, $) {
       if (activatedBy == "property") {
         Survey.JsonObject.metaData.addProperty("dropdown", {
           name: "renderAs",
-          default: "standard",
-          choices: ["standard", "select2"]
+          default: "standart",
+          choices: ["select2", "standart"]
         });
         Survey.JsonObject.metaData.addProperty("dropdown", {
+          dependsOn: "renderAs",
           name: "select2Config",
-          default: null
+          default: null,
+          visibleIf: function (obj) {
+            return obj.renderAs == "select2";
+          }
         });
       }
       if (activatedBy == "customtype") {
