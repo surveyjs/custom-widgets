@@ -32,7 +32,6 @@ function init(Survey, $) {
         Survey.JsonObject.metaData.addProperty("dropdown", {
           dependsOn: "renderAs",
           name: "select2Config",
-          default: null,
           visibleIf: function (obj) {
             return obj.renderAs == "select2";
           }
@@ -47,7 +46,8 @@ function init(Survey, $) {
       }
     },
     afterRender: function (question, el) {
-      var settings = question.select2Config;
+      var select2Config = question.select2Config;
+      var settings = select2Config && typeof select2Config == 'string' ? JSON.parse(select2Config) : select2Config;
       var $el = $(el).is("select") ? $(el) : $(el).find("select");
       var othersEl = document.createElement("input");
       othersEl.type = "text";
