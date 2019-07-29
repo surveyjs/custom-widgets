@@ -92,7 +92,7 @@ function init(Survey) {
       question.valueChangedCallback = updateValueHandler;
     },
     willUnmount: function(question, el) {
-      question.bootstrapSlider.destroy();
+      question.bootstrapSlider && question.bootstrapSlider.destroy();
       question.bootstrapSlider = null;
       question.readOnlyChangedCallback = null;
     }
