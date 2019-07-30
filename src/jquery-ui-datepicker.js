@@ -83,15 +83,21 @@ function init(Survey, $) {
       question.readOnlyChangedCallback = function () {
         $el.datepicker("option", "disabled", question.isReadOnly);
       };
-      question.readOnlyChangedCallback();
-
+      function updateDate() {
+        if (question.value) {
+          pickerWidget.datepicker("setDate", question.value);
+        } else {
+          pickerWidget.datepicker("setDate", null);
+        }
+      }
+      question.registerFunctionOnPropertyValueChanged("dateFormat", function () {
+        question.dateFormat && pickerWidget.datepicker("option", "dateFormat", question.dateFormat);
+        updateDate();
+      }
+      );
       question.valueChangedCallback = function () {
         if (!isSelecting) {
-          if (question.value) {
-            pickerWidget.datepicker("setDate", question.value);
-          } else {
-            pickerWidget.datepicker("setDate", null);
-          }
+          updateDate();
           $el.blur();
         }
       };
