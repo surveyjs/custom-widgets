@@ -1,5 +1,5 @@
 function init(Survey) {
-    if (!!$.fn.bootstrapDP && !!$.fn.datepicker.noConflict) {
+    if (!$.fn.bootstrapDP && !!$.fn.datepicker.noConflict) {
         $.fn.bootstrapDP = $.fn.datepicker;
     }
     var widget = {
