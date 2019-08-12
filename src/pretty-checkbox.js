@@ -134,7 +134,7 @@ function init(Survey) {
           if (choiceItem.locText.hasHtml) {
             label.innerHTML = choiceItem.locText.html;
           } else {
-            label.textContent = choiceItem.locText.text;
+            label.textContent = choiceItem.locText.renderedText;
           }
           stateRoot.appendChild(label);
 

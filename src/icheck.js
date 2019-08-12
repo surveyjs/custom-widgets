@@ -72,7 +72,7 @@ function init(Survey, $) {
       });
       $el.find("input").on("ifUnchecked", function(event) {
         if (question.getType() === "checkbox") {
-          var oldValue = question.value || [];
+          var oldValue = (question.value || []).slice();
           var index = oldValue.indexOf(event.target.value);
           if (index >= 0) {
             oldValue.splice(index, 1);
