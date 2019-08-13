@@ -1,6 +1,6 @@
 function init(Survey, $) {
   $ = $ || window.$;
-  if (!!$.fn.datepicker && !!$.fn.datepicker.noConflict) {
+  if (!$.fn.bootstrapDP && !!$.fn.datepicker && !!$.fn.datepicker.noConflict) {
     $.fn.bootstrapDP = $.fn.datepicker.noConflict();
   }
   var widget = {
@@ -8,7 +8,7 @@ function init(Survey, $) {
     title: "Date picker",
     iconName: "icon-datepicker",
     widgetIsLoaded: function () {
-      return !!$ && !!$.fn.datepicker;
+      return !!$ && !!$.fn.datepicker && !$.fn.datepicker.noConflict;
     },
     isFit: function (question) {
       return question.getType() === "datepicker";
