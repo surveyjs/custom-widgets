@@ -158,7 +158,7 @@ function init(Survey) {
       var updateValueHandler = function(newValue) {
         if (!inChangeHandler) {
           var checkedItems = newValue || [];
-          if (radiogroupType) {
+          if (radiogroupType || booleanType) {
             checkedItems = [newValue];
           }
 
