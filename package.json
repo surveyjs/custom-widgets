@@ -29,11 +29,11 @@
     "signature_pad": "^2.3.2",
     "sortablejs": "^1.9.0",
     "standard-version": "4.0.0",
-    "survey-angular": "^1.1.4",
-    "survey-jquery": "^1.1.4",
-    "survey-knockout": "^1.1.4",
-    "survey-react": "^1.1.4",
-    "survey-vue": "^1.1.4",
+    "survey-angular": "^1.1.6",
+    "survey-jquery": "^1.1.6",
+    "survey-knockout": "^1.1.6",
+    "survey-react": "^1.1.6",
+    "survey-vue": "^1.1.6",
     "virtual-module-webpack-plugin": "^0.3.0",
     "webpack": "^3.6.0"
   }
