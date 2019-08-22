@@ -80,7 +80,8 @@ function init(Survey, $) {
       el.innerHTML = null;
       $(el).off();
       question.readOnlyChangedCallback = null;
-    }
+    },
+    pdfQuestionType: "dropdown"
   };
 
   Survey.CustomWidgetCollection.Instance.addCustomWidget(widget, "customtype");
