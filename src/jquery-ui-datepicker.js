@@ -111,7 +111,8 @@ function init(Survey, $) {
         ? $(el)
         : $(el).find(".widget-datepicker");
       $el.datepicker("destroy");
-    }
+    },
+    pdfQuestionType: "text"
   };
 
   Survey.matrixDropdownColumnTypes.datepicker = { properties: ["placeHolder"] };

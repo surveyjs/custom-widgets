@@ -67,7 +67,8 @@ function init(Survey) {
             $el.bootstrapDP("destroy");
             question.readOnlyChangedCallback = undefined;
             question.valueChangedCallback = undefined;
-        }
+        },
+        pdfQuestionType: "text"
     };
 
     Survey.CustomWidgetCollection.Instance.addCustomWidget(widget, "customtype");

@@ -174,7 +174,8 @@ function init(Survey) {
       question.resultEl.destroy();
       question.sourceEl.destroy();
       question.readOnlyChangedCallback = null;
-    }
+    },
+    pdfQuestionType: "checkbox"
   };
 
   Survey.CustomWidgetCollection.Instance.addCustomWidget(widget, "customtype");

@@ -115,6 +115,21 @@ function init(Survey) {
       question.readOnlyChangedCallback = null;
       question.signaturePad = null;
       question.readOnlyChangedCallback = null;
+    },
+    pdfRender: function(surveyPDF, options) {
+      if (options.question.getType() === "signaturepad") {
+        var point = SurveyPDF.SurveyHelper.createPoint(
+          SurveyPDF.SurveyHelper.mergeRects.apply(null,
+            options.bricks));
+        point.xLeft += options.controller.unitWidth;
+        point.yTop += options.controller.unitHeight *
+          SurveyPDF.FlatQuestion.CONTENT_GAP_VERT_SCALE;
+        var imageBrick = SurveyPDF.SurveyHelper.createImageFlat(
+          point, options.question, options.controller,
+          surveyPDF.data[options.question.name],
+          parseInt(options.question.width));
+        options.bricks.push(imageBrick);
+      }
     }
   };
 

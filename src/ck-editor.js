@@ -59,6 +59,28 @@ function init(Survey) {
     willUnmount: function (question, el) {
       question.readOnlyChangedCallback = null;
       CKEDITOR.instances[question.name].destroy(false);
+    },
+    pdfRender: function(_, options) {
+      if (options.question.getType() === "editor") {
+        var point = SurveyPDF.SurveyHelper.createPoint(
+          SurveyPDF.SurveyHelper.mergeRects.apply(null,
+            options.bricks));
+        point.xLeft += options.controller.unitWidth;
+        point.yTop += options.controller.unitHeight *
+          SurveyPDF.FlatQuestion.CONTENT_GAP_VERT_SCALE;
+        var html = SurveyPDF.SurveyHelper.createDivBlock(
+          options.question.value, options.controller);
+        return new Promise(function(resolve) {
+          SurveyPDF.SurveyHelper.createHTMLFlat(point,
+            options.question, options.controller, html).then(
+              function (htmlFlat) {
+                var htmlBrick = SurveyPDF.SurveyHelper.
+                  splitHtmlRect(options.controller, htmlFlat);
+                options.bricks.push(htmlBrick);
+                resolve();
+              });
+        });
+      }
     }
   };
 

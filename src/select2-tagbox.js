@@ -133,7 +133,8 @@ function init(Survey, $) {
         question._propertyValueChangedFnSelect2
       );
       question._propertyValueChangedFnSelect2 = undefined;
-    }
+    },
+    pdfQuestionType: "checkbox"
   };
 
   Survey.CustomWidgetCollection.Instance.addCustomWidget(widget, "customtype");

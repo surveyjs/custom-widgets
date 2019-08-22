@@ -91,7 +91,8 @@ function init(Survey, $) {
         question.__barratingOnPropertyChangedCallback
       );
       question.__barratingOnPropertyChangedCallback = undefined;
-    }
+    },
+    pdfQuestionType: "dropdown"
   };
 
   Survey.CustomWidgetCollection.Instance.addCustomWidget(widget, "customtype");
