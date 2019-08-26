@@ -22,7 +22,9 @@ function init(Survey) {
         "sortablelist",
         [
           { name: "hasOther", visible: false },
-          { name: "storeOthersAsComment", visible: false }
+          { name: "storeOthersAsComment", visible: false },
+          { name: "hasNone", visible: false },
+          { name: "renderAs", visible: false }
         ],
         null,
         "checkbox"
