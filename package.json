@@ -22,7 +22,7 @@
     "jquery-bar-rating": "^1.2.2",
     "jquery-ui": "^1.12.1",
     "live-server": "^1.2.0",
-    "nouislider": "^10.1.0",
+    "nouislider": "latest",
     "pretty-checkbox": "^3.0.3",
     "recordrtc": "^5.5.8",
     "select2": "^4.0.8",
