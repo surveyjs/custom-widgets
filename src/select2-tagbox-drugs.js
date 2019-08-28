@@ -35,7 +35,6 @@ function init(Survey, $) {
   },
   afterRender: function(question, el) {
     var self = this;
-    // console.log(question)
     var settings = {
         minimumInputLength: 3,
         ajax: {

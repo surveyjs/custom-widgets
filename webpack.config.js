@@ -25,6 +25,7 @@ var widgets = [
   "select2-tagbox",
   "select2-tagbox-medical",
   "select2-tagbox-drugs",
+  "select2-places",
   "jquery-ui-datepicker",
   "inputmask",
   "icheck",

@@ -7,6 +7,7 @@ export { default as nouislider } from "./nouislider.js";
 export { default as select2tagbox } from "./select2-tagbox.js";
 export { default as select2tagboxdrugs } from "./select2-tagbox-drugs.js";
 export { default as select2tagboxmedical } from "./select2-tagbox-medical.js";
+export { default as select2places } from "./select2-places.js";
 export { default as signaturepad } from "./signature_pad.js";
 export { default as sortablejs } from "./sortablejs.js";
 export { default as ckeditor } from "./ck-editor.js";
