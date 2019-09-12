@@ -38,7 +38,7 @@ function init(Survey) {
       return question.getType() === "signaturepad";
     },
     htmlTemplate:
-      "<div class='sjs_sp_container'><div><canvas></canvas></div><div class='sjs_sp_controls'><button type='button' class='sjs_sp_clear' title='Clear'>✖</button></div></div><style>.sjs_sp_container { position: relative; } .sjs_sp_controls { position: absolute; left: 0; bottom: 0; } .sjs_sp_controls > button { user-select: none; }</style>",
+      "<div class='sjs_sp_container'><div><canvas tabindex='0'></canvas></div><div class='sjs_sp_controls'><button type='button' class='sjs_sp_clear' title='Clear'>✖</button></div></div><style>.sjs_sp_container { position: relative; } .sjs_sp_controls { position: absolute; left: 0; bottom: 0; } .sjs_sp_controls > button { user-select: none; } .sjs_sp_container>div>canvas:focus { outline: none; }</style>",
     activatedByChanged: function(activatedBy) {
       Survey.JsonObject.metaData.addClass("signaturepad", [], null, "empty");
       Survey.JsonObject.metaData.addProperties("signaturepad", [
@@ -80,6 +80,9 @@ function init(Survey) {
       };
 
       signaturePad.penColor = rootWidget.penColor;
+      signaturePad.onBegin = function() {
+        canvas.focus();
+      };
       signaturePad.onEnd = function() {
         var data = signaturePad.toDataURL();
         question.value = data;
