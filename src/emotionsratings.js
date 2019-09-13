@@ -48,15 +48,41 @@ function init(Survey, $) {
         null,
         "dropdown"
       );
+      Survey.JsonObject.metaData.addProperties("emotionsratings", [
+        {
+          name: "emotions:itemvalues",
+          default: ["angry", "disappointed", "meh", "happy", "inLove"]
+        },
+        {
+          name: "emotionSize:number",
+          default: 30
+        },
+        {
+          name: "emotionsCount:number",
+          default: 5
+        },
+        {
+          name: "bgEmotion",
+          default: "happy"
+        },
+        {
+          name: "emotionColor",
+          default: "#FF0066"
+        }
+      ]);      
     },
     afterRender: function(question, el) {
-      var self = this;
-      var emotionsArray = ["angry", "disappointed", "meh", "happy", "inLove"];
+      var emotions = (question.emotions || []).map(function(item) { return item.value });
+      if(emotions.length === 0) {
+        emotions = ["angry", "disappointed", "meh", "happy", "inLove"];
+      }
       var options = {
-        emotionSize: 30,
-        bgEmotion: "happy",
-        emotions: emotionsArray,
-        color: "#FF0066",
+        emotionSize: question.emotionSize,
+        bgEmotion: question.bgEmotion,
+        emotions:  emotions,
+        initialRating: question.value,
+        color: question.emotionColor,
+        count: question.emotionsCount,
         onUpdate: function(value) {
           question.value = value;
         }
@@ -80,6 +106,7 @@ function init(Survey, $) {
       el.innerHTML = null;
       $(el).off();
       question.readOnlyChangedCallback = null;
+      question.valueChangedCallback = null;
     },
     pdfQuestionType: "dropdown"
   };
