@@ -14,3 +14,4 @@ export { default as bootstrapslider } from "./bootstrap-slider.js";
 export { default as microphone } from "./microphone.js";
 export { default as emotionsratings } from "./emotionsratings.js";
 export { default as bootstrapdatepicker } from "./bootstrapdatepicker.js";
+export { default as bipolarslider } from "./bipolar-slider.js";

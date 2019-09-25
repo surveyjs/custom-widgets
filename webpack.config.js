@@ -35,7 +35,8 @@ var widgets = [
   "pretty-checkbox",
   "bootstrap-slider",
   "microphone",
-  "emotionsratings"
+  "emotionsratings",
+  "bipolar-slider"
 ];
 
 var dependencies = {
