@@ -2,6 +2,51 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.1.14"></a>
+## [1.1.14](https://github.com/surveyjs/widgets/compare/v1.1.13...v1.1.14) (2019-10-01)
+
+
+
+<a name="1.1.13"></a>
+## [1.1.13](https://github.com/surveyjs/widgets/compare/v1.1.12...v1.1.13) (2019-09-24)
+
+
+
+<a name="1.1.12"></a>
+## [1.1.12](https://github.com/surveyjs/widgets/compare/v1.1.11...v1.1.12) (2019-09-17)
+
+
+
+<a name="1.1.11"></a>
+## [1.1.11](https://github.com/surveyjs/widgets/compare/v1.1.10...v1.1.11) (2019-09-13)
+
+
+
+<a name="1.1.10"></a>
+## [1.1.10](https://github.com/surveyjs/widgets/compare/v1.1.9...v1.1.10) (2019-09-11)
+
+
+
+<a name="1.1.9"></a>
+## [1.1.9](https://github.com/surveyjs/widgets/compare/v1.1.8...v1.1.9) (2019-09-10)
+
+
+
+<a name="1.1.8"></a>
+## [1.1.8](https://github.com/surveyjs/widgets/compare/v1.1.7...v1.1.8) (2019-09-03)
+
+
+
+<a name="1.1.7"></a>
+## [1.1.7](https://github.com/surveyjs/widgets/compare/v1.1.6...v1.1.7) (2019-08-27)
+
+
+
+<a name="1.1.6"></a>
+## [1.1.6](https://github.com/surveyjs/widgets/compare/v1.1.5...v1.1.6) (2019-08-20)
+
+
+
 <a name="1.1.5"></a>
 ## [1.1.5](https://github.com/surveyjs/widgets/compare/v1.1.4...v1.1.5) (2019-08-13)
 

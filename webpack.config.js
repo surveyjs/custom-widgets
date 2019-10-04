@@ -34,7 +34,8 @@ var widgets = [
   "easy-autocomplete",
   "pretty-checkbox",
   "bootstrap-slider",
-  "microphone"
+  "microphone",
+  "emotionsratings"
 ];
 
 var dependencies = {
@@ -49,7 +50,8 @@ var dependencies = {
   "easy-autocomplete": "^1.3.5",
   "pretty-checkbox": "^3.0.3",
   "bootstrap-slider": "^10.0.0",
-  recordrtc: "^5.4.6"
+  recordrtc: "^5.4.6",
+  "emotion-ratings": "^2.0.1"
 };
 
 var entry = {};

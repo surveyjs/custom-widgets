@@ -86,6 +86,24 @@ function init(Survey) {
         question.noUiSlider = null;
       }
       question.readOnlyChangedCallback = null;
+    },
+    pdfRender: function(_, options) {
+      if (options.question.getType() === "nouislider") {
+        var point = SurveyPDF.SurveyHelper.createPoint(
+          SurveyPDF.SurveyHelper.mergeRects.apply(null,
+            options.bricks));
+        point.xLeft += options.controller.unitWidth;
+        point.yTop += options.controller.unitHeight *
+          SurveyPDF.FlatQuestion.CONTENT_GAP_VERT_SCALE;
+        var rect = SurveyPDF.SurveyHelper.
+          createTextFieldRect(point, options.controller);
+        var textboxBrick = new SurveyPDF.TextFieldBrick(
+          options.question, options.controller, rect,
+          true, options.question.id, options.question.value ||
+          options.question.defaultValue, "",
+          options.question.isReadOnly, false, "text");
+        options.bricks.push(textboxBrick);
+      }
     }
   };
 

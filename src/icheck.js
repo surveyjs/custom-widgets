@@ -1,3 +1,10 @@
+function escValue(val) {
+  if (typeof val === 'string') {
+      return (val || "").replace(/(?!^)(['])(?!$)/g, "\\$1");
+  }
+  return val;
+}
+
 function init(Survey, $) {
   $ = $ || window.$;
   var widget = {
@@ -35,7 +42,7 @@ function init(Survey, $) {
             values = [values];
           }
           values.forEach(function(value) {
-            $el.find("input[value='" + value + "']").iCheck("check");
+            $el.find("input[value='" + escValue(value) + "']").iCheck("check");
           });
         } else {
           question.generatedVisibleRows.forEach(function(row, index, rows) {
@@ -45,7 +52,7 @@ function init(Survey, $) {
                   "input[name='" +
                     row.fullName +
                     "'][value='" +
-                    row.value +
+                    escValue(row.value) +
                     "']"
                 )
                 .iCheck("check");

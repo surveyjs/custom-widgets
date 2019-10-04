@@ -22,7 +22,9 @@ function init(Survey) {
         "sortablelist",
         [
           { name: "hasOther", visible: false },
-          { name: "storeOthersAsComment", visible: false }
+          { name: "storeOthersAsComment", visible: false },
+          { name: "hasNone", visible: false },
+          { name: "renderAs", visible: false }
         ],
         null,
         "checkbox"
@@ -89,7 +91,7 @@ function init(Survey) {
       };
       var getChoicesNotInResults = function () {
         var res = [];
-        question.activeChoices.forEach(function (choice) {
+        question.visibleChoices.forEach(function (choice) {
           if (!hasValueInResults(choice.value)) {
             res.push(choice);
           }
@@ -102,7 +104,7 @@ function init(Survey) {
         if (!Array.isArray(val)) return res;
         for (var i = 0; i < val.length; i++) {
           var item = Survey.ItemValue.getItemByValue(
-            question.activeChoices,
+            question.visibleChoices,
             val[i]
           );
           if (!!item) {
@@ -174,7 +176,8 @@ function init(Survey) {
       question.resultEl.destroy();
       question.sourceEl.destroy();
       question.readOnlyChangedCallback = null;
-    }
+    },
+    pdfQuestionType: "checkbox"
   };
 
   Survey.CustomWidgetCollection.Instance.addCustomWidget(widget, "customtype");
