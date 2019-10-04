@@ -33,7 +33,7 @@ function init(Survey, $) {
     },
     afterRender: function(question, el) {
       var $el = $(el).is("input") ? $(el) : $(el).find("input");
-      $el.parents(".sv_qstn")[0].style.overflow = "visible";
+      $el.parents(question.cssMainRoot.replace(/(^\s*)|(\s+)/g,'.'))[0].style.overflow = "visible";
       var options = {
         data: (question.choices || []).map(function(item) {
           return item.text;
