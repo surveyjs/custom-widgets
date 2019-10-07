@@ -23,6 +23,9 @@ function init(Survey, $) {
     afterRender: function(question, el) {
       var rootWidget = this;
       var $el = $(el);
+
+      $el.find(".sv-radio__svg").hide();
+
       $el.find("input").data({
         iCheck: undefined
       });
