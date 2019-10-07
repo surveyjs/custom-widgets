@@ -31,9 +31,16 @@ function init(Survey, $) {
         }
       });
     },
+    getCssSelectorFromClassesString(classesString) {
+      var cssSelector = classesString.replace(/(^\s*)|(\s+)/g, "."); // replace whitespaces with '.'
+      return cssSelector;
+    },
     afterRender: function(question, el) {
       var $el = $(el).is("input") ? $(el) : $(el).find("input");
-      $el.parents(question.cssMainRoot.replace(/(^\s*)|(\s+)/g,'.'))[0].style.overflow = "visible";
+      var questionRootClasses = this.getCssSelectorFromClassesString(
+        question.cssMainRoot
+      );
+      $el.parents(questionRootClasses)[0].style.overflow = "visible";
       var options = {
         data: (question.choices || []).map(function(item) {
           return item.text;
