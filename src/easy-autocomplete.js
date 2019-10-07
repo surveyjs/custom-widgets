@@ -31,13 +31,15 @@ function init(Survey, $) {
         }
       });
     },
-    getCssSelectorFromClassesString(classesString) {
-      var cssSelector = classesString.replace(/(^\s*)|(\s+)/g, "."); // replace whitespaces with '.'
-      return cssSelector;
-    },
     afterRender: function(question, el) {
       var $el = $(el).is("input") ? $(el) : $(el).find("input");
-      var questionRootClasses = this.getCssSelectorFromClassesString(
+
+      var getCssSelectorFromClassesString = function (classesString) {
+        var cssSelector = classesString.replace(/(^\s*)|(\s+)/g, "."); // replace whitespaces with '.'
+        return cssSelector;
+      }
+
+      var questionRootClasses = getCssSelectorFromClassesString(
         question.cssMainRoot
       );
       $el.parents(questionRootClasses)[0].style.overflow = "visible";
