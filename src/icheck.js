@@ -1,6 +1,6 @@
 function escValue(val) {
   if (typeof val === "string") {
-    return (val || "").replace(/(?!^)(['])(?!$)/g, "\\$1");
+    return (val || "").replace(/(['])/g, "\\$1");
   }
   return val;
 }
