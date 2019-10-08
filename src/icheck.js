@@ -24,12 +24,7 @@ function init(Survey, $) {
       var rootWidget = this;
       var $el = $(el);
       
-      var getCssSelectorFromClassesString = function(classesString) {
-        var cssSelector = classesString.replace(/(^\s*)|(\s+)/g, "."); // replace whitespaces with '.'
-        return cssSelector;
-      };
-      var decoratorClass = getCssSelectorFromClassesString(question.cssClasses.materialDecorator);
-      $el.find(decoratorClass).hide();
+      $el.find('.sv-item__decorator').hide();
 
       $el.find("input").data({
         iCheck: undefined
