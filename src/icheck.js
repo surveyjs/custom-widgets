@@ -1,6 +1,6 @@
 function escValue(val) {
-  if (typeof val === 'string') {
-      return (val || "").replace(/(?!^)(['])(?!$)/g, "\\$1");
+  if (typeof val === "string") {
+    return (val || "").replace(/(?!^)(['])(?!$)/g, "\\$1");
   }
   return val;
 }
@@ -23,8 +23,13 @@ function init(Survey, $) {
     afterRender: function(question, el) {
       var rootWidget = this;
       var $el = $(el);
-
-      $el.find(".sv-radio__svg").hide();
+      
+      var getCssSelectorFromClassesString = function(classesString) {
+        var cssSelector = classesString.replace(/(^\s*)|(\s+)/g, "."); // replace whitespaces with '.'
+        return cssSelector;
+      };
+      var decoratorClass = getCssSelectorFromClassesString(question.cssClasses.materialDecorator);
+      $el.find(decoratorClass).hide();
 
       $el.find("input").data({
         iCheck: undefined
