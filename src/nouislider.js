@@ -5,14 +5,14 @@ function init(Survey) {
     name: "nouislider",
     title: "noUiSlider",
     iconName: "icon-nouislider",
-    widgetIsLoaded: function () {
+    widgetIsLoaded: function() {
       return typeof noUiSlider != "undefined";
     },
-    isFit: function (question) {
+    isFit: function(question) {
       return question.getType() === "nouislider";
     },
-    htmlTemplate: "<div></div>",
-    activatedByChanged: function (activatedBy) {
+    htmlTemplate: "<div><div></div></div>",
+    activatedByChanged: function(activatedBy) {
       Survey.JsonObject.metaData.addClass("nouislider", [], null, "empty");
       Survey.JsonObject.metaData.addProperties("nouislider", [
         {
@@ -41,7 +41,10 @@ function init(Survey) {
         }
       ]);
     },
-    afterRender: function (question, el) {
+    afterRender: function(question, el) {
+      el.style.paddingBottom = "19px";
+      el.style.paddingRight = "12px";
+      el = el.children[0];
       el.style.marginBottom = "60px";
       var slider = noUiSlider.create(el, {
         start: question.value || (question.rangeMin + question.rangeMax) / 2,
@@ -50,7 +53,7 @@ function init(Survey) {
         tooltips: true,
         pips: {
           mode: question.pipsMode || "positions",
-          values: question.pipsValues.map(function (pVal) {
+          values: question.pipsValues.map(function(pVal) {
             return parseInt((pVal.value !== undefined && pVal.value) || pVal);
           }),
           density: question.pipsDensity || 5
@@ -60,10 +63,10 @@ function init(Survey) {
           max: question.rangeMax
         }
       });
-      slider.on("change", function () {
+      slider.on("change", function() {
         question.value = slider.get();
       });
-      var updateValueHandler = function () {
+      var updateValueHandler = function() {
         slider.set(question.value);
       };
       if (question.isReadOnly) {
@@ -72,7 +75,7 @@ function init(Survey) {
       updateValueHandler();
       question.noUiSlider = slider;
       question.valueChangedCallback = updateValueHandler;
-      question.readOnlyChangedCallback = function () {
+      question.readOnlyChangedCallback = function() {
         if (question.isReadOnly) {
           el.setAttribute("disabled", true);
         } else {
@@ -80,7 +83,7 @@ function init(Survey) {
         }
       };
     },
-    willUnmount: function (question, el) {
+    willUnmount: function(question, el) {
       if (!!question.noUiSlider) {
         question.noUiSlider.destroy();
         question.noUiSlider = null;
@@ -90,18 +93,28 @@ function init(Survey) {
     pdfRender: function(_, options) {
       if (options.question.getType() === "nouislider") {
         var point = SurveyPDF.SurveyHelper.createPoint(
-          SurveyPDF.SurveyHelper.mergeRects.apply(null,
-            options.bricks));
+          SurveyPDF.SurveyHelper.mergeRects.apply(null, options.bricks)
+        );
         point.xLeft += options.controller.unitWidth;
-        point.yTop += options.controller.unitHeight *
+        point.yTop +=
+          options.controller.unitHeight *
           SurveyPDF.FlatQuestion.CONTENT_GAP_VERT_SCALE;
-        var rect = SurveyPDF.SurveyHelper.
-          createTextFieldRect(point, options.controller);
+        var rect = SurveyPDF.SurveyHelper.createTextFieldRect(
+          point,
+          options.controller
+        );
         var textboxBrick = new SurveyPDF.TextFieldBrick(
-          options.question, options.controller, rect,
-          true, options.question.id, options.question.value ||
-          options.question.defaultValue, "",
-          options.question.isReadOnly, false, "text");
+          options.question,
+          options.controller,
+          rect,
+          true,
+          options.question.id,
+          options.question.value || options.question.defaultValue,
+          "",
+          options.question.isReadOnly,
+          false,
+          "text"
+        );
         options.bricks.push(textboxBrick);
       }
     }

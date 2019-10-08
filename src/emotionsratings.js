@@ -15,7 +15,7 @@ function init(Survey, $) {
       return question.getType() === "emotionsratings";
     },
     isDefaultRender: false,
-    htmlTemplate: "<div></div>",
+    htmlTemplate: "<div style='height: 33px'></div>",
     activatedByChanged: function(activatedBy) {
       Survey.JsonObject.metaData.addClass(
         "emotionsratings",
