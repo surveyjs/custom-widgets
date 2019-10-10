@@ -4,15 +4,15 @@ function init(Survey, $) {
     name: "barrating",
     title: "Bar rating",
     iconName: "icon-barrating",
-    widgetIsLoaded: function () {
+    widgetIsLoaded: function() {
       return typeof $ == "function" && !!$.fn.barrating;
     },
     defaultJSON: { choices: [1, 2, 3, 4, 5] },
-    isFit: function (question) {
+    isFit: function(question) {
       return question.getType() === "barrating";
     },
     isDefaultRender: true,
-    activatedByChanged: function (activatedBy) {
+    activatedByChanged: function(activatedBy) {
       Survey.JsonObject.metaData.addClass(
         "barrating",
         [
@@ -46,16 +46,17 @@ function init(Survey, $) {
         ]
       });
     },
-    afterRender: function (question, el) {
+    afterRender: function(question, el) {
       var $el = $(el).is("select") ? $(el) : $(el).find("select");
+      $el.parents()[0].style.marginBottom = "3px";
       var valueChangingByWidget = false;
-      var creator = function () {
+      var creator = function() {
         $el.barrating("show", {
           theme: question.ratingTheme,
           initialRating: question.value,
           showValues: question.showValues,
           showSelectedRating: false,
-          onSelect: function (value, text) {
+          onSelect: function(value, text) {
             valueChangingByWidget = true;
             question.value = value;
             valueChangingByWidget = false;
@@ -63,14 +64,17 @@ function init(Survey, $) {
         });
       };
       creator();
-      question.valueChangedCallback = function () {
-        if (!valueChangingByWidget && $(el).find("select")[0].value !== question.value) {
+      question.valueChangedCallback = function() {
+        if (
+          !valueChangingByWidget &&
+          $(el).find("select")[0].value !== question.value
+        ) {
           $(el)
             .find("select")
             .barrating("set", question.value);
         }
       };
-      question.__barratingOnPropertyChangedCallback = function (
+      question.__barratingOnPropertyChangedCallback = function(
         sender,
         options
       ) {
@@ -83,7 +87,7 @@ function init(Survey, $) {
         question.__barratingOnPropertyChangedCallback
       );
     },
-    willUnmount: function (question, el) {
+    willUnmount: function(question, el) {
       var $el = $(el).find("select");
       $el.barrating("destroy");
       question.valueChangedCallback = undefined;
