@@ -10,14 +10,14 @@ function init(Survey, $) {
     name: "datepicker",
     title: "Date picker",
     iconName: "icon-datepicker",
-    widgetIsLoaded: function () {
+    widgetIsLoaded: function() {
       return !!$ && !!$.fn.datepicker && !$.fn.datepicker.noConflict;
     },
-    isFit: function (question) {
+    isFit: function(question) {
       return question.getType() === "datepicker";
     },
     htmlTemplate: "<input class='form-control widget-datepicker' type='text'>",
-    activatedByChanged: function (activatedBy) {
+    activatedByChanged: function(activatedBy) {
       Survey.JsonObject.metaData.addClass(
         "datepicker",
         [
@@ -36,10 +36,11 @@ function init(Survey, $) {
         default: null
       });
     },
-    afterRender: function (question, el) {
+    afterRender: function(question, el) {
       var $el = $(el).is(".widget-datepicker")
         ? $(el)
         : $(el).find(".widget-datepicker");
+      $el.addClass(question.css.text.root);
       var isSelecting = false;
       var config = $.extend(true, {}, question.config || {});
       if (!!question.placeHolder) {
@@ -57,7 +58,7 @@ function init(Survey, $) {
         };
       }
       if (config.onSelect === undefined) {
-        config.onSelect = function (dateText) {
+        config.onSelect = function(dateText) {
           isSelecting = true;
           question.value = dateText;
           isSelecting = false;
@@ -65,10 +66,10 @@ function init(Survey, $) {
         };
       }
       config.fixFocusIE = false;
-      config.onClose = function (dateText, inst) {
+      config.onClose = function(dateText, inst) {
         this.fixFocusIE = true;
       };
-      config.beforeShow = function (input, inst) {
+      config.beforeShow = function(input, inst) {
         var result = !!navigator.userAgent.match(/Trident\/7\./)
           ? !this.fixFocusIE
           : true;
@@ -77,13 +78,13 @@ function init(Survey, $) {
       };
       var pickerWidget = $el.datepicker(config);
 
-      $el.keyup(function (e) {
+      $el.keyup(function(e) {
         if (e.keyCode == 8 || e.keyCode == 46) {
           $.datepicker._clearDate(this);
         }
       });
 
-      question.readOnlyChangedCallback = function () {
+      question.readOnlyChangedCallback = function() {
         $el.datepicker("option", "disabled", question.isReadOnly);
       };
       function updateDate() {
@@ -93,12 +94,12 @@ function init(Survey, $) {
           pickerWidget.datepicker("setDate", null);
         }
       }
-      question.registerFunctionOnPropertyValueChanged("dateFormat", function () {
-        question.dateFormat && pickerWidget.datepicker("option", "dateFormat", question.dateFormat);
+      question.registerFunctionOnPropertyValueChanged("dateFormat", function() {
+        question.dateFormat &&
+          pickerWidget.datepicker("option", "dateFormat", question.dateFormat);
         updateDate();
-      }
-      );
-      question.valueChangedCallback = function () {
+      });
+      question.valueChangedCallback = function() {
         if (!isSelecting) {
           updateDate();
           $el.blur();
@@ -106,7 +107,7 @@ function init(Survey, $) {
       };
       question.valueChangedCallback();
     },
-    willUnmount: function (question, el) {
+    willUnmount: function(question, el) {
       var $el = $(el).is(".widget-datepicker")
         ? $(el)
         : $(el).find(".widget-datepicker");
