@@ -59,14 +59,15 @@ function init(Survey) {
       var sourceEl = document.createElement("div");
 
       resultEl.style.cssText = self.areaStyle;
+      resultEl.style.boxSizing = "border-box";      
       resultEl.className = "sjs-sortablejs-result";
 
       emptyEl.innerHTML = question.emptyText;
       resultEl.appendChild(emptyEl);
 
       sourceEl.style.cssText = self.areaStyle;
+      sourceEl.style.boxSizing = "border-box";
       sourceEl.className = "sjs-sortablejs-source";
-
       el.appendChild(resultEl);
       el.appendChild(sourceEl);
       var hasValueInResults = function (val) {
