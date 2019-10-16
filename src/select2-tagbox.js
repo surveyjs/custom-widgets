@@ -18,10 +18,12 @@ function init(Survey, $) {
       Survey.JsonObject.metaData.addClass(
         "tagbox",
         [
-          {
-            name: "hasOther",
-            visible: false
-          }
+          { name: "hasOther:boolean", visible: false },
+          { name: "hasSelectAll:boolean", visible: false },
+          { name: "hasNone:boolean", visible: false },
+          { name: "otherText", visible: false },
+          { name: "selectAllText", visible: false },
+          { name: "noneText", visible: false }
         ],
         null,
         "checkbox"
