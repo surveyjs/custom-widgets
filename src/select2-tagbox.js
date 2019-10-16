@@ -4,17 +4,17 @@ function init(Survey, $) {
     name: "tagbox",
     title: "Tag box",
     iconName: "icon-tagbox",
-    widgetIsLoaded: function () {
+    widgetIsLoaded: function() {
       return typeof $ == "function" && !!$.fn.select2;
     },
     defaultJSON: {
       choices: ["Item 1", "Item 2", "Item 3"]
     },
     htmlTemplate: "<select multiple='multiple' style='width: 100%;'></select>",
-    isFit: function (question) {
+    isFit: function(question) {
       return question.getType() === "tagbox";
     },
-    activatedByChanged: function (activatedBy) {
+    activatedByChanged: function(activatedBy) {
       Survey.JsonObject.metaData.addClass(
         "tagbox",
         [
@@ -41,16 +41,18 @@ function init(Survey, $) {
         ]
       };
     },
-    fixStyles: function (el) {
+    fixStyles: function(el) {
       el.parentElement.querySelector(".select2-search__field").style.border =
         "none";
     },
-    afterRender: function (question, el) {
+    afterRender: function(question, el) {
       var self = this;
       var select2Config = question.select2Config;
-      var settings = select2Config && typeof select2Config == 'string' ? JSON.parse(select2Config) : select2Config;
+      var settings =
+        select2Config && typeof select2Config == "string"
+          ? JSON.parse(select2Config)
+          : select2Config;
       var $el = $(el).is("select") ? $(el) : $(el).find("select");
-
       self.willUnmount(question, el);
 
       $el.select2({
@@ -60,19 +62,25 @@ function init(Survey, $) {
       });
 
       self.fixStyles(el);
-
-      var updateValueHandler = function () {
-        $el.val(question.value).trigger("change");
+      var question;
+      var updateValueHandler = function() {
+        if (question.hasSelectAll && question.isAllSelected) {
+          $el
+            .val([question.selectAllItemValue.value].concat(question.value))
+            .trigger("change");
+        } else {
+          $el.val(question.value).trigger("change");
+        }
         self.fixStyles(el);
       };
-      var updateChoices = function () {
+      var updateChoices = function() {
         $el.select2().empty();
 
         if (settings) {
           if (settings.ajax) {
             $el.select2(settings);
           } else {
-            settings.data = question.visibleChoices.map(function (choice) {
+            settings.data = question.visibleChoices.map(function(choice) {
               return {
                 id: choice.value,
                 text: choice.text
@@ -82,7 +90,7 @@ function init(Survey, $) {
           }
         } else {
           $el.select2({
-            data: question.visibleChoices.map(function (choice) {
+            data: question.visibleChoices.map(function(choice) {
               return {
                 id: choice.value,
                 text: choice.text
@@ -90,15 +98,18 @@ function init(Survey, $) {
             })
           });
         }
-
         updateValueHandler();
       };
-
-      question._propertyValueChangedFnSelect2 = function () {
+      var isAllItemSelected = function(value) {
+        return (
+          question.hasSelectAll && value === question.selectAllItemValue.value
+        );
+      };
+      question._propertyValueChangedFnSelect2 = function() {
         updateChoices();
       };
 
-      question.readOnlyChangedCallback = function () {
+      question.readOnlyChangedCallback = function() {
         $el.prop("disabled", question.isReadOnly);
       };
       question.registerFunctionOnPropertyValueChanged(
@@ -106,12 +117,18 @@ function init(Survey, $) {
         question._propertyValueChangedFnSelect2
       );
       question.valueChangedCallback = updateValueHandler;
-      $el.on("select2:select", function (e) {
-        question.value = (question.value || []).concat(e.params.data.id);
+      $el.on("select2:select", function(e) {
+        if (isAllItemSelected(e.params.data.id)) {
+          question.selectAll();
+        } else {
+          question.value = (question.value || []).concat(e.params.data.id);
+        }
       });
-      $el.on("select2:unselect", function (e) {
+      $el.on("select2:unselect", function(e) {
         var index = (question.value || []).indexOf(e.params.data.id);
-        if (index !== -1) {
+        if (isAllItemSelected(e.params.data.id)) {
+          question.clearValue();
+        } else if (index !== -1) {
           var val = [].concat(question.value);
           val.splice(index, 1);
           question.value = val;
@@ -119,7 +136,7 @@ function init(Survey, $) {
       });
       updateChoices();
     },
-    willUnmount: function (question, el) {
+    willUnmount: function(question, el) {
       if (!question._propertyValueChangedFnSelect2) return;
 
       $(el)
