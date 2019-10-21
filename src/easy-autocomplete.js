@@ -19,16 +19,7 @@ function init(Survey, $) {
       Survey.JsonObject.metaData.addProperty("text", "choices:itemvalues");
       Survey.JsonObject.metaData.addProperty("text", {
         name: "choicesByUrl:restfull",
-        className: "ChoicesRestfull",
-        onGetValue: function(obj) {
-          return obj && obj.choicesByUrl && obj.choicesByUrl.getData();
-        },
-        onSetValue: function(obj, value) {
-          if (!obj.choicesByUrl) {
-            obj.choicesByUrl = new Survey.ChoicesRestfull();
-          }
-          obj.choicesByUrl.setData(value);
-        }
+        className: "ChoicesRestfull"
       });
       Array.prototype.push.apply(
         Survey.matrixDropdownColumnTypes.text.properties,
