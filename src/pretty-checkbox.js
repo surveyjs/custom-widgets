@@ -105,7 +105,7 @@ function init(Survey) {
 
       var choices = booleanType
         ? [{ locText: question.locTitle, value: !!question.value }]
-        : question.choices;
+        : question.visibleChoices;
       choices.forEach(function(choiceItem, index) {
         var input = document.createElement("input");
         input.type = options.inputType;
