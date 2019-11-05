@@ -113,7 +113,7 @@ function init(Survey) {
         input.onchange = changeHandler;
         input.value = choiceItem.value;
 
-        if (booleanType) {
+        if (booleanType && question.value === null) {
           input.indeterminate = question.defaultValue === "indeterminate";
         }
 
@@ -159,7 +159,7 @@ function init(Survey) {
         if (!inChangeHandler) {
           var checkedItems = newValue || [];
           if (radiogroupType || booleanType) {
-            checkedItems = [newValue];
+            checkedItems = [newValue && newValue.toString()];
           }
 
           Object.values(itemInputs).forEach(function(inputItem) {
