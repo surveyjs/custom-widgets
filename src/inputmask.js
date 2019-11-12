@@ -7,7 +7,6 @@ function init(Survey) {
     numericAutoGroup: true,
     numericDigits: 2,
     numericDigitsOptional: false,
-    numericPrefix: "$",
     numericPlaceholder: "0",
     autoUnmask: true,
     widgetIsLoaded: function() {
@@ -27,8 +26,9 @@ function init(Survey) {
         "inputFormat",
         {
           name: "prefix",
-          default: "$"
+          visible: false
         },
+        "currencySymbol",
         {
           name: "autoUnmask:boolean",
           default: true
@@ -79,7 +79,9 @@ function init(Survey) {
       if (surveyElement.inputMask == "currency") {
         options.digits = rootWidget.numericDigits;
         options.digitsOptional = rootWidget.numericDigitsOptional;
-        options.prefix = surveyElement.prefix || rootWidget.numericPrefix;
+        options.prefix = surveyElement.currencySymbol || surveyElement.prefix ||
+          Survey.cultureInfo && Survey.cultureInfo.getCulture(
+            surveyElement.culture).currencySymbol || "";
         options.placeholder = rootWidget.numericPlaceholder;
       }
       if (surveyElement.inputMask == "datetime") {
