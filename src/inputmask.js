@@ -100,6 +100,16 @@ function init(Survey) {
         surveyElement.customWidgetData.isNeedRender = true;
       };
 
+      $(el).on('focusout change', function () {
+
+        if ($(el).inputmask('isComplete')) {
+          surveyElement.value = $(el).val();
+        } else {
+          surveyElement.value = null;
+        }
+
+      });      
+
       var updateHandler = function() {
         el.value =
           typeof surveyElement.value === "undefined" ? "" : surveyElement.value;
