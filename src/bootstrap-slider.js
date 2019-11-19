@@ -36,6 +36,7 @@ function init(Survey) {
     afterRender: function(question, el) {
       el.style.paddingTop = '20px';
       el.style.paddingBottom = '17px';
+      el.style.paddingLeft = '10px';
       var inputEl = document.createElement("input");
       inputEl.id = question.id;
       inputEl.type = "text";
