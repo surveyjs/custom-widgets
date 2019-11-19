@@ -40,7 +40,7 @@ function init() {
 
   Survey.defaultBootstrapCss.navigationButton = "btn btn-primary";
   //Survey.Survey.cssType = "bootstrapmaterial";
-  Survey.Survey.cssType = "bootstrap";
+  Survey.Model.cssType = "bootstrap";
 
   var model = new Survey.Model(json);
   window.survey = model;
