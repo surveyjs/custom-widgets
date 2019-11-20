@@ -93,18 +93,18 @@ function init(Survey) {
     },
     pdfRender: function(_, options) {
       if (options.question.getType() === "nouislider") {
-        var point = SurveyPDF.SurveyHelper.createPoint(
-          SurveyPDF.SurveyHelper.mergeRects.apply(null, options.bricks)
+        var point = options.module.SurveyHelper.createPoint(
+          options.module.SurveyHelper.mergeRects.apply(null, options.bricks)
         );
         point.xLeft += options.controller.unitWidth;
         point.yTop +=
           options.controller.unitHeight *
-          SurveyPDF.FlatQuestion.CONTENT_GAP_VERT_SCALE;
-        var rect = SurveyPDF.SurveyHelper.createTextFieldRect(
+          options.module.FlatQuestion.CONTENT_GAP_VERT_SCALE;
+        var rect = options.module.SurveyHelper.createTextFieldRect(
           point,
           options.controller
         );
-        var textboxBrick = new SurveyPDF.TextFieldBrick(
+        var textboxBrick = new options.module.TextFieldBrick(
           options.question,
           options.controller,
           rect,
