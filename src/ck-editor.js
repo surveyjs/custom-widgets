@@ -62,19 +62,19 @@ function init(Survey) {
     },
     pdfRender: function(_, options) {
       if (options.question.getType() === "editor") {
-        var point = SurveyPDF.SurveyHelper.createPoint(
-          SurveyPDF.SurveyHelper.mergeRects.apply(null,
+        var point = options.module.SurveyHelper.createPoint(
+          options.module.SurveyHelper.mergeRects.apply(null,
             options.bricks));
         point.xLeft += options.controller.unitWidth;
         point.yTop += options.controller.unitHeight *
-          SurveyPDF.FlatQuestion.CONTENT_GAP_VERT_SCALE;
-        var html = SurveyPDF.SurveyHelper.createDivBlock(
+          options.module.FlatQuestion.CONTENT_GAP_VERT_SCALE;
+        var html = options.module.SurveyHelper.createDivBlock(
           options.question.value, options.controller);
         return new Promise(function(resolve) {
-          SurveyPDF.SurveyHelper.createHTMLFlat(point,
+          options.module.SurveyHelper.createHTMLFlat(point,
             options.question, options.controller, html).then(
               function (htmlFlat) {
-                var htmlBrick = SurveyPDF.SurveyHelper.
+                var htmlBrick = options.module.SurveyHelper.
                   splitHtmlRect(options.controller, htmlFlat);
                 options.bricks.push(htmlBrick);
                 resolve();
