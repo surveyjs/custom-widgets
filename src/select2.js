@@ -109,6 +109,7 @@ function init(Survey, $) {
               };
             })
           });
+          el.nextElementSibling.style.height = "30px";
         }
 
         updateValueHandler();
@@ -145,6 +146,7 @@ function init(Survey, $) {
         .select2("destroy");
       question.readOnlyChangedCallback = null;
     }
+    
   };
 
   Survey.CustomWidgetCollection.Instance.addCustomWidget(widget);
