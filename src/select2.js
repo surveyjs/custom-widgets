@@ -109,7 +109,7 @@ function init(Survey, $) {
               };
             })
           });
-          el.nextElementSibling.style.height = "30px";
+          el.nextElementSibling.style.marginBottom = "1px";
         }
 
         updateValueHandler();
