@@ -1,5 +1,4 @@
 function init(Survey, $) {
-
   $ = $ || window.$;
   if (!$.fn.bootstrapDP && !!$.fn.datepicker && !!$.fn.datepicker.noConflict) {
     $.fn.bootstrapDP = $.fn.datepicker.noConflict();
@@ -44,8 +43,8 @@ function init(Survey, $) {
         onSetValue: function(obj, value, jsonConv) {
           var newValue = value || "/";
           if(!!obj.shortDateFormat) {
-            var regex = new RegExp(obj.dateSeparator, 'g');
-            obj.shortDateFormat =  obj.shortDateFormat.replace(regex, newValue);
+            var regex = new RegExp(obj.dateSeparator, "g");
+            obj.shortDateFormat = obj.shortDateFormat.replace(regex, newValue);
           }
           obj.setPropertyValue("dateSeparator", newValue);
         },
