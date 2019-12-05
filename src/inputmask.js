@@ -100,15 +100,15 @@ function init(Survey) {
         surveyElement.customWidgetData.isNeedRender = true;
       };
 
-      $(el).on('focusout change', function () {
-
-        if ($(el).inputmask('isComplete')) {
-          surveyElement.value = $(el).val();
+      var pushValueHandler = function () {
+        if (el.inputmask.isComplete()) {
+          surveyElement.value = options.autoUnmask ?
+            el.inputmask.unmaskedvalue() : el.value;
         } else {
           surveyElement.value = null;
         }
-
-      });      
+      };
+      el.onfocusout = el.onchange = pushValueHandler;    
 
       var updateHandler = function() {
         el.value =
