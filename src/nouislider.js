@@ -55,7 +55,11 @@ function init(Survey) {
         pips: {
           mode: question.pipsMode || "positions",
           values: question.pipsValues.map(function(pVal) {
-            return parseInt((pVal.value !== undefined && pVal.value) || pVal);
+            var pipValue = pVal;
+            if(pVal.value !== undefined) {
+              pipValue = pVal.value;
+            }
+            return parseInt(pipValue);
           }),
           density: question.pipsDensity || 5
         },
