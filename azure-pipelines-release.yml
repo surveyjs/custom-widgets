@@ -22,6 +22,9 @@ steps:
     npm run build
   displayName: 'npm install and build'
 
-- script: |
-    chmod +x ./deploy_npm.sh && ./deploy_npm.sh
-  displayName: 'npm publish'
+  - task: Npm@1
+    inputs:
+      command: "publish"
+      workingDir: "package"
+      publishEndpoint: "NPM Registry"
+      verbose: true
