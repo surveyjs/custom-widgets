@@ -6,21 +6,21 @@
 trigger:
   tags:
     include:
-    - v*.*.*
+      - v*.*.*
 
 pool:
-  vmImage: 'Ubuntu-16.04'
+  vmImage: "Ubuntu-16.04"
 
 steps:
-- task: NodeTool@0
-  inputs:
-    versionSpec: '10.x'
-  displayName: 'install Node.js'
+  - task: NodeTool@0
+    inputs:
+      versionSpec: "10.x"
+    displayName: "install Node.js"
 
-- script: |
-    npm install
-    npm run build
-  displayName: 'npm install and build'
+  - script: |
+      npm install
+      npm run build
+    displayName: "npm install and build"
 
   - task: Npm@1
     inputs:
