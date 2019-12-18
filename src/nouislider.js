@@ -38,6 +38,10 @@ function init(Survey) {
         {
           name: "pipsDensity:number",
           default: 5
+        },
+        {
+          name: "orientation:string",
+          default: "horizontal"
         }
       ]);
     },
@@ -47,6 +51,9 @@ function init(Survey) {
       el.style.paddingTop = "44px";
       el = el.children[0];
       el.style.marginBottom = "60px";
+      if(question.orientation === "vertical") {
+        el.style.height = "250px";
+      }
       var slider = noUiSlider.create(el, {
         start: question.value || (question.rangeMin + question.rangeMax) / 2,
         connect: [true, false],
@@ -66,7 +73,8 @@ function init(Survey) {
         range: {
           min: question.rangeMin,
           max: question.rangeMax
-        }
+        },
+        orientation: question.orientation
       });
       slider.on("change", function() {
         question.value = slider.get();
