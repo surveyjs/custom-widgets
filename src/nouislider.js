@@ -36,6 +36,10 @@ function init(Survey) {
           default: [0, 25, 50, 75, 100]
         },
         {
+          name: "pipsText:itemvalues",
+          default: [0, 25, 50, 75, 100]
+        },
+        {
           name: "pipsDensity:number",
           default: 5
         },
@@ -68,7 +72,18 @@ function init(Survey) {
             }
             return parseInt(pipValue);
           }),
-          density: question.pipsDensity || 5
+          density: question.pipsDensity || 5,
+          format: {
+            to: function(pVal) {
+              var pipText = pVal;
+              question.pipsText.map(function(el) {
+                if(el.text !== undefined && pVal === el.value) {
+                  pipText = el.text;
+                }
+              })
+              return pipText;
+            }
+          }
         },
         range: {
           min: question.rangeMin,
