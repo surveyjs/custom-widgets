@@ -36,8 +36,20 @@ function init(Survey) {
           default: [0, 25, 50, 75, 100]
         },
         {
+          name: "pipsText:itemvalues",
+          default: [0, 25, 50, 75, 100]
+        },
+        {
           name: "pipsDensity:number",
           default: 5
+        },
+        {
+          name: "orientation:string",
+          default: "horizontal"
+        },
+        {
+          name: "direction:string",
+          default: "ltr"
         }
       ]);
     },
@@ -47,6 +59,9 @@ function init(Survey) {
       el.style.paddingTop = "44px";
       el = el.children[0];
       el.style.marginBottom = "60px";
+      if(question.orientation === "vertical") {
+        el.style.height = "250px";
+      }
       var slider = noUiSlider.create(el, {
         start: question.value || (question.rangeMin + question.rangeMax) / 2,
         connect: [true, false],
@@ -55,14 +70,31 @@ function init(Survey) {
         pips: {
           mode: question.pipsMode || "positions",
           values: question.pipsValues.map(function(pVal) {
-            return parseInt((pVal.value !== undefined && pVal.value) || pVal);
+            var pipValue = pVal;
+            if(pVal.value !== undefined) {
+              pipValue = pVal.value;
+            }
+            return parseInt(pipValue);
           }),
-          density: question.pipsDensity || 5
+          density: question.pipsDensity || 5,
+          format: {
+            to: function(pVal) {
+              var pipText = pVal;
+              question.pipsText.map(function(el) {
+                if(el.text !== undefined && pVal === el.value) {
+                  pipText = el.text;
+                }
+              })
+              return pipText;
+            }
+          }
         },
         range: {
           min: question.rangeMin,
           max: question.rangeMax
-        }
+        },
+        orientation: question.orientation,
+        direction: question.direction
       });
       slider.on("change", function() {
         question.value = slider.get();

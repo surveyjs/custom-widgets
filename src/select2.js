@@ -109,7 +109,9 @@ function init(Survey, $) {
               };
             })
           });
-          el.nextElementSibling.style.marginBottom = "1px";
+          if(!!el.nextElementSibling) {
+            el.nextElementSibling.style.marginBottom = "1px";
+          }
         }
 
         updateValueHandler();

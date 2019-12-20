@@ -1,4 +1,5 @@
-## Widgets [![Build Status](https://travis-ci.org/surveyjs/widgets.svg?branch=master)](https://travis-ci.org/surveyjs/widgets) [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat)](LICENSE)
+## Widgets 
+[![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat)](LICENSE)
 
 - select2: [site](https://select2.org/), [repo](https://github.com/select2/select2), license: MIT
 
