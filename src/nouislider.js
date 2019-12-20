@@ -42,6 +42,10 @@ function init(Survey) {
         {
           name: "orientation:string",
           default: "horizontal"
+        },
+        {
+          name: "direction:string",
+          default: "ltr"
         }
       ]);
     },
@@ -74,7 +78,8 @@ function init(Survey) {
           min: question.rangeMin,
           max: question.rangeMax
         },
-        orientation: question.orientation
+        orientation: question.orientation,
+        direction: question.direction
       });
       slider.on("change", function() {
         question.value = slider.get();
