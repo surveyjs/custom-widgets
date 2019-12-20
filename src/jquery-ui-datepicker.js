@@ -35,33 +35,6 @@ function init(Survey, $) {
         name: "config",
         default: null
       });
-      Survey.JsonObject.metaData.addProperty("datepicker", {
-        name: "dateSeparator",
-        choices: function(obj) {
-          return Survey.cultureInfo && Survey.cultureInfo.getCulture(obj && obj.culture).dateSeparators || [];
-        },
-        onSetValue: function(obj, value, jsonConv) {
-          var newValue = value || "/";
-          if(!!obj.shortDateFormat) {
-            var regex = new RegExp(obj.dateSeparator, "g");
-            obj.shortDateFormat = obj.shortDateFormat.replace(regex, newValue);
-          }
-          obj.setPropertyValue("dateSeparator", newValue);
-        },
-        default: "/"
-      });
-      Survey.JsonObject.metaData.addProperty("datepicker", {
-        name: "shortDateFormat",
-        dependsOn: "dateSeparator",
-        choices: function(obj) {
-          return (Survey.cultureInfo && Survey.cultureInfo.getCulture(obj && obj.culture).shortDateFormats || []).map(function(fmt) {
-            return {
-              text: fmt.text.replace(/\//g, obj.dateSeparator || "/"),
-              value: fmt.value.replace(/\//g, obj.dateSeparator || "/")
-            }
-          });
-        }
-      });
     },
     afterRender: function(question, el) {
       var $el = $(el).is(".widget-datepicker")
@@ -77,11 +50,6 @@ function init(Survey, $) {
         config.dateFormat = !!question.dateFormat
           ? question.dateFormat
           : undefined;
-          if (config.dateFormat === undefined) {
-            config.dateFormat = !!question.shortDateFormat
-            ? question.shortDateFormat
-            : undefined;
-          }
       }
       if (config.option === undefined) {
         config.option = {
