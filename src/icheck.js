@@ -105,9 +105,10 @@ function init(Survey, $) {
     willUnmount: function(question, el) {
       var $el = $(el);
       $el.find("input").iCheck("destroy");
+      question.visibleChoicesChangedCallback = null;
     }
   };
-
+  
   Survey.JsonObject.metaData.addProperty("radiogroup", "radioClass");
   Survey.JsonObject.metaData.addProperty("checkbox", "checkboxClass");
   Survey.CustomWidgetCollection.Instance.addCustomWidget(widget, "type");
