@@ -29,6 +29,14 @@ function init(Survey, $) {
       $el.find("input").data({
         iCheck: undefined
       });
+      function getIndexByValue(arr, value) {
+        if (!Array.isArray(arr)) return -1;
+        for (var i = 0; i < arr.length; i++) {
+          if (arr[i] == value) return i;
+          if (!!arr[i] && arr[i].toString().toLowerCase() == value) return i;
+        }
+        return -1;
+      }
       var makeChoicesICheck = function() {
         var inputs = $el.find("input");
         inputs.iCheck({
@@ -49,7 +57,7 @@ function init(Survey, $) {
             });
           } else if (question.getType() === "checkbox") {
             var oldValue = question.value || [];
-            var index = oldValue.indexOf(event.target.value);
+            var index = getIndexByValue(oldValue, event.target.value);
             if (index === -1) {
               question.value = oldValue.concat([event.target.value]);
             }
@@ -61,7 +69,7 @@ function init(Survey, $) {
         inputs.on("ifUnchecked", function(event) {
           if (question.getType() === "checkbox") {
             var oldValue = (question.value || []).slice();
-            var index = oldValue.indexOf(event.target.value);
+            var index = getIndexByValue(oldValue, event.target.value);
             if (index >= 0) {
               oldValue.splice(index, 1);
               question.value = oldValue;
@@ -108,7 +116,7 @@ function init(Survey, $) {
       question.visibleChoicesChangedCallback = null;
     }
   };
-  
+
   Survey.JsonObject.metaData.addProperty("radiogroup", "radioClass");
   Survey.JsonObject.metaData.addProperty("checkbox", "checkboxClass");
   Survey.CustomWidgetCollection.Instance.addCustomWidget(widget, "type");
