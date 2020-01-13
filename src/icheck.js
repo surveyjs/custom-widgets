@@ -37,6 +37,7 @@ function init(Survey, $) {
         }
         return -1;
       }
+      var frozeUpdating = false;
       var makeChoicesICheck = function() {
         var inputs = $el.find("input");
         inputs.iCheck({
@@ -47,8 +48,8 @@ function init(Survey, $) {
           radioClass:
             question.radioClass || rootWidget.radioClass || rootWidget.className
         });
-
         inputs.on("ifChecked", function(event) {
+          if (frozeUpdating) return;
           if (question.getType() === "matrix") {
             question.generatedVisibleRows.forEach(function(row, index, rows) {
               if (row.fullName === event.target.name) {
@@ -67,6 +68,7 @@ function init(Survey, $) {
         });
 
         inputs.on("ifUnchecked", function(event) {
+          if (frozeUpdating) return;
           if (question.getType() === "checkbox") {
             var oldValue = (question.value || []).slice();
             var index = getIndexByValue(oldValue, event.target.value);
@@ -77,15 +79,43 @@ function init(Survey, $) {
           }
         });
       };
+      function uncheckIcheck(cEl) {
+        cEl.iCheck("uncheck");
+        cEl[0].parentElement.classList.remove("checked");
+      }
       var select = function() {
+        frozeUpdating = true;
         if (question.getType() !== "matrix") {
           var values = question.value;
           if (!Array.isArray(values)) {
             values = [values];
           }
-          values.forEach(function(value) {
-            $el.find("input[value='" + escValue(value) + "']").iCheck("check");
-          });
+          if (question.getType() == "checkbox") {
+            var qValue = question.value;
+            question.visibleChoices.forEach(function(item) {
+              var inEl = $el.find(
+                "input[value='" + escValue(item.value) + "']"
+              );
+              if (!inEl) return;
+              var isChecked = getIndexByValue(qValue, item.value) > -1;
+              if (isChecked) {
+                inEl.iCheck("check");
+              } else {
+                var cEl = inEl[0];
+                var wasChecked = !!cEl["checked"];
+                if (wasChecked) {
+                  inEl.removeAttr("checked").iCheck("update");
+                  uncheckIcheck(inEl);
+                }
+              }
+            });
+          } else {
+            values.forEach(function(value) {
+              $el
+                .find("input[value='" + escValue(value) + "']")
+                .iCheck("check");
+            });
+          }
         } else {
           question.generatedVisibleRows.forEach(function(row, index, rows) {
             if (row.value) {
@@ -101,6 +131,7 @@ function init(Survey, $) {
             }
           });
         }
+        frozeUpdating = false;
       };
       makeChoicesICheck();
 
