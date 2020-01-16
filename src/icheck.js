@@ -98,6 +98,7 @@ function init(Survey, $) {
 
       question.visibleChoicesChangedCallback = function() {
         makeChoicesICheck();
+        $el.find(".sv-item__decorator").hide();
       };
       question.valueChangedCallback = select;
       select();
