@@ -82,7 +82,7 @@ To build library yourself:
 
     Please go to [this plunker](https://plnkr.co/edit/HdnYE5?p=preview) and select customwidget.js to review the code and comments.
 
-    The [same plunker example](https://plnkr.co/edit/fXsLf1R88WxxDFaFEnYx?p=preview), but for Survey Creator / Form Builder
+    The [same plunker example](https://plnkr.co/edit/fUTjd8JcTFLxtr2tkTJf?p=preview), but for Survey Creator / Form Builder
 
 ## License
 
