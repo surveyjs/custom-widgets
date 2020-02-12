@@ -104,8 +104,12 @@ function init(Survey, $) {
                 var cEl = inEl[0];
                 var wasChecked = !!cEl["checked"];
                 if (wasChecked) {
-                  inEl.removeAttr("checked").iCheck("update");
-                  uncheckIcheck(inEl);
+                  inEl.removeAttr("checked");
+                  if (!inEl.parent().hasClass("checked"))
+                    setTimeout(function() {
+                      uncheckIcheck(inEl);
+                    });
+                  else uncheckIcheck(inEl);
                 }
               }
             });
