@@ -6,7 +6,7 @@
     "watch": "webpack --env.buildType dev --watch",
     "prebuild": "webpack --env.buildType dev",
     "build": "webpack --env.buildType prod",
-    "release": "standard-version --message \"Release: %s\""
+    "release": "standard-version --message \"Release: %s [skip ci]\""
   },
   "private": true,
   "devDependencies": {
