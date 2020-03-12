@@ -41,7 +41,7 @@ steps:
       OverWrite: true
   
   - script: |
-      npm run build_prod
+      npm run build
     displayName: "npm build and test"
 
   - task: CopyFiles@2
