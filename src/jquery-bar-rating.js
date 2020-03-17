@@ -47,15 +47,39 @@ function init(Survey, $) {
       });
     },
     afterRender: function(question, el) {
-      var $el = $(el).is("select") ? $(el) : $(el).find("select");
-      $el.parents()[0].style.marginBottom = "3px";
-      var valueChangingByWidget = false;
-      var creator = function() {
-        $el.barrating("show", {
+      var $customSelect;
+      var $questionInput;
+      var contentContainer = $(el).is("select")
+        ? $(el)
+            .parent()
+            .parent()[0]
+        : $(el).parent()[0];
+      var renderCustomSelect = function() {
+        $customSelect = $("<select class='sv-widget-select'></select>");
+        question.visibleChoices.forEach(function(choice) {
+          $customSelect.append(
+            '<option value="{0}">{1}</option>'.format(choice.value, choice.text)
+          );
+        });
+        $questionInput = $(contentContainer).find(
+          '[id="{0}"]'.format(question.inputId)
+        );
+
+        $questionInput.css("display", "none");
+        $questionInput.after($customSelect);
+      };
+      var removeCustomSelect = function() {
+        $questionInput.css("display", "");
+        $customSelect.barrating("destroy");
+        $customSelect.remove();
+      };
+      var renderBarrating = function() {
+        $customSelect.barrating("show", {
           theme: question.ratingTheme,
           initialRating: question.value,
           showValues: question.showValues,
           showSelectedRating: false,
+          readonly: question.isReadOnly,
           onSelect: function(value, text) {
             valueChangingByWidget = true;
             question.value = value;
@@ -63,14 +87,20 @@ function init(Survey, $) {
           }
         });
       };
-      creator();
+      renderCustomSelect();
+      renderBarrating();
+      if (!!$customSelect.parents()[0])
+        $customSelect.parents()[0].style.marginBottom = "3px";
+      var valueChangingByWidget = false;
+
       question.valueChangedCallback = function() {
         if (
           !valueChangingByWidget &&
-          $(el).find("select")[0].value !== question.value
+          $(contentContainer).find("select.sv-widget-select")[0].value !==
+            question.value
         ) {
-          $(el)
-            .find("select")
+          $(contentContainer)
+            .find("select.sv-widget-select")
             .barrating("set", question.value);
         }
       };
@@ -79,17 +109,31 @@ function init(Survey, $) {
         options
       ) {
         if (options.name == "ratingTheme") {
-          $el.barrating("destroy");
-          creator();
+          $customSelect.barrating("destroy");
+          renderBarrating();
         }
       };
       question.onPropertyChanged.add(
         question.__barratingOnPropertyChangedCallback
       );
+      question.readOnlyChangedCallback = function() {
+        removeCustomSelect();
+        renderCustomSelect();
+        renderBarrating();
+      };
+      question.visibleChoicesChangedCallback = function() {
+        renderBarrating();
+      };
     },
     willUnmount: function(question, el) {
-      var $el = $(el).find("select");
+      var $contentContainer = $(el).is("select")
+        ? $(el)
+            .parent()
+            .parent()
+        : $(el).parent();
+      var $el = $contentContainer.find("select.sv-widget-select");
       $el.barrating("destroy");
+      $el.remove();
       question.valueChangedCallback = undefined;
       question.onPropertyChanged.remove(
         question.__barratingOnPropertyChangedCallback
