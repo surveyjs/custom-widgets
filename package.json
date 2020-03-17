@@ -1,12 +1,12 @@
 {
   "name": "surveyjs-widgets",
-  "version": "1.5.9",
+  "version": "1.5.15",
   "scripts": {
     "start": "npm run build && live-server",
     "watch": "webpack --env.buildType dev --watch",
     "prebuild": "webpack --env.buildType dev",
     "build": "webpack --env.buildType prod",
-    "release": "standard-version --message \"Release: %s\""
+    "release": "standard-version --message \"Release: %s [skip ci]\""
   },
   "private": true,
   "devDependencies": {
@@ -28,7 +28,7 @@
     "select2": "^4.0.8",
     "signature_pad": "^2.3.2",
     "sortablejs": "^1.9.0",
-    "standard-version": "4.0.0",
+    "standard-version": "^7.1.0",
     "survey-angular": "^1.5.0",
     "survey-jquery": "^1.5.0",
     "survey-knockout": "^1.5.0",

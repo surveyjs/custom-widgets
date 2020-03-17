@@ -1,6 +1,19 @@
-# Change Log
+# Changelog
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
+### [1.5.15](https://github.com/surveyjs/widgets/compare/v1.5.13...v1.5.15) (2020-03-12)
+
+### [1.5.13](https://github.com/surveyjs/widgets/compare/v1.5.12...v1.5.13) (2020-03-04)
+
+### [1.5.12](https://github.com/surveyjs/widgets/compare/v1.5.11...v1.5.12) (2020-02-28)
+
+### [1.5.11](https://github.com/surveyjs/widgets/compare/v1.5.10...v1.5.11) (2020-02-28)
+
+<a name="1.5.10"></a>
+## [1.5.10](https://github.com/surveyjs/widgets/compare/v1.5.9...v1.5.10) (2020-02-18)
+
+
 
 <a name="1.5.9"></a>
 ## [1.5.9](https://github.com/surveyjs/widgets/compare/v1.5.8...v1.5.9) (2020-02-14)

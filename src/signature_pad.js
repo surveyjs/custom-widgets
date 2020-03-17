@@ -1,5 +1,8 @@
 import SignaturePad from "signature_pad";
 
+var defaultWidth = 300;
+var defaultHeight = 200;
+
 function resizeCanvas(canvas) {
   var context = canvas.getContext("2d");
   var devicePixelRatio = window.devicePixelRatio || 1;
@@ -48,11 +51,11 @@ function init(Survey) {
         },
         {
           name: "width:number",
-          default: 300
+          default: defaultWidth
         },
         {
           name: "height:number",
-          default: 200
+          default: defaultHeight
         }
       ]);
     },
@@ -89,8 +92,8 @@ function init(Survey) {
       };
       var updateValueHandler = function() {
         var data = question.value;
-        canvas.width = question.width;
-        canvas.height = question.height;
+        canvas.width = question.width || defaultWidth;
+        canvas.height = question.height || defaultHeight;
         resizeCanvas(canvas);
         signaturePad.fromDataURL(
           data || "data:image/gif;base64,R0lGODlhAQABAIAAAP"
@@ -122,15 +125,19 @@ function init(Survey) {
     pdfRender: function(surveyPDF, options) {
       if (options.question.getType() === "signaturepad") {
         var point = options.module.SurveyHelper.createPoint(
-          options.module.SurveyHelper.mergeRects.apply(null,
-            options.bricks));
+          options.module.SurveyHelper.mergeRects.apply(null, options.bricks)
+        );
         point.xLeft += options.controller.unitWidth;
-        point.yTop += options.controller.unitHeight *
+        point.yTop +=
+          options.controller.unitHeight *
           options.module.FlatQuestion.CONTENT_GAP_VERT_SCALE;
         var imageBrick = options.module.SurveyHelper.createImageFlat(
-          point, options.question, options.controller,
+          point,
+          options.question,
+          options.controller,
           surveyPDF.data[options.question.name],
-          parseInt(options.question.width));
+          parseInt(options.question.width)
+        );
         options.bricks.push(imageBrick);
       }
     }
