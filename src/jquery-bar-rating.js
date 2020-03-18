@@ -67,6 +67,7 @@ function init(Survey, $) {
 
         $questionInput.css("display", "none");
         $questionInput.after($customSelect);
+        $customSelect[0].selectedIndex = -1;
       };
       var removeCustomSelect = function() {
         $questionInput.css("display", "");
@@ -79,7 +80,8 @@ function init(Survey, $) {
           initialRating: question.value,
           showValues: question.showValues,
           showSelectedRating: false,
-          readonly: question.isReadOnly,
+          allowEmpty: true,
+          // readonly: question.isReadOnly,
           onSelect: function(value, text) {
             valueChangingByWidget = true;
             question.value = value;
