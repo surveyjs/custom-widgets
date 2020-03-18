@@ -80,8 +80,7 @@ function init(Survey, $) {
           initialRating: question.value,
           showValues: question.showValues,
           showSelectedRating: false,
-          allowEmpty: true,
-          // readonly: question.isReadOnly,
+          readonly: question.isReadOnly,
           onSelect: function(value, text) {
             valueChangingByWidget = true;
             question.value = value;
