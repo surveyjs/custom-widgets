@@ -15,8 +15,6 @@
 
 - nouislider: [site](https://refreshless.com/nouislider/), [repo](https://github.com/leongersen/noUiSlider), license: https://github.com/leongersen/noUiSlider/blob/master/LICENSE
 
-- signaturepad: [site](http://szimek.github.io/signature_pad/), [repo](https://github.com/szimek/signature_pad), license: MIT
-
 - sortablejs: [site](http://rubaxa.github.io/Sortable/), [repo](https://github.com/RubaXa/Sortable), license: MIT
 
 - ckeditor: [site](https://ckeditor.com/ckeditor-4/), [repo](https://github.com/ckeditor/ckeditor-dev), license: https://github.com/ckeditor/ckeditor-dev/blob/major/LICENSE.md

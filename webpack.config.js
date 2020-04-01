@@ -27,7 +27,6 @@ var widgets = [
   "inputmask",
   "icheck",
   "jquery-bar-rating",
-  "signature_pad",
   "sortablejs",
   "nouislider",
   "ck-editor",
@@ -43,7 +42,6 @@ var dependencies = {
   icheck: "^1.0.2",
   "jquery-ui": "^1.12.1",
   sortablejs: "^1.6.1",
-  signature_pad: "^2.3.2",
   nouislider: "^10.1.0",
   inputmask: "^3.3.10",
   "jquery-bar-rating": "^1.2.2",
@@ -131,12 +129,6 @@ module.exports = function(options) {
         commonjs2: "nouislider",
         commonjs: "nouislider",
         amd: "nouislider"
-      },
-      signature_pad: {
-        root: "SignaturePad",
-        commonjs2: "signature_pad",
-        commonjs: "signature_pad",
-        amd: "signature_pad"
       },
       sortablejs: {
         root: "Sortable",
