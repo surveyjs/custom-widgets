@@ -59,7 +59,7 @@ steps:
 
 - script: |
     npm run build
-  displayName: "npm build and test"
+  displayName: "build"
 
 - powershell: |
     git push --follow-tags origin master;
