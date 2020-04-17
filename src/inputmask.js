@@ -9,10 +9,10 @@ function init(Survey) {
     numericDigitsOptional: false,
     numericPlaceholder: "0",
     autoUnmask: true,
-    widgetIsLoaded: function() {
+    widgetIsLoaded: function () {
       return typeof Inputmask != "undefined";
     },
-    isFit: function(question) {
+    isFit: function (question) {
       if (question.getType() == "multipletext") return true;
       return (
         question.getType() == "text" &&
@@ -20,17 +20,17 @@ function init(Survey) {
       );
     },
     isDefaultRender: true,
-    activatedByChanged: function(activatedBy) {
+    activatedByChanged: function (activatedBy) {
       if (Survey.JsonObject.metaData.findProperty("text", "inputMask")) return;
       var properties = [
         "inputFormat",
         {
           name: "prefix",
-          visible: false
+          visible: false,
         },
         {
           name: "autoUnmask:boolean",
-          default: true
+          default: true,
         },
         {
           name: "inputMask",
@@ -42,9 +42,9 @@ function init(Survey) {
             "decimal",
             "email",
             "phone",
-            "ip"
-          ]
-        }
+            "ip",
+          ],
+        },
       ];
       Survey.JsonObject.metaData.addProperties("text", properties);
       Survey.JsonObject.metaData.addProperties(
@@ -53,7 +53,7 @@ function init(Survey) {
       );
       Survey.JsonObject.metaData.addProperties("multipletextitem", properties);
     },
-    applyInputMask: function(surveyElement, el) {
+    applyInputMask: function (surveyElement, el) {
       var rootWidget = this;
       var mask =
         surveyElement.inputMask != "none"
@@ -63,7 +63,7 @@ function init(Survey) {
         autoUnmask:
           typeof surveyElement.autoUnmask !== "undefined"
             ? surveyElement.autoUnmask
-            : rootWidget.autoUnmask
+            : rootWidget.autoUnmask,
       };
       if (surveyElement.inputMask != "none")
         options.inputFormat = surveyElement.inputFormat;
@@ -84,37 +84,41 @@ function init(Survey) {
       if (surveyElement.inputMask == "datetime") {
         mask = surveyElement.inputFormat;
       }
+      if (surveyElement.inputMask == "phone" && !!surveyElement.inputFormat) {
+        mask = surveyElement.inputFormat;
+      }
 
       Inputmask(mask, options).mask(el);
 
-      el.onblur = function() {
+      el.onblur = function () {
         if (surveyElement.value === el.inputmask.getemptymask()) {
           surveyElement.value = "";
         }
       };
 
-      el.oninput = function() {
+      el.oninput = function () {
         surveyElement.customWidgetData.isNeedRender = true;
       };
 
       var pushValueHandler = function () {
         if (el.inputmask.isComplete()) {
-          surveyElement.value = options.autoUnmask ?
-            el.inputmask.unmaskedvalue() : el.value;
+          surveyElement.value = options.autoUnmask
+            ? el.inputmask.unmaskedvalue()
+            : el.value;
         } else {
           surveyElement.value = null;
         }
       };
-      el.onfocusout = el.onchange = pushValueHandler;    
+      el.onfocusout = el.onchange = pushValueHandler;
 
-      var updateHandler = function() {
+      var updateHandler = function () {
         el.value =
           typeof surveyElement.value === "undefined" ? "" : surveyElement.value;
       };
       surveyElement.valueChangedCallback = updateHandler;
       updateHandler();
     },
-    afterRender: function(question, el) {
+    afterRender: function (question, el) {
       if (question.getType() != "multipletext") {
         var input = el.querySelector("input") || el;
         this.applyInputMask(question, input);
@@ -130,12 +134,12 @@ function init(Survey) {
         }
       }
     },
-    willUnmount: function(question, el) {
+    willUnmount: function (question, el) {
       var input = el.querySelector("input") || el;
       if (!!input && !!input.inputmask) {
         input.inputmask.remove();
       }
-    }
+    },
   };
 
   Survey.CustomWidgetCollection.Instance.addCustomWidget(widget);
