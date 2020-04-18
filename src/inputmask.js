@@ -126,7 +126,7 @@ function init(Survey) {
         for (var i = 0; i < question.items.length; i++) {
           var item = question.items[i];
           if (item.inputMask != "none" || item.inputFormat) {
-            var input = el.querySelector("#" + item.id);
+            var input = el.querySelector("#" + item.editor.inputId);
             if (input) {
               this.applyInputMask(item, input);
             }
