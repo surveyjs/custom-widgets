@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.7.3](https://github.com/surveyjs/widgets/compare/v1.7.2...v1.7.3) (2020-04-21)
+
+
+### Bug Fixes
+
+* inputMask doesn't work for Multiple Text question [#171](https://github.com/surveyjs/widgets/issues/171) ([445bd15](https://github.com/surveyjs/widgets/commit/445bd1576575863739422419e444e23e55f0237f))
+
 ### [1.7.2](https://github.com/surveyjs/widgets/compare/v1.7.1...v1.7.2) (2020-04-17)
 
 
