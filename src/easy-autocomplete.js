@@ -2,14 +2,14 @@ function init(Survey, $) {
   $ = $ || window.$;
   var widget = {
     name: "autocomplete",
-    widgetIsLoaded: function() {
+    widgetIsLoaded: function () {
       return typeof $ == "function" && !!$.fn.easyAutocomplete;
     },
-    isFit: function(question) {
+    isFit: function (question) {
       return question.getType() === "text";
     },
     isDefaultRender: true,
-    activatedByChanged: function(activatedBy) {
+    activatedByChanged: function (activatedBy) {
       if (
         Survey.JsonObject.metaData.findProperty("text", "choices") !== null ||
         Survey.JsonObject.metaData.findProperty("text", "choicesByUrl") !== null
@@ -19,41 +19,45 @@ function init(Survey, $) {
       Survey.JsonObject.metaData.addProperty("text", "choices:itemvalues");
       Survey.JsonObject.metaData.addProperty("text", {
         name: "choicesByUrl:restfull",
-        className: "ChoicesRestfull"
+        className: "ChoicesRestfull",
       });
       Array.prototype.push.apply(
         Survey.matrixDropdownColumnTypes.text.properties,
-        ["choices", "choicesOrder", "choicesByUrl", "otherText"]);
+        ["choices", "choicesOrder", "choicesByUrl", "otherText"]
+      );
     },
-    afterRender: function(question, el) {
+    afterRender: function (question, el) {
       var $el = $(el).is("input") ? $(el) : $(el).find("input");
 
       var getCssSelectorFromClassesString = function (classesString) {
+        if (!classesString) return "";
         var cssSelector = classesString.replace(/(^\s*)|(\s+)/g, "."); // replace whitespaces with '.'
         return cssSelector;
-      }
+      };
 
       var questionRootClasses = getCssSelectorFromClassesString(
-        question.cssMainRoot
+        question.cssRoot
       );
-      $el.parents(questionRootClasses)[0].style.overflow = "visible";
+      if (!!questionRootClasses) {
+        $el.parents(questionRootClasses)[0].style.overflow = "visible";
+      }
       var options = {
-        data: (question.choices || []).map(function(item) {
+        data: (question.choices || []).map(function (item) {
           return item.text;
         }),
         adjustWidth: false,
         list: {
           sort: {
-            enabled: true
+            enabled: true,
           },
           match: {
-            enabled: true
-          }
+            enabled: true,
+          },
         },
-        placeholder: question.placeholder
+        placeholder: question.placeholder,
       };
       if (!!question.choicesByUrl) {
-        options.url = function(phrase) {
+        options.url = function (phrase) {
           return question.choicesByUrl.url;
         };
         options.getValue = question.choicesByUrl.valueName;
@@ -63,20 +67,20 @@ function init(Survey, $) {
       }
       $el.easyAutocomplete(options);
 
-      $el[0].oninput = function() {
+      $el[0].oninput = function () {
         question.customWidgetData.isNeedRender = true;
       };
-      var updateHandler = function() {
+      var updateHandler = function () {
         $el[0].value =
           typeof question.value === "undefined" ? "" : question.value;
       };
       question.valueChangedCallback = updateHandler;
       updateHandler();
     },
-    willUnmount: function(question, el) {
+    willUnmount: function (question, el) {
       // var $el = $(el).find("input");
       // $el.autocomplete("destroy");
-    }
+    },
   };
 
   Survey.CustomWidgetCollection.Instance.addCustomWidget(widget, "type");
