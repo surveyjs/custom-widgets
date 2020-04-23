@@ -27,40 +27,34 @@ function init(Survey, $) {
         Survey.JsonObject.metaData.addProperty("dropdown", {
           name: "renderAs",
           default: "standart",
-          choices: ["select2", "standart"]
+          choices: ["select2", "standart"],
         });
         Survey.JsonObject.metaData.addProperty("dropdown", {
           dependsOn: "renderAs",
           name: "select2Config",
           visibleIf: function (obj) {
             return obj.renderAs == "select2";
-          }
+          },
         });
       }
       if (activatedBy == "customtype") {
         Survey.JsonObject.metaData.addClass("select2", [], null, "dropdown");
         Survey.JsonObject.metaData.addProperty("select2", {
           name: "select2Config",
-          default: null
+          default: null,
         });
       }
     },
+    isDefaultRender: true,
     afterRender: function (question, el) {
       var select2Config = question.select2Config;
-      var settings = select2Config && typeof select2Config == 'string' ? JSON.parse(select2Config) : select2Config;
+      var settings =
+        select2Config && typeof select2Config == "string"
+          ? JSON.parse(select2Config)
+          : select2Config;
       var $el = $(el).is("select") ? $(el) : $(el).find("select");
-      var othersEl = document.createElement("input");
-      othersEl.type = "text";
-      othersEl.style.marginTop = "3px";
-      othersEl.style.display = "none";
-      othersEl.style.width = "100%";
-      $el
-        .parent()
-        .get(0)
-        .appendChild(othersEl);
-
       var updateValueHandler = function () {
-        var qText = (typeof question.value === "object")
+        var qText = typeof question.value === "object";
 
         if ($el.find("option[value='" + question.value + "']").length) {
           $el.val(question.value).trigger("change");
@@ -73,14 +67,6 @@ function init(Survey, $) {
           );
           $el.append(newOption).trigger("change");
         }
-
-        othersEl.style.display = !question.isOtherSelected ? "none" : "";
-      };
-      var updateCommentHandler = function () {
-        othersEl.value = question.comment ? question.comment : "";
-      };
-      var othersElChanged = function () {
-        question.comment = othersEl.value;
       };
       var updateChoices = function () {
         $el.select2().empty();
@@ -93,7 +79,7 @@ function init(Survey, $) {
             settings.data = question.visibleChoices.map(function (choice) {
               return {
                 id: choice.value,
-                text: choice.text
+                text: choice.text,
               };
             });
             $el.select2(settings);
@@ -105,17 +91,15 @@ function init(Survey, $) {
             data: question.visibleChoices.map(function (choice) {
               return {
                 id: choice.value,
-                text: choice.text
+                text: choice.text,
               };
-            })
+            }),
           });
-          if(!!el.nextElementSibling) {
+          if (!!el.nextElementSibling) {
             el.nextElementSibling.style.marginBottom = "1px";
           }
         }
-
         updateValueHandler();
-        updateCommentHandler();
       };
 
       question.readOnlyChangedCallback = function () {
@@ -135,20 +119,13 @@ function init(Survey, $) {
       $el.on("select2:unselecting", function (e) {
         question.value = null;
       });
-      othersEl.onchange = othersElChanged;
       question.valueChangedCallback = updateValueHandler;
-      question.commentChangedCallback = updateCommentHandler;
       updateValueHandler();
-      updateCommentHandler();
     },
     willUnmount: function (question, el) {
-      $(el)
-        .find("select")
-        .off("select2:select")
-        .select2("destroy");
+      $(el).find("select").off("select2:select").select2("destroy");
       question.readOnlyChangedCallback = null;
-    }
-    
+    },
   };
 
   Survey.CustomWidgetCollection.Instance.addCustomWidget(widget);
