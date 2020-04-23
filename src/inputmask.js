@@ -96,8 +96,12 @@ function init(Survey) {
         }
       };
 
+      var customWidgetData =
+        surveyElement.getType() === "multipletextitem"
+          ? surveyElement.editorValue.customWidgetData
+          : surveyElement.customWidgetData;
       el.oninput = function () {
-        surveyElement.customWidgetData.isNeedRender = true;
+        customWidgetData.isNeedRender = true;
       };
 
       var pushValueHandler = function () {
