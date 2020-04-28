@@ -40,13 +40,20 @@ function init(Survey) {
             var pickerWidget = $el.bootstrapDP({
                 enableOnReadonly: false
             })
-                .on("changeDate", function (e) {
-                    question.value = moment(e.date).format("DD/MM/YYYY");
-                    // `e` here contains the extra attributes
-                });
+            // .on("changeDate", function (e) {
+            //     question.value = moment(e.date).format("DD/MM/YYYY");
+            //     // `e` here contains the extra attributes
+            // })
+            .on("change", function (e) {
+                var newValue = pickerWidget.val();
+                if(question.value != newValue) {
+                    question.value = newValue;
+                }
+            });
 
             question.valueChangedCallback = function () {
-                $el.bootstrapDP('update', moment(question.value, "DD/MM/YYYY").toDate());
+                pickerWidget.val(question.value);
+                // $el.bootstrapDP('update', moment(question.value, "DD/MM/YYYY").toDate());
             }
             question.valueChangedCallback();
             question.readOnlyChangedCallback = function () {
