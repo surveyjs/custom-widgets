@@ -11,7 +11,7 @@ function init(Survey) {
     isFit: function(question) {
       return question.getType() === "nouislider";
     },
-    htmlTemplate: "<div><div></div></div>",
+    htmlTemplate: "<div><div></div></div><style>.noUi-origin { width: 0; }</style>",
     activatedByChanged: function(activatedBy) {
       Survey.JsonObject.metaData.addClass("nouislider", [], null, "empty");
       Survey.JsonObject.metaData.addProperties("nouislider", [
