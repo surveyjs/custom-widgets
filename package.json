@@ -18,7 +18,7 @@
     "generate-json-webpack-plugin": "^0.2.2",
     "icheck": "^1.0.2",
     "inputmask": "^3.3.10",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "jquery-bar-rating": "^1.2.2",
     "jquery-ui": "^1.12.1",
     "live-server": "^1.2.0",
