@@ -54,9 +54,10 @@ function init(Survey, $) {
           : select2Config;
       if (!settings) settings = {};
       var $el = $(el).is("select") ? $(el) : $(el).find("select");
+      var isSettingValue = false;
       var updateValueHandler = function () {
-        var qText = typeof question.value === "object";
-
+        if (isSettingValue) return;
+        isSettingValue = true;
         if ($el.find("option[value='" + question.value + "']").length) {
           $el.val(question.value).trigger("change");
         } else {
@@ -67,6 +68,7 @@ function init(Survey, $) {
             true
           );
           $el.append(newOption).trigger("change");
+          isSettingValue = false;
         }
       };
       var updateChoices = function () {
