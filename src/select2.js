@@ -52,6 +52,7 @@ function init(Survey, $) {
         select2Config && typeof select2Config == "string"
           ? JSON.parse(select2Config)
           : select2Config;
+      if (!settings) settings = {};
       var $el = $(el).is("select") ? $(el) : $(el).find("select");
       var updateValueHandler = function () {
         var qText = typeof question.value === "object";
@@ -70,34 +71,28 @@ function init(Survey, $) {
       };
       var updateChoices = function () {
         $el.select2().empty();
-
-        if (settings) {
-          if (settings.ajax) {
-            $el.select2(settings);
-            question.keepIncorrectValues = true;
-          } else {
-            settings.data = question.visibleChoices.map(function (choice) {
-              return {
-                id: choice.value,
-                text: choice.text,
-              };
-            });
-            $el.select2(settings);
-          }
+        if (!settings.placeholder && question.showOptionsCaption) {
+          settings.placeholder = question.optionsCaption;
+          settings.allowClear = true;
+        }
+        if (!settings.theme) {
+          settings.theme = "classic";
+        }
+        settings.disabled = question.isReadOnly;
+        if (settings.ajax) {
+          $el.select2(settings);
+          question.keepIncorrectValues = true;
         } else {
-          $el.select2({
-            theme: "classic",
-            disabled: question.isReadOnly,
-            data: question.visibleChoices.map(function (choice) {
-              return {
-                id: choice.value,
-                text: choice.text,
-              };
-            }),
+          settings.data = question.visibleChoices.map(function (choice) {
+            return {
+              id: choice.value,
+              text: choice.text,
+            };
           });
-          if (!!el.nextElementSibling) {
-            el.nextElementSibling.style.marginBottom = "1px";
-          }
+          $el.select2(settings);
+        }
+        if (!!el.nextElementSibling) {
+          el.nextElementSibling.style.marginBottom = "1px";
         }
         updateValueHandler();
       };
