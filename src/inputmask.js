@@ -81,9 +81,9 @@ function init(Survey) {
         options.prefix = surveyElement.prefix || "";
         options.placeholder = rootWidget.numericPlaceholder;
       }
-      if (surveyElement.inputMask == "datetime") {
-        mask = surveyElement.inputFormat;
-      }
+      // if (surveyElement.inputMask == "datetime") {
+      //   mask = surveyElement.inputFormat;
+      // }
       if (surveyElement.inputMask == "phone" && !!surveyElement.inputFormat) {
         mask = surveyElement.inputFormat;
       }
