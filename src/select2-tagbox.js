@@ -4,17 +4,17 @@ function init(Survey, $) {
     name: "tagbox",
     title: "Tag box",
     iconName: "icon-tagbox",
-    widgetIsLoaded: function() {
+    widgetIsLoaded: function () {
       return typeof $ == "function" && !!$.fn.select2;
     },
     defaultJSON: {
-      choices: ["Item 1", "Item 2", "Item 3"]
+      choices: ["Item 1", "Item 2", "Item 3"],
     },
     htmlTemplate: "<select multiple='multiple' style='width: 100%;'></select>",
-    isFit: function(question) {
+    isFit: function (question) {
       return question.getType() === "tagbox";
     },
-    activatedByChanged: function(activatedBy) {
+    activatedByChanged: function (activatedBy) {
       Survey.JsonObject.metaData.addClass(
         "tagbox",
         [
@@ -23,14 +23,18 @@ function init(Survey, $) {
           { name: "hasNone:boolean", visible: false },
           { name: "otherText", visible: false },
           { name: "selectAllText", visible: false },
-          { name: "noneText", visible: false }
+          { name: "noneText", visible: false },
         ],
         null,
         "checkbox"
       );
       Survey.JsonObject.metaData.addProperty("tagbox", {
         name: "select2Config",
-        default: null
+        default: null,
+      });
+      Survey.JsonObject.metaData.addProperty("tagbox", {
+        name: "placeholder",
+        default: "",
       });
       Survey.matrixDropdownColumnTypes.tagbox = {
         properties: [
@@ -39,33 +43,35 @@ function init(Survey, $) {
           "choicesByUrl",
           "optionsCaption",
           "otherText",
-          "choicesVisibleIf"
-        ]
+          "choicesVisibleIf",
+        ],
       };
     },
-    fixStyles: function(el) {
+    fixStyles: function (el) {
       el.parentElement.querySelector(".select2-search__field").style.border =
         "none";
     },
-    afterRender: function(question, el) {
+    afterRender: function (question, el) {
       var self = this;
       var select2Config = question.select2Config;
       var settings =
         select2Config && typeof select2Config == "string"
           ? JSON.parse(select2Config)
           : select2Config;
+      var placeholder = question.placeholder;
       var $el = $(el).is("select") ? $(el) : $(el).find("select");
+
       self.willUnmount(question, el);
 
       $el.select2({
         tags: "true",
         disabled: question.isReadOnly,
-        theme: "classic"
+        theme: "classic",
       });
 
       self.fixStyles(el);
       var question;
-      var updateValueHandler = function() {
+      var updateValueHandler = function () {
         if (question.hasSelectAll && question.isAllSelected) {
           $el
             .val([question.selectAllItemValue.value].concat(question.value))
@@ -75,43 +81,46 @@ function init(Survey, $) {
         }
         self.fixStyles(el);
       };
-      var updateChoices = function() {
+      var updateChoices = function () {
         $el.select2().empty();
 
         if (settings) {
+          if (placeholder) settings.placeholder = placeholder;
+
           if (settings.ajax) {
             $el.select2(settings);
           } else {
-            settings.data = question.visibleChoices.map(function(choice) {
+            settings.data = question.visibleChoices.map(function (choice) {
               return {
                 id: choice.value,
-                text: choice.text
+                text: choice.text,
               };
             });
             $el.select2(settings);
           }
         } else {
           $el.select2({
-            data: question.visibleChoices.map(function(choice) {
+            placeholder: placeholder,
+            data: question.visibleChoices.map(function (choice) {
               return {
                 id: choice.value,
-                text: choice.text
+                text: choice.text,
               };
-            })
+            }),
           });
         }
         updateValueHandler();
       };
-      var isAllItemSelected = function(value) {
+      var isAllItemSelected = function (value) {
         return (
           question.hasSelectAll && value === question.selectAllItemValue.value
         );
       };
-      question._propertyValueChangedFnSelect2 = function() {
+      question._propertyValueChangedFnSelect2 = function () {
         updateChoices();
       };
 
-      question.readOnlyChangedCallback = function() {
+      question.readOnlyChangedCallback = function () {
         $el.prop("disabled", question.isReadOnly);
       };
       question.registerFunctionOnPropertyValueChanged(
@@ -119,14 +128,14 @@ function init(Survey, $) {
         question._propertyValueChangedFnSelect2
       );
       question.valueChangedCallback = updateValueHandler;
-      $el.on("select2:select", function(e) {
+      $el.on("select2:select", function (e) {
         if (isAllItemSelected(e.params.data.id)) {
           question.selectAll();
         } else {
           question.value = (question.value || []).concat(e.params.data.id);
         }
       });
-      $el.on("select2:unselect", function(e) {
+      $el.on("select2:unselect", function (e) {
         var index = (question.value || []).indexOf(e.params.data.id);
         if (isAllItemSelected(e.params.data.id)) {
           question.clearValue();
@@ -138,13 +147,10 @@ function init(Survey, $) {
       });
       updateChoices();
     },
-    willUnmount: function(question, el) {
+    willUnmount: function (question, el) {
       if (!question._propertyValueChangedFnSelect2) return;
 
-      $(el)
-        .find("select")
-        .off("select2:select")
-        .select2("destroy");
+      $(el).find("select").off("select2:select").select2("destroy");
       question.readOnlyChangedCallback = null;
       question.valueChangedCallback = null;
       question.unRegisterFunctionOnPropertyValueChanged(
@@ -153,7 +159,7 @@ function init(Survey, $) {
       );
       question._propertyValueChangedFnSelect2 = undefined;
     },
-    pdfQuestionType: "checkbox"
+    pdfQuestionType: "checkbox",
   };
 
   Survey.CustomWidgetCollection.Instance.addCustomWidget(widget, "customtype");
