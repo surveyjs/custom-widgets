@@ -50,6 +50,10 @@ function init(Survey) {
         {
           name: "direction:string",
           default: "ltr"
+        },
+        {
+          name: "tooltips:boolean",
+          default: true
         }
       ]);
     },
@@ -66,7 +70,7 @@ function init(Survey) {
         start: question.value || (question.rangeMin + question.rangeMax) / 2,
         connect: [true, false],
         step: question.step,
-        tooltips: true,
+        tooltips: question.tooltips,
         pips: {
           mode: question.pipsMode || "positions",
           values: question.pipsValues.map(function(pVal) {
