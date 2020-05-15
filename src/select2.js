@@ -3,7 +3,7 @@ function init(Survey, $) {
   var widget = {
     activatedBy: "property",
     name: "select2",
-    htmlTemplate: "<select style='width: 100% !important;'></select>",
+    htmlTemplate: "<select style='width: 100%;'></select>",
     widgetIsLoaded: function () {
       return typeof $ == "function" && !!$.fn.select2;
     },
