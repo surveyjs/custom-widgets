@@ -116,8 +116,7 @@ function init(Survey) {
       el.onfocusout = el.onchange = pushValueHandler;
 
       var updateHandler = function () {
-        el.value =
-          typeof surveyElement.value === "undefined" ? "" : surveyElement.value;
+        el.value = surveyElement.value === undefined || surveyElement.value === null ? "" : surveyElement.value;
       };
       surveyElement.valueChangedCallback = updateHandler;
       updateHandler();
