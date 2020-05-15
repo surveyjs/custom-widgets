@@ -3,7 +3,7 @@ function init(Survey, $) {
   var widget = {
     activatedBy: "property",
     name: "select2",
-    htmlTemplate: "<select style='width: 100%;'></select>",
+    htmlTemplate: "<select style='width: 100% !important;'></select>",
     widgetIsLoaded: function () {
       return typeof $ == "function" && !!$.fn.select2;
     },
@@ -54,6 +54,12 @@ function init(Survey, $) {
           : select2Config;
       if (!settings) settings = {};
       var $el = $(el).is("select") ? $(el) : $(el).find("select");
+
+      // removed custom select styles for the "default" theme
+      $el.parent()[0].className = $el
+        .parent()[0]
+        .className.replace("sv_select_wrapper", "");
+
       var isSettingValue = false;
       var updateValueHandler = function () {
         if (isSettingValue) return;
@@ -93,6 +99,8 @@ function init(Survey, $) {
           });
           $el.select2(settings);
         }
+        // fixed width accrording to https://stackoverflow.com/questions/45276778/select2-not-responsive-width-larger-than-container
+        el.querySelector(".select2").style.width = "100%";
         if (!!el.nextElementSibling) {
           el.nextElementSibling.style.marginBottom = "1px";
         }
