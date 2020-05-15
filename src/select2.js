@@ -74,8 +74,8 @@ function init(Survey, $) {
             true
           );
           $el.append(newOption).trigger("change");
-          isSettingValue = false;
         }
+        isSettingValue = false;
       };
       var updateChoices = function () {
         $el.select2().empty();
