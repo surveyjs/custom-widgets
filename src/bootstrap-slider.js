@@ -110,9 +110,12 @@ function init(Survey) {
         var rect = options.module.SurveyHelper.
           createTextFieldRect(point, options.controller);
         var textboxBrick = new options.module.TextFieldBrick(
-          options.question, options.controller, rect,
-          true, options.question.id, options.question.value ||
-          options.question.defaultValue, "",
+          options.question,
+          options.controller, rect,
+          true, options.question.id,
+          (options.question.value ||
+            options.question.defaultValue ||
+            "").toString(), "",
           options.question.isReadOnly, false, "text");
         options.bricks.push(textboxBrick);
       }

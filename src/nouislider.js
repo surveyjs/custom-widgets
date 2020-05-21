@@ -146,7 +146,7 @@ function init(Survey) {
           rect,
           true,
           options.question.id,
-          options.question.value || options.question.defaultValue,
+          options.question.value || options.question.defaultValue || "",
           "",
           options.question.isReadOnly,
           false,
