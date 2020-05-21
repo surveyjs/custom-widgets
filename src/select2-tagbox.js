@@ -10,7 +10,8 @@ function init(Survey, $) {
     defaultJSON: {
       choices: ["Item 1", "Item 2", "Item 3"],
     },
-    htmlTemplate: "<select multiple='multiple' style='width: 100%;'></select>",
+    htmlTemplate:
+      "<div><select multiple='multiple' style='width: 100%;'></select><textarea></textarea></div>",
     isFit: function (question) {
       return question.getType() === "tagbox";
     },
@@ -69,6 +70,26 @@ function init(Survey, $) {
         theme: "classic",
       });
 
+      var $otherElement = $(el).find("textarea");
+      if (
+        !!question.survey &&
+        !!question.survey.css &&
+        !!question.survey.css.checkbox
+      ) {
+        $otherElement.addClass(question.survey.css.checkbox.other);
+      }
+      $otherElement.bind("input propertychange", function () {
+        question.comment = $otherElement.val();
+      });
+      var updateComment = function () {
+        $otherElement.val(question.comment);
+        if (question.isOtherSelected) {
+          $otherElement.show();
+        } else {
+          $otherElement.hide();
+        }
+      };
+
       self.fixStyles(el);
       var question;
       var updateValueHandler = function () {
@@ -80,6 +101,7 @@ function init(Survey, $) {
           $el.val(question.value).trigger("change");
         }
         self.fixStyles(el);
+        updateComment();
       };
       var updateChoices = function () {
         $el.select2().empty();
@@ -120,8 +142,10 @@ function init(Survey, $) {
         updateChoices();
       };
 
+      $otherElement.prop("disabled", question.isReadOnly);
       question.readOnlyChangedCallback = function () {
         $el.prop("disabled", question.isReadOnly);
+        $otherElement.prop("disabled", question.isReadOnly);
       };
       question.registerFunctionOnPropertyValueChanged(
         "visibleChoices",
@@ -134,6 +158,7 @@ function init(Survey, $) {
         } else {
           question.value = (question.value || []).concat(e.params.data.id);
         }
+        updateComment();
       });
       $el.on("select2:unselect", function (e) {
         var index = (question.value || []).indexOf(e.params.data.id);
@@ -144,6 +169,7 @@ function init(Survey, $) {
           val.splice(index, 1);
           question.value = val;
         }
+        updateComment();
       });
       updateChoices();
     },
