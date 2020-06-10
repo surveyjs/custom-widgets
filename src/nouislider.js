@@ -5,66 +5,67 @@ function init(Survey) {
     name: "nouislider",
     title: "noUiSlider",
     iconName: "icon-nouislider",
-    widgetIsLoaded: function() {
+    widgetIsLoaded: function () {
       return typeof noUiSlider != "undefined";
     },
-    isFit: function(question) {
+    isFit: function (question) {
       return question.getType() === "nouislider";
     },
-    htmlTemplate: "<div><div></div></div><style>.noUi-origin { width: 0; }</style>",
-    activatedByChanged: function(activatedBy) {
+    htmlTemplate:
+      "<div><div></div></div><style>.noUi-origin { width: 0; }</style>",
+    activatedByChanged: function (activatedBy) {
       Survey.JsonObject.metaData.addClass("nouislider", [], null, "empty");
       Survey.JsonObject.metaData.addProperties("nouislider", [
         {
           name: "step:number",
-          default: 1
+          default: 1,
         },
         {
           name: "rangeMin:number",
-          default: 0
+          default: 0,
         },
         {
           name: "rangeMax:number",
-          default: 100
+          default: 100,
         },
         {
           name: "pipsMode",
-          default: "positions"
+          default: "positions",
         },
         {
           name: "pipsValues:itemvalues",
-          default: [0, 25, 50, 75, 100]
+          default: [0, 25, 50, 75, 100],
         },
         {
           name: "pipsText:itemvalues",
-          default: [0, 25, 50, 75, 100]
+          default: [0, 25, 50, 75, 100],
         },
         {
           name: "pipsDensity:number",
-          default: 5
+          default: 5,
         },
         {
           name: "orientation:string",
-          default: "horizontal"
+          default: "horizontal",
         },
         {
           name: "direction:string",
-          default: "ltr"
+          default: "ltr",
         },
         {
           name: "tooltips:boolean",
-          default: true
-        }
+          default: true,
+        },
       ]);
     },
-    afterRender: function(question, el) {
+    afterRender: function (question, el) {
       el.style.paddingBottom = "19px";
       el.style.paddingRight = "30px";
       el.style.paddingTop = "44px";
-      el.style.width = "100%";
+      el.style.width = "95%";
       el = el.children[0];
       el.style.marginBottom = "60px";
-      if(question.orientation === "vertical") {
+      if (question.orientation === "vertical") {
         el.style.height = "250px";
       }
       var slider = noUiSlider.create(el, {
@@ -74,37 +75,37 @@ function init(Survey) {
         tooltips: question.tooltips,
         pips: {
           mode: question.pipsMode || "positions",
-          values: question.pipsValues.map(function(pVal) {
+          values: question.pipsValues.map(function (pVal) {
             var pipValue = pVal;
-            if(pVal.value !== undefined) {
+            if (pVal.value !== undefined) {
               pipValue = pVal.value;
             }
             return parseInt(pipValue);
           }),
           density: question.pipsDensity || 5,
           format: {
-            to: function(pVal) {
+            to: function (pVal) {
               var pipText = pVal;
-              question.pipsText.map(function(el) {
-                if(el.text !== undefined && pVal === el.value) {
+              question.pipsText.map(function (el) {
+                if (el.text !== undefined && pVal === el.value) {
                   pipText = el.text;
                 }
-              })
+              });
               return pipText;
-            }
-          }
+            },
+          },
         },
         range: {
           min: question.rangeMin,
-          max: question.rangeMax
+          max: question.rangeMax,
         },
         orientation: question.orientation,
-        direction: question.direction
+        direction: question.direction,
       });
-      slider.on("change", function() {
+      slider.on("change", function () {
         question.value = slider.get();
       });
-      var updateValueHandler = function() {
+      var updateValueHandler = function () {
         slider.set(question.value);
       };
       if (question.isReadOnly) {
@@ -113,7 +114,7 @@ function init(Survey) {
       updateValueHandler();
       question.noUiSlider = slider;
       question.valueChangedCallback = updateValueHandler;
-      question.readOnlyChangedCallback = function() {
+      question.readOnlyChangedCallback = function () {
         if (question.isReadOnly) {
           el.setAttribute("disabled", true);
         } else {
@@ -121,14 +122,14 @@ function init(Survey) {
         }
       };
     },
-    willUnmount: function(question, el) {
+    willUnmount: function (question, el) {
       if (!!question.noUiSlider) {
         question.noUiSlider.destroy();
         question.noUiSlider = null;
       }
       question.readOnlyChangedCallback = null;
     },
-    pdfRender: function(_, options) {
+    pdfRender: function (_, options) {
       if (options.question.getType() === "nouislider") {
         var point = options.module.SurveyHelper.createPoint(
           options.module.SurveyHelper.mergeRects.apply(null, options.bricks)
@@ -155,7 +156,7 @@ function init(Survey) {
         );
         options.bricks.push(textboxBrick);
       }
-    }
+    },
   };
 
   Survey.CustomWidgetCollection.Instance.addCustomWidget(widget, "customtype");
