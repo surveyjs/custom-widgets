@@ -61,6 +61,7 @@ function init(Survey) {
       el.style.paddingBottom = "19px";
       el.style.paddingRight = "30px";
       el.style.paddingTop = "44px";
+      el.style.width = "100%";
       el = el.children[0];
       el.style.marginBottom = "60px";
       if(question.orientation === "vertical") {
