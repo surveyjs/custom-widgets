@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.7.11](https://github.com/surveyjs/widgets/compare/v1.7.10...v1.7.11) (2020-06-10)
+
+
+### Bug Fixes
+
+* **nouislider:** explicit cast to number ([#195](https://github.com/surveyjs/widgets/issues/195)) ([51e9209](https://github.com/surveyjs/widgets/commit/51e920977a5c191dcca45ab91d29782675b0f022))
+
 ### [1.7.10](https://github.com/surveyjs/widgets/compare/v1.7.9...v1.7.10) (2020-06-03)
 
 ### [1.7.9](https://github.com/surveyjs/widgets/compare/v1.7.8...v1.7.9) (2020-05-27)
