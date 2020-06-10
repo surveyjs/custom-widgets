@@ -102,8 +102,8 @@ function init(Survey) {
         orientation: question.orientation,
         direction: question.direction,
       });
-      slider.on("change", function () {
-        question.value = slider.get();
+      slider.on("change", function() {
+        question.value = Number(slider.get());
       });
       var updateValueHandler = function () {
         slider.set(question.value);
