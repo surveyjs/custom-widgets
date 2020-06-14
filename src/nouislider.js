@@ -60,9 +60,9 @@ function init(Survey) {
     },
     afterRender: function (question, el) {
       el.style.paddingBottom = "19px";
-      el.style.paddingRight = "30px";
+      el.style.paddingLeft = "20px";
+      el.style.paddingRight = "20px";
       el.style.paddingTop = "44px";
-      el.style.width = "95%";
       el = el.children[0];
       el.style.marginBottom = "60px";
       if (question.orientation === "vertical") {
