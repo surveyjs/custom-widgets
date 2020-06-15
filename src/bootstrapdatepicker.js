@@ -35,10 +35,14 @@ function init(Survey) {
                     default: "'mm/dd/yyyy'"
                 },
                 {
+                    // Can take a Date or a string
+                    // https://bootstrap-datepicker.readthedocs.io/en/latest/options.html#options
                     name: "startDate",
                     default: ""
                 },
                 {
+                    // Can take a Date or a string
+                    // https://bootstrap-datepicker.readthedocs.io/en/latest/options.html#options
                     name: "endDate",
                     default: ""
                 },
