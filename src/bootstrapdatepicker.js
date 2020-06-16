@@ -31,6 +31,7 @@ function init(Survey) {
             Survey.JsonObject.metaData.addProperties("bootstrapdatepicker", [
                 {
                     // Can take a string or an Object.
+                    // https://bootstrap-datepicker.readthedocs.io/en/latest/options.html#format
                     name: "dateFormat",
                     default: "'mm/dd/yyyy'"
                 },
