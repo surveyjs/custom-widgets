@@ -30,9 +30,50 @@ function init(Survey, $) {
                 null,
                 "text"
             );
-            Survey.JsonObject.metaData.addProperty("bootstrapdatepicker", {
-                name: "dateFormat"
-            });
+            Survey.JsonObject.metaData.addProperties("bootstrapdatepicker", [
+                {
+                    // Can take a string or an Object.
+                    // https://bootstrap-datepicker.readthedocs.io/en/latest/options.html#format
+                    name: "dateFormat",
+                    default: "'mm/dd/yyyy'"
+                },
+                {
+                    // Can take a Date or a string
+                    // https://bootstrap-datepicker.readthedocs.io/en/latest/options.html#options
+                    name: "startDate",
+                    default: ""
+                },
+                {
+                    // Can take a Date or a string
+                    // https://bootstrap-datepicker.readthedocs.io/en/latest/options.html#options
+                    name: "endDate",
+                    default: ""
+                },
+                {
+                    name: "todayHighlight:boolean",
+                    default: true,
+                },
+                {
+                    name: "weekStart:number",
+                    default: 0
+                },
+                {
+                    name: "clearBtn:boolean",
+                    default: false
+                },
+                {
+                    name: "autoClose:boolean",
+                    default: true,
+                },
+                {
+                    name: "daysOfWeekHighlighted:string",
+                    default: ""
+                },
+                {
+                    name: "disableTouchKeyboard:boolean",
+                    default: true
+                }
+            ]);
         },
         afterRender: function (question, el) {
             var $el = $(el).is(".widget-datepicker")
@@ -40,7 +81,16 @@ function init(Survey, $) {
                 : $(el).find(".widget-datepicker");
 
             var pickerWidget = $el.bootstrapDP({
-                enableOnReadonly: false
+                enableOnReadonly: false,
+                format: question.dateFormat,
+                startDate: question.startDate,
+                endDate: question.endDate,
+                todayHighlight: question.todayHighlight,
+                weekStart: question.weekStart,
+                clearBtn: question.clearBtn,
+                autoclose: question.autoClose,
+                daysOfWeekHighlighted: question.daysOfWeekHighlighted,
+                disableTouchKeyboard: question.disableTouchKeyboard
             })
             // .on("changeDate", function (e) {
             //     question.value = moment(e.date).format("DD/MM/YYYY");
