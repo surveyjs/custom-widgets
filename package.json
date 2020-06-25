@@ -1,6 +1,6 @@
 {
   "name": "surveyjs-widgets",
-  "version": "1.7.13",
+  "version": "1.7.14",
   "scripts": {
     "start": "npm run build && live-server",
     "watch": "webpack --env.buildType dev --watch",
