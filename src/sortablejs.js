@@ -24,24 +24,23 @@ function init(Survey) {
           { name: "hasOther", visible: false },
           { name: "storeOthersAsComment", visible: false },
           { name: "hasNone", visible: false },
-          { name: "renderAs", visible: false }
+          { name: "renderAs", visible: false },
         ],
         null,
         "checkbox"
       );
       Survey.JsonObject.metaData.addProperty("sortablelist", {
         name: "emptyText",
-        default: "Move items here."
+        default: "Move items here.",
       });
       Survey.JsonObject.metaData.addProperty("sortablelist", {
         name: "useDefaultTheme",
-        default: true
+        default: true,
       });
       Survey.JsonObject.metaData.addProperty("sortablelist", {
         name: "maxAnswersCount:number",
-        default: -1
+        default: -1,
       });
-
     },
     afterRender: function (question, el) {
       var self = this;
@@ -59,7 +58,7 @@ function init(Survey) {
       var sourceEl = document.createElement("div");
 
       resultEl.style.cssText = self.areaStyle;
-      resultEl.style.boxSizing = "border-box";      
+      resultEl.style.boxSizing = "border-box";
       resultEl.className = "sjs-sortablejs-result";
 
       emptyEl.innerHTML = question.emptyText;
@@ -81,14 +80,14 @@ function init(Survey) {
       var addChoiceToWidget = function (choice, inResults) {
         var srcEl = inResults ? resultEl : sourceEl;
         var newEl = document.createElement("div");
-        newEl.innerHTML =
-          "<div class='sjs-sortablejs-item' style='" +
-          self.itemStyle +
-          "'>" +
-          choice.text +
-          "</div>";
+        newEl.className = "sjs-sortablejs-item";
+        newEl.style.cssText = self.itemStyle;
+        newEl.innerText = choice.text;
         newEl.dataset["value"] = choice.value;
         srcEl.appendChild(newEl);
+        choice.onPropertyChanged.add(function (sender, options) {
+          newEl.innerText = sender.text;
+        });
       };
       var getChoicesNotInResults = function () {
         var res = [];
@@ -136,7 +135,10 @@ function init(Survey) {
         group: {
           name: question.name,
           put: function (to) {
-            return question.maxAnswersCount < 0 || to.el.children.length <= question.maxAnswersCount;
+            return (
+              question.maxAnswersCount < 0 ||
+              to.el.children.length <= question.maxAnswersCount
+            );
           },
         },
         onSort: function (evt) {
@@ -154,12 +156,12 @@ function init(Survey) {
           isUpdatingQuestionValue = true;
           question.value = result;
           isUpdatingQuestionValue = false;
-        }
+        },
       });
       source = question.sourceEl = Sortable.create(sourceEl, {
         animation: 150,
         disabled: question.isReadOnly,
-        group: question.name
+        group: question.name,
       });
       question.valueChangedCallback = updateValueHandler;
       question.readOnlyChangedCallback = function () {
@@ -178,7 +180,7 @@ function init(Survey) {
       question.sourceEl.destroy();
       question.readOnlyChangedCallback = null;
     },
-    pdfQuestionType: "checkbox"
+    pdfQuestionType: "checkbox",
   };
 
   Survey.CustomWidgetCollection.Instance.addCustomWidget(widget, "customtype");
