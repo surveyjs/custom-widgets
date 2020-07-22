@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.7.23](https://github.com/surveyjs/widgets/compare/v1.7.22...v1.7.23) (2020-07-22)
+
+### [1.7.22](https://github.com/surveyjs/widgets/compare/v1.7.21...v1.7.22) (2020-07-22)
+
+### [1.7.21](https://github.com/surveyjs/widgets/compare/v1.7.20...v1.7.21) (2020-07-22)
+
+
+### Bug Fixes
+
+* sortable list text changing not working on typing or on blur [#204](https://github.com/surveyjs/widgets/issues/204) ([d5ca377](https://github.com/surveyjs/widgets/commit/d5ca377fb546fe8ce5f556ebfad8d22b1746476b))
+
 ### [1.7.20](https://github.com/surveyjs/widgets/compare/v1.7.19...v1.7.20) (2020-07-15)
 
 ### [1.7.19](https://github.com/surveyjs/widgets/compare/v1.7.18...v1.7.19) (2020-07-09)
