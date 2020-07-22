@@ -25,6 +25,10 @@ function init(Survey) {
           { name: "storeOthersAsComment", visible: false },
           { name: "hasNone", visible: false },
           { name: "renderAs", visible: false },
+          { name: "checkboxClass", visible: false },
+          { name: "hasSelectAll", visible: false },
+          { name: "noneText", visible: false },
+          { name: "selectAllText", visible: false },
         ],
         null,
         "checkbox"
@@ -32,14 +36,17 @@ function init(Survey) {
       Survey.JsonObject.metaData.addProperty("sortablelist", {
         name: "emptyText",
         default: "Move items here.",
+        category: "general",
       });
       Survey.JsonObject.metaData.addProperty("sortablelist", {
-        name: "useDefaultTheme",
+        name: "useDefaultTheme:switch",
         default: true,
+        category: "general",
       });
       Survey.JsonObject.metaData.addProperty("sortablelist", {
         name: "maxAnswersCount:number",
         default: -1,
+        category: "general",
       });
     },
     afterRender: function (question, el) {
@@ -164,6 +171,11 @@ function init(Survey) {
         group: question.name,
       });
       question.valueChangedCallback = updateValueHandler;
+      question.onPropertyChanged.add(function (sender, options) {
+        if (options.name == "emptyText") {
+          emptyEl.innerHTML = question.emptyText;
+        }
+      });
       question.readOnlyChangedCallback = function () {
         if (question.isReadOnly) {
           result.options.disabled = true;
