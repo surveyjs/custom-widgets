@@ -60,25 +60,20 @@ function init(Survey) {
       question.readOnlyChangedCallback = null;
       CKEDITOR.instances[question.name].destroy(false);
     },
-    pdfRender: function(_, options) {
+    pdfRender: function(survey, options) {
       if (options.question.getType() === "editor") {
-        var point = options.module.SurveyHelper.createPoint(
-          options.module.SurveyHelper.mergeRects.apply(null,
-            options.bricks));
-        point.xLeft += options.controller.unitWidth;
-        point.yTop += options.controller.unitHeight *
-          options.module.FlatQuestion.CONTENT_GAP_VERT_SCALE;
-        var html = options.module.SurveyHelper.createDivBlock(
-          options.question.value, options.controller);
-        return new Promise(function(resolve) {
-          options.module.SurveyHelper.createHTMLFlat(point,
-            options.question, options.controller, html).then(
-              function (htmlFlat) {
-                var htmlBrick = options.module.SurveyHelper.
-                  splitHtmlRect(options.controller, htmlFlat);
-                options.bricks.push(htmlBrick);
-                resolve();
-              });
+        var loc = new Survey.LocalizableString(survey, true); 
+        loc.text = options.question.value;
+        options.question['locHtml'] = loc;
+        options.question['renderAs'] = 'auto';
+        var flatHtml = options.repository.create(
+          survey, options.question, options.controller, "html");
+        return new Promise(function (resolve) {
+          flatHtml.generateFlats(options.point)
+            .then(function (htmlBricks) {
+              options.bricks = htmlBricks;
+              resolve();
+            });
         });
       }
     }
