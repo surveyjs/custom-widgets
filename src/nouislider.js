@@ -56,6 +56,10 @@ function init(Survey) {
           name: "tooltips:boolean",
           default: true,
         },
+        {
+          name: "decimals:number",
+          default: 2,
+        },
       ]);
     },
     afterRender: function (question, el) {
@@ -94,6 +98,14 @@ function init(Survey) {
               return pipText;
             },
           },
+        },
+        format: {
+          to: function ( value ) {
+            return Number(value).toFixed(question.decimals);
+          },
+          from: function ( value ) {
+            return Number(value).toFixed(question.decimals);
+          }
         },
         range: {
           min: question.rangeMin,
