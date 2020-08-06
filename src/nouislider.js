@@ -100,10 +100,10 @@ function init(Survey) {
           },
         },
         format: {
-          to: function ( value ) {
+          to: function (value) {
             return Number(value).toFixed(question.decimals);
           },
-          from: function ( value ) {
+          from: function (value) {
             return Number(value).toFixed(question.decimals);
           }
         },
@@ -133,6 +133,7 @@ function init(Survey) {
           el.removeAttribute("disabled");
         }
       };
+      question.value = slider.get();
     },
     willUnmount: function (question, el) {
       if (!!question.noUiSlider) {
