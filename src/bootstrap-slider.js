@@ -5,38 +5,42 @@ function init(Survey) {
     name: "bootstrapslider",
     title: "Bootstrap Slider",
     iconName: "icon-bootstrap-slider",
-    widgetIsLoaded: function() {
+    widgetIsLoaded: function () {
       return typeof Slider !== "undefined";
     },
-    isFit: function(question) {
+    isFit: function (question) {
       return question.getType() === "bootstrapslider";
     },
     htmlTemplate: "<div></div>",
-    activatedByChanged: function(activatedBy) {
+    activatedByChanged: function (activatedBy) {
       Survey.JsonObject.metaData.addClass("bootstrapslider", [], null, "empty");
       Survey.JsonObject.metaData.addProperties("bootstrapslider", [
         {
           name: "step:number",
-          default: 1
+          default: 1,
+          category: "general",
         },
         {
           name: "rangeMin:number",
-          default: 0
+          default: 0,
+          category: "general",
         },
         {
           name: "rangeMax:number",
-          default: 100
-        }
+          default: 100,
+          category: "general",
+        },
       ]);
       Survey.JsonObject.metaData.addProperty("bootstrapslider", {
         name: "config",
-        default: null
+        default: null,
+        category: "general",
       });
     },
-    afterRender: function(question, el) {
-      el.style.paddingTop = '20px';
-      el.style.paddingBottom = '17px';
-      el.style.paddingLeft = '10px';
+    afterRender: function (question, el) {
+      el.style.paddingTop = "20px";
+      el.style.paddingBottom = "17px";
+      el.style.paddingLeft = "10px";
       var inputEl = document.createElement("input");
       inputEl.id = question.id;
       inputEl.type = "text";
@@ -78,13 +82,13 @@ function init(Survey) {
 
       var slider = new Slider(inputEl, config);
 
-      slider.on("change", function(valueObj) {
+      slider.on("change", function (valueObj) {
         question.value = slider.getValue();
       });
-      var updateValueHandler = function() {
+      var updateValueHandler = function () {
         slider.setValue(question.value || question.rangeMin);
       };
-      question.readOnlyChangedCallback = function() {
+      question.readOnlyChangedCallback = function () {
         if (question.isReadOnly) {
           slider.disable();
         } else {
@@ -94,32 +98,43 @@ function init(Survey) {
       question.bootstrapSlider = slider;
       question.valueChangedCallback = updateValueHandler;
     },
-    willUnmount: function(question, el) {
+    willUnmount: function (question, el) {
       question.bootstrapSlider && question.bootstrapSlider.destroy();
       question.bootstrapSlider = null;
       question.readOnlyChangedCallback = null;
     },
-    pdfRender: function(_, options) {
+    pdfRender: function (_, options) {
       if (options.question.getType() === "bootstrapslider") {
         var point = options.module.SurveyHelper.createPoint(
-          options.module.SurveyHelper.mergeRects.apply(null,
-            options.bricks));
+          options.module.SurveyHelper.mergeRects.apply(null, options.bricks)
+        );
         point.xLeft += options.controller.unitWidth;
-        point.yTop += options.controller.unitHeight *
+        point.yTop +=
+          options.controller.unitHeight *
           options.module.FlatQuestion.CONTENT_GAP_VERT_SCALE;
-        var rect = options.module.SurveyHelper.
-          createTextFieldRect(point, options.controller);
+        var rect = options.module.SurveyHelper.createTextFieldRect(
+          point,
+          options.controller
+        );
         var textboxBrick = new options.module.TextFieldBrick(
           options.question,
-          options.controller, rect,
-          true, options.question.id,
-          (options.question.value ||
+          options.controller,
+          rect,
+          true,
+          options.question.id,
+          (
+            options.question.value ||
             options.question.defaultValue ||
-            "").toString(), "",
-          options.question.isReadOnly, false, "text");
+            ""
+          ).toString(),
+          "",
+          options.question.isReadOnly,
+          false,
+          "text"
+        );
         options.bricks.push(textboxBrick);
       }
-    }
+    },
   };
 
   Survey.CustomWidgetCollection.Instance.addCustomWidget(widget, "customtype");

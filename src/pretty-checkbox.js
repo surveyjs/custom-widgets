@@ -5,12 +5,12 @@ function init(Survey) {
       radiogroup: {
         rootClass: "pretty p-default p-round",
         inputType: "radio",
-        states: [{ stateClass: "state p-success", addOn: "" }]
+        states: [{ stateClass: "state p-success", addOn: "" }],
       },
       checkbox: {
         rootClass: "pretty p-default",
         inputType: "checkbox",
-        states: [{ stateClass: "state p-success", addOn: "" }]
+        states: [{ stateClass: "state p-success", addOn: "" }],
       },
       boolean: {
         rootClass: "pretty p-icon p-default p-has-indeterminate",
@@ -20,18 +20,18 @@ function init(Survey) {
           {
             stateClass: "state p-success p-is-indeterminate",
             iconClass: "icon mdi mdi-minus",
-            addOn: ""
-          }
-        ]
-      }
+            addOn: "",
+          },
+        ],
+      },
     },
     name: "pretty-checkbox",
     activatedBy: "property",
-    widgetIsLoaded: function() {
+    widgetIsLoaded: function () {
       return true;
     },
     htmlTemplate: "<fieldset></fieldset>",
-    isFit: function(question) {
+    isFit: function (question) {
       var isFitByType =
         widget.settings.supportedTypes.indexOf(question.getType()) !== -1;
 
@@ -43,24 +43,25 @@ function init(Survey) {
 
       return false;
     },
-    activatedByChanged: function(value) {
+    activatedByChanged: function (value) {
       if (this.widgetIsLoaded()) {
         widget.activatedBy = value;
-        widget.settings.supportedTypes.forEach(function(supportedType) {
+        widget.settings.supportedTypes.forEach(function (supportedType) {
           Survey.JsonObject.metaData.removeProperty(supportedType, "renderAs");
 
           if (value === "property") {
             Survey.JsonObject.metaData.addProperty(supportedType, {
               name: "renderAs",
+              category: "general",
               default: "standard",
-              choices: ["standard", "prettycheckbox"]
+              choices: ["standard", "prettycheckbox"],
             });
           }
         });
       }
     },
     isDefaultRender: false,
-    afterRender: function(question, element) {
+    afterRender: function (question, element) {
       var itemInputs = {};
       var questionType = question.getType();
       var options = this.settings[questionType];
@@ -69,7 +70,7 @@ function init(Survey) {
       var booleanType = questionType === "boolean";
 
       var inChangeHandler = false;
-      var changeHandler = function(event) {
+      var changeHandler = function (event) {
         inChangeHandler = true;
         try {
           var target = arguments[0].target;
@@ -106,7 +107,7 @@ function init(Survey) {
       var choices = booleanType
         ? [{ locText: question.locTitle, value: !!question.value }]
         : question.visibleChoices;
-      choices.forEach(function(choiceItem, index) {
+      choices.forEach(function (choiceItem, index) {
         var input = document.createElement("input");
         input.type = options.inputType;
         input.name = question.name + (checkboxType ? "" + index : "");
@@ -121,7 +122,7 @@ function init(Survey) {
         controlRoot.className = options.rootClass;
         controlRoot.appendChild(input);
 
-        options.states.forEach(function(state) {
+        options.states.forEach(function (state) {
           var stateRoot = document.createElement("div");
           stateRoot.className = state.stateClass;
           if (!!state.iconClass) {
@@ -155,14 +156,14 @@ function init(Survey) {
         itemInputs[choiceItem.value] = input;
       });
 
-      var updateValueHandler = function(newValue) {
+      var updateValueHandler = function (newValue) {
         if (!inChangeHandler) {
           var checkedItems = newValue || [];
           if (radiogroupType || booleanType) {
             checkedItems = [newValue && newValue.toString()];
           }
 
-          Object.values(itemInputs).forEach(function(inputItem) {
+          Object.values(itemInputs).forEach(function (inputItem) {
             if (checkedItems.indexOf(inputItem.value) !== -1) {
               inputItem.setAttribute("checked", undefined);
             } else {
@@ -171,8 +172,8 @@ function init(Survey) {
           });
         }
       };
-      var readOnlyHandler = function() {
-        Object.values(itemInputs).forEach(function(inputItem) {
+      var readOnlyHandler = function () {
+        Object.values(itemInputs).forEach(function (inputItem) {
           if (question.isReadOnly) {
             inputItem.setAttribute("disabled", true);
           } else {
@@ -186,10 +187,10 @@ function init(Survey) {
       updateValueHandler(question.value);
       readOnlyHandler();
     },
-    willUnmount: function(question, el) {
+    willUnmount: function (question, el) {
       question.valueChangedCallback = undefined;
       question.readOnlyChangedCallback = undefined;
-    }
+    },
   };
 
   Survey.CustomWidgetCollection.Instance.addCustomWidget(widget, "property");

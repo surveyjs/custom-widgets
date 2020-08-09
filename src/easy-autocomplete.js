@@ -16,10 +16,16 @@ function init(Survey, $) {
       ) {
         return;
       }
-      Survey.JsonObject.metaData.addProperty("text", "choices:itemvalues");
+      Survey.JsonObject.metaData.addProperty("text", {
+        name: "choices:itemvalues",
+        category: "choices",
+        categoryIndex: 1,
+      });
       Survey.JsonObject.metaData.addProperty("text", {
         name: "choicesByUrl:restfull",
         className: "ChoicesRestfull",
+        category: "choicesByUrl",
+        categoryIndex: 2,
       });
       Array.prototype.push.apply(
         Survey.matrixDropdownColumnTypes.text.properties,

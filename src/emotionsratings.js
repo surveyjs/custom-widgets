@@ -5,45 +5,45 @@ function init(Survey, $) {
     name: "emotionsratings",
     title: "Emotions Ratings",
     iconName: "icon-emotionsratings",
-    widgetIsLoaded: function() {
+    widgetIsLoaded: function () {
       return typeof $ == "function" && !!$.fn.emotionsRating;
     },
     defaultJSON: {
-      choices: [1, 2, 3, 4, 5]
+      choices: [1, 2, 3, 4, 5],
     },
-    isFit: function(question) {
+    isFit: function (question) {
       return question.getType() === "emotionsratings";
     },
     isDefaultRender: false,
     htmlTemplate: "<div style='height: 33px'></div>",
-    activatedByChanged: function(activatedBy) {
+    activatedByChanged: function (activatedBy) {
       Survey.JsonObject.metaData.addClass(
         "emotionsratings",
         [
           {
             name: "hasOther",
-            visible: false
+            visible: false,
           },
           {
             name: "otherText",
-            visible: false
+            visible: false,
           },
           {
             name: "optionsCaption",
-            visible: false
+            visible: false,
           },
           {
             name: "otherErrorText",
-            visible: false
+            visible: false,
           },
           {
             name: "storeOthersAsComment",
-            visible: false
+            visible: false,
           },
           {
             name: "renderAs",
-            visible: false
-          }
+            visible: false,
+          },
         ],
         null,
         "dropdown"
@@ -51,41 +51,49 @@ function init(Survey, $) {
       Survey.JsonObject.metaData.addProperties("emotionsratings", [
         {
           name: "emotions:itemvalues",
-          default: ["angry", "disappointed", "meh", "happy", "inLove"]
+          category: "emotions",
+          categoryIndex: 1,
+          default: ["angry", "disappointed", "meh", "happy", "inLove"],
         },
         {
           name: "emotionSize:number",
-          default: 30
+          category: "emotions",
+          default: 30,
         },
         {
           name: "emotionsCount:number",
-          default: 5
+          category: "emotions",
+          default: 5,
         },
         {
           name: "bgEmotion",
-          default: "happy"
+          category: "emotions",
+          default: "happy",
         },
         {
           name: "emotionColor",
-          default: "#FF0066"
-        }
-      ]);      
+          category: "emotions",
+          default: "#FF0066",
+        },
+      ]);
     },
-    afterRender: function(question, el) {
-      var emotions = (question.emotions || []).map(function(item) { return item.value });
-      if(emotions.length === 0) {
+    afterRender: function (question, el) {
+      var emotions = (question.emotions || []).map(function (item) {
+        return item.value;
+      });
+      if (emotions.length === 0) {
         emotions = ["angry", "disappointed", "meh", "happy", "inLove"];
       }
       var options = {
         emotionSize: question.emotionSize,
         bgEmotion: question.bgEmotion,
-        emotions:  emotions,
+        emotions: emotions,
         initialRating: question.value,
         color: question.emotionColor,
         count: question.emotionsCount,
-        onUpdate: function(value) {
+        onUpdate: function (value) {
           question.value = value;
-        }
+        },
       };
       initWidget();
 
@@ -97,18 +105,16 @@ function init(Survey, $) {
         $(el).off();
         options.initialRating = question.value || 0;
         options.disabled = question.isReadOnly;
-        $(el)
-          .find("div")
-          .emotionsRating(options);
+        $(el).find("div").emotionsRating(options);
       }
     },
-    willUnmount: function(question, el) {
+    willUnmount: function (question, el) {
       el.innerHTML = null;
       $(el).off();
       question.readOnlyChangedCallback = null;
       question.valueChangedCallback = null;
     },
-    pdfQuestionType: "dropdown"
+    pdfQuestionType: "dropdown",
   };
 
   Survey.CustomWidgetCollection.Instance.addCustomWidget(widget, "customtype");

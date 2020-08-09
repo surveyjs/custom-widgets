@@ -15,7 +15,8 @@ function init(Survey) {
       Survey.JsonObject.metaData.addClass("editor", [], null, "empty");
       Survey.JsonObject.metaData.addProperty("editor", {
         name: "height",
-        default: 300
+        default: 300,
+        category: "general",
       });
     },
     afterRender: function (question, el) {
@@ -60,23 +61,26 @@ function init(Survey) {
       question.readOnlyChangedCallback = null;
       CKEDITOR.instances[question.name].destroy(false);
     },
-    pdfRender: function(survey, options) {
+    pdfRender: function (survey, options) {
       if (options.question.getType() === "editor") {
-        var loc = new Survey.LocalizableString(survey, true); 
+        var loc = new Survey.LocalizableString(survey, true);
         loc.text = options.question.value;
-        options.question['locHtml'] = loc;
-        options.question['renderAs'] = 'auto';
+        options.question["locHtml"] = loc;
+        options.question["renderAs"] = "auto";
         var flatHtml = options.repository.create(
-          survey, options.question, options.controller, "html");
+          survey,
+          options.question,
+          options.controller,
+          "html"
+        );
         return new Promise(function (resolve) {
-          flatHtml.generateFlats(options.point)
-            .then(function (htmlBricks) {
-              options.bricks = htmlBricks;
-              resolve();
-            });
+          flatHtml.generateFlats(options.point).then(function (htmlBricks) {
+            options.bricks = htmlBricks;
+            resolve();
+          });
         });
       }
-    }
+    },
   };
 
   Survey.CustomWidgetCollection.Instance.addCustomWidget(widget, "customtype");

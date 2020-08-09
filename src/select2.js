@@ -25,11 +25,13 @@ function init(Survey, $) {
       if (activatedBy == "property") {
         Survey.JsonObject.metaData.addProperty("dropdown", {
           name: "renderAs",
+          category: "general",
           default: "standart",
           choices: ["select2", "standart"],
         });
         Survey.JsonObject.metaData.addProperty("dropdown", {
           dependsOn: "renderAs",
+          category: "general",
           name: "select2Config",
           visibleIf: function (obj) {
             return obj.renderAs == "select2";
@@ -40,6 +42,7 @@ function init(Survey, $) {
         Survey.JsonObject.metaData.addClass("select2", [], null, "dropdown");
         Survey.JsonObject.metaData.addProperty("select2", {
           name: "select2Config",
+          category: "general",
           default: null,
         });
       }

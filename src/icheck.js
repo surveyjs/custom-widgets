@@ -12,22 +12,22 @@ function init(Survey, $) {
     checkboxClass: "iradio_square-blue",
     radioClass: "iradio_square-blue",
     name: "icheck",
-    widgetIsLoaded: function() {
+    widgetIsLoaded: function () {
       return typeof $ == "function" && !!$.fn.iCheck;
     },
-    isFit: function(question) {
+    isFit: function (question) {
       var t = question.getType();
       return t === "radiogroup" || t === "checkbox" || t === "matrix";
     },
     isDefaultRender: true,
-    afterRender: function(question, el) {
+    afterRender: function (question, el) {
       var rootWidget = this;
       var $el = $(el);
 
       $el.find(".sv-item__decorator").hide();
 
       $el.find("input").data({
-        iCheck: undefined
+        iCheck: undefined,
       });
       function getIndexByValue(arr, value) {
         if (!Array.isArray(arr)) return -1;
@@ -38,7 +38,7 @@ function init(Survey, $) {
         return -1;
       }
       var frozeUpdating = false;
-      var makeChoicesICheck = function() {
+      var makeChoicesICheck = function () {
         var inputs = $el.find("input");
         inputs.iCheck({
           checkboxClass:
@@ -46,12 +46,14 @@ function init(Survey, $) {
             rootWidget.checkboxClass ||
             rootWidget.className,
           radioClass:
-            question.radioClass || rootWidget.radioClass || rootWidget.className
+            question.radioClass ||
+            rootWidget.radioClass ||
+            rootWidget.className,
         });
-        inputs.on("ifChecked", function(event) {
+        inputs.on("ifChecked", function (event) {
           if (frozeUpdating) return;
           if (question.getType() === "matrix") {
-            question.generatedVisibleRows.forEach(function(row, index, rows) {
+            question.generatedVisibleRows.forEach(function (row, index, rows) {
               if (row.fullName === event.target.name) {
                 row.value = event.target.value;
               }
@@ -67,7 +69,7 @@ function init(Survey, $) {
           }
         });
 
-        inputs.on("ifUnchecked", function(event) {
+        inputs.on("ifUnchecked", function (event) {
           if (frozeUpdating) return;
           if (question.getType() === "checkbox") {
             var oldValue = (question.value || []).slice();
@@ -83,7 +85,7 @@ function init(Survey, $) {
         cEl.iCheck("uncheck");
         cEl[0].parentElement.classList.remove("checked");
       }
-      var select = function() {
+      var select = function () {
         frozeUpdating = true;
         if (question.getType() !== "matrix") {
           var values = question.value;
@@ -92,7 +94,7 @@ function init(Survey, $) {
           }
           if (question.getType() == "checkbox") {
             var qValue = question.value;
-            question.visibleChoices.forEach(function(item) {
+            question.visibleChoices.forEach(function (item) {
               var inEl = $el.find(
                 "input[value='" + escValue(item.value) + "']"
               );
@@ -106,7 +108,7 @@ function init(Survey, $) {
                 if (wasChecked) {
                   inEl.removeAttr("checked");
                   if (!inEl.parent().hasClass("checked"))
-                    setTimeout(function() {
+                    setTimeout(function () {
                       uncheckIcheck(inEl);
                     });
                   else uncheckIcheck(inEl);
@@ -114,14 +116,14 @@ function init(Survey, $) {
               }
             });
           } else {
-            values.forEach(function(value) {
+            values.forEach(function (value) {
               $el
                 .find("input[value='" + escValue(value) + "']")
                 .iCheck("check");
             });
           }
         } else {
-          question.generatedVisibleRows.forEach(function(row, index, rows) {
+          question.generatedVisibleRows.forEach(function (row, index, rows) {
             if (row.value) {
               $(el)
                 .find(
@@ -139,22 +141,28 @@ function init(Survey, $) {
       };
       makeChoicesICheck();
 
-      question.visibleChoicesChangedCallback = function() {
+      question.visibleChoicesChangedCallback = function () {
         makeChoicesICheck();
         $el.find(".sv-item__decorator").hide();
       };
       question.valueChangedCallback = select;
       select();
     },
-    willUnmount: function(question, el) {
+    willUnmount: function (question, el) {
       var $el = $(el);
       $el.find("input").iCheck("destroy");
       question.visibleChoicesChangedCallback = null;
-    }
+    },
   };
 
-  Survey.JsonObject.metaData.addProperty("radiogroup", "radioClass");
-  Survey.JsonObject.metaData.addProperty("checkbox", "checkboxClass");
+  Survey.JsonObject.metaData.addProperty("radiogroup", {
+    name: "radioClass",
+    category: "general",
+  });
+  Survey.JsonObject.metaData.addProperty("checkbox", {
+    name: "checkboxClass",
+    category: "general",
+  });
   Survey.CustomWidgetCollection.Instance.addCustomWidget(widget, "type");
 }
 

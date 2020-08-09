@@ -31,10 +31,12 @@ function init(Survey, $) {
       );
       Survey.JsonObject.metaData.addProperty("tagbox", {
         name: "select2Config",
+        category: "general",
         default: null,
       });
       Survey.JsonObject.metaData.addProperty("tagbox", {
         name: "placeholder",
+        category: "general",
         default: "",
       });
       Survey.matrixDropdownColumnTypes.tagbox = {

@@ -18,42 +18,53 @@ function init(Survey) {
       Survey.JsonObject.metaData.addProperties("nouislider", [
         {
           name: "step:number",
+          category: "slider",
+          categoryIndex: 1,
           default: 1,
         },
         {
           name: "rangeMin:number",
+          category: "slider",
           default: 0,
         },
         {
           name: "rangeMax:number",
+          category: "slider",
           default: 100,
         },
         {
           name: "pipsMode",
+          category: "slider",
           default: "positions",
         },
         {
           name: "pipsValues:itemvalues",
+          category: "slider",
           default: [0, 25, 50, 75, 100],
         },
         {
           name: "pipsText:itemvalues",
+          category: "slider",
           default: [0, 25, 50, 75, 100],
         },
         {
           name: "pipsDensity:number",
+          category: "slider",
           default: 5,
         },
         {
           name: "orientation:string",
+          category: "slider",
           default: "horizontal",
         },
         {
           name: "direction:string",
+          category: "slider",
           default: "ltr",
         },
         {
           name: "tooltips:boolean",
+          category: "slider",
           default: true,
         },
       ]);
@@ -102,7 +113,7 @@ function init(Survey) {
         orientation: question.orientation,
         direction: question.direction,
       });
-      slider.on("change", function() {
+      slider.on("change", function () {
         question.value = Number(slider.get());
       });
       var updateValueHandler = function () {
