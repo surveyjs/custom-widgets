@@ -35,7 +35,16 @@ function init(Survey, $) {
       Survey.JsonObject.metaData.addProperty("datepicker", {
         name: "config",
         category: "general",
+        visible: false,
         default: null,
+      });
+      Survey.JsonObject.metaData.addProperty("datepicker", {
+        name: "maxDate",
+        category: "general",
+      });
+      Survey.JsonObject.metaData.addProperty("datepicker", {
+        name: "minDate",
+        category: "general",
       });
     },
     afterRender: function (question, el) {
@@ -58,6 +67,12 @@ function init(Survey, $) {
           minDate: null,
           maxDate: null,
         };
+      }
+      if (!!question.minDate) {
+        config.minDate = question.minDate;
+      }
+      if (!!question.maxDate) {
+        config.maxDate = question.maxDate;
       }
       if (config.onSelect === undefined) {
         config.onSelect = function (dateText) {
