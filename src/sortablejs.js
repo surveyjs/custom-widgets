@@ -35,19 +35,16 @@ function init(Survey) {
       );
       Survey.JsonObject.metaData.addProperty("sortablelist", {
         name: "emptyText",
-        category: "general",
         default: "Move items here.",
         category: "general",
       });
       Survey.JsonObject.metaData.addProperty("sortablelist", {
         name: "useDefaultTheme:switch",
-        category: "general",
         default: true,
         category: "general",
       });
       Survey.JsonObject.metaData.addProperty("sortablelist", {
         name: "maxAnswersCount:number",
-        category: "general",
         default: -1,
         category: "general",
       });
