@@ -146,7 +146,10 @@ function init(Survey, $) {
       updateValueHandler();
     },
     willUnmount: function (question, el) {
-      $(el).find("select").off("select2:select").select2("destroy");
+      var $select2 = $(el).find("select");
+      if (!!$select2.data("select2")) {
+        $select2.off("select2:select").select2("destroy");
+      }
       question.readOnlyChangedCallback = null;
     },
   };
