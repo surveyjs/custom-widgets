@@ -78,13 +78,15 @@ function init(Survey, $) {
         if ($el.find("option[value='" + question.value + "']").length) {
           $el.val(question.value).trigger("change");
         } else {
-          var newOption = new Option(
-            question.value, //TODO if question value is object then need to improve
-            question.value,
-            true,
-            true
-          );
-          $el.append(newOption).trigger("change");
+          if (question.value !== null && question.value !== undefined) {
+            var newOption = new Option(
+              question.value, //TODO if question value is object then need to improve
+              question.value,
+              true,
+              true
+            );
+            $el.append(newOption).trigger("change");
+          }
         }
         updateComment();
         isSettingValue = false;
