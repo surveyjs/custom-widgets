@@ -178,7 +178,10 @@ function init(Survey, $) {
     willUnmount: function (question, el) {
       if (!question._propertyValueChangedFnSelect2) return;
 
-      $(el).find("select").off("select2:select").select2("destroy");
+      var $select2 = $(el).find("select");
+      if (!!$select2.data("select2")) {
+        $select2.off("select2:select").select2("destroy");
+      }
       question.readOnlyChangedCallback = null;
       question.valueChangedCallback = null;
       question.unRegisterFunctionOnPropertyValueChanged(
