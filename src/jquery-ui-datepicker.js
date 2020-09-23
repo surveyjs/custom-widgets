@@ -74,6 +74,7 @@ function init(Survey, $) {
       if (!!question.maxDate) {
         config.maxDate = question.maxDate;
       }
+      config.disabled = question.isReadOnly;
       if (config.onSelect === undefined) {
         config.onSelect = function (dateText) {
           isSelecting = true;
