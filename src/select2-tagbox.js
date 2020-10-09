@@ -39,6 +39,11 @@ function init(Survey, $) {
         category: "general",
         default: "",
       });
+      Survey.JsonObject.metaData.addProperty("tagbox", {
+        name: "allowAddNewTag:boolean",
+        category: "general",
+        default: false,
+      });
       Survey.matrixDropdownColumnTypes.tagbox = {
         properties: [
           "choices",
@@ -61,16 +66,17 @@ function init(Survey, $) {
         select2Config && typeof select2Config == "string"
           ? JSON.parse(select2Config)
           : select2Config;
-      var placeholder = question.placeholder;
       var $el = $(el).is("select") ? $(el) : $(el).find("select");
 
       self.willUnmount(question, el);
 
-      $el.select2({
-        tags: "true",
-        disabled: question.isReadOnly,
-        theme: "classic",
-      });
+      if (!settings) settings = {};
+      settings.placeholder = question.placeholder;
+      settings.tags = question.allowAddNewTag;
+      settings.disabled = question.isReadOnly;
+      settings.theme = "classic";
+
+      $el.select2(settings);
 
       var $otherElement = $(el).find("textarea");
       if (
@@ -107,31 +113,16 @@ function init(Survey, $) {
       };
       var updateChoices = function () {
         $el.select2().empty();
-
-        if (settings) {
-          if (placeholder) settings.placeholder = placeholder;
-
-          if (settings.ajax) {
-            $el.select2(settings);
-          } else {
-            settings.data = question.visibleChoices.map(function (choice) {
-              return {
-                id: choice.value,
-                text: choice.text,
-              };
-            });
-            $el.select2(settings);
-          }
+        if (settings.ajax) {
+          $el.select2(settings);
         } else {
-          $el.select2({
-            placeholder: placeholder,
-            data: question.visibleChoices.map(function (choice) {
-              return {
-                id: choice.value,
-                text: choice.text,
-              };
-            }),
+          settings.data = question.visibleChoices.map(function (choice) {
+            return {
+              id: choice.value,
+              text: choice.text,
+            };
           });
+          $el.select2(settings);
         }
         updateValueHandler();
       };
