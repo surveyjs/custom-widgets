@@ -95,6 +95,7 @@ function init(Survey) {
       Inputmask(mask, options).mask(el);
 
       el.onblur = function () {
+        if (!el.inputmask) return;
         if (surveyElement.value === el.inputmask.getemptymask()) {
           surveyElement.value = "";
         }
@@ -109,6 +110,7 @@ function init(Survey) {
       };
 
       var pushValueHandler = function () {
+        if (!el.inputmask) return;
         if (el.inputmask.isComplete()) {
           surveyElement.value = options.autoUnmask
             ? el.inputmask.unmaskedvalue()
