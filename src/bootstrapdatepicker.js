@@ -36,7 +36,7 @@ function init(Survey, $) {
           // https://bootstrap-datepicker.readthedocs.io/en/latest/options.html#format
           name: "dateFormat",
           category: "general",
-          default: "'mm/dd/yyyy'",
+          default: "mm/dd/yyyy",
         },
         {
           // Can take a Date or a string
