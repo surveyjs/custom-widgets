@@ -53,9 +53,10 @@ function init(Survey) {
           default: 5,
         },
         {
-          name: "orientation:string",
+          name: "orientation",
           category: "slider",
           default: "horizontal",
+          choices: ["horizontal", "vertical"]
         },
         {
           name: "direction:string",

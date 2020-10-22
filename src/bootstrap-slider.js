@@ -30,6 +30,12 @@ function init(Survey) {
           default: 100,
           category: "general",
         },
+        {
+          name: "orientation",
+          default: "horizontal",
+          choices: ["horizontal", "vertical"],
+          category: "general"
+        },
       ]);
       Survey.JsonObject.metaData.addProperty("bootstrapslider", {
         name: "config",
@@ -47,6 +53,10 @@ function init(Survey) {
       inputEl.setAttribute("data-slider-id", question.name + "_" + question.id);
       inputEl.setAttribute("data-slider-min", question.rangeMin);
       inputEl.setAttribute("data-slider-max", question.rangeMax);
+      inputEl.setAttribute("data-slider-step", question.step);
+      if(question.orientation == "vertical") {
+        inputEl.setAttribute("data-slider-orientation", "vertical");
+      }
       inputEl.setAttribute("data-slider-step", question.step);
       inputEl.setAttribute(
         "data-slider-value",
