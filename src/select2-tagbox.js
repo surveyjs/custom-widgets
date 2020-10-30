@@ -107,6 +107,23 @@ function init(Survey, $) {
             .trigger("change");
         } else {
           $el.val(question.value).trigger("change");
+
+          if (
+            question.allowAddNewTag &&
+            $el.val().length !== question.value.length
+          ) {
+            question.value.forEach(function (choiceValue) {
+              if ($el.val().indexOf(choiceValue) === -1) {
+                var newOption = new Option(
+                  choiceValue,
+                  choiceValue,
+                  true,
+                  true
+                );
+                $el.append(newOption).trigger("change");
+              }
+            });
+          }
         }
         self.fixStyles(el);
         updateComment();

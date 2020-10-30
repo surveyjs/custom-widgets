@@ -63,6 +63,7 @@ function init(Survey, $) {
         if (isSettingValue) return;
         question.comment = $otherElement.val();
       });
+
       var updateComment = function () {
         $otherElement.val(question.comment);
         if (question.isOtherSelected) {
@@ -105,12 +106,18 @@ function init(Survey, $) {
           $el.select2(settings);
           question.keepIncorrectValues = true;
         } else {
-          settings.data = question.visibleChoices.map(function (choice) {
-            return {
-              id: choice.value,
-              text: choice.text,
-            };
-          });
+          var data = [];
+          if (!!settings.placeholder || question.showOptionsCaption) {
+            data.push({ id: "", text: "" });
+          }
+          settings.data = data.concat(
+            question.visibleChoices.map(function (choice) {
+              return {
+                id: choice.value,
+                text: choice.text,
+              };
+            })
+          );
           $el.select2(settings);
         }
         // fixed width accrording to https://stackoverflow.com/questions/45276778/select2-not-responsive-width-larger-than-container
