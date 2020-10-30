@@ -13,7 +13,7 @@ function init(Survey, $) {
           question.getType() === "dropdown"
         );
       if (widget.activatedBy == "type")
-        return typeof question.getType() === "dropdown";
+        return question.getType() === "dropdown";
       if (widget.activatedBy == "customtype")
         return question.getType() === "select2";
       return false;
