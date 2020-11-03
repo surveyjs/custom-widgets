@@ -9,6 +9,7 @@ function init(Survey) {
     numericDigitsOptional: false,
     numericPlaceholder: "0",
     autoUnmask: true,
+    clearIncomplete: true,
     widgetIsLoaded: function () {
       return typeof Inputmask != "undefined";
     },
@@ -32,6 +33,11 @@ function init(Survey) {
         },
         {
           name: "autoUnmask:boolean",
+          category: "general",
+          default: true,
+        },
+        {
+          name: "clearIncomplete:boolean",
           category: "general",
           default: true,
         },
@@ -68,7 +74,11 @@ function init(Survey) {
           typeof surveyElement.autoUnmask !== "undefined"
             ? surveyElement.autoUnmask
             : rootWidget.autoUnmask,
-      };
+        clearIncomplete:
+            typeof surveyElement.clearIncomplete !== "undefined"
+              ? surveyElement.clearIncomplete
+              : rootWidget.clearIncomplete,
+        };
       if (surveyElement.inputMask != "none")
         options.inputFormat = surveyElement.inputFormat;
 
