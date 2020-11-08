@@ -53,8 +53,8 @@ function init(Survey) {
             Survey.JsonObject.metaData.addProperty(supportedType, {
               name: "renderAs",
               category: "general",
-              default: "standard",
-              choices: ["standard", "prettycheckbox"],
+              default: "default",
+              choices: ["default", "prettycheckbox"],
             });
           }
         });

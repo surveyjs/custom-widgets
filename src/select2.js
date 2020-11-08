@@ -26,8 +26,8 @@ function init(Survey, $) {
         Survey.JsonObject.metaData.addProperty("dropdown", {
           name: "renderAs",
           category: "general",
-          default: "standard",
-          choices: ["select2", "standard"],
+          default: "default",
+          choices: ["select2", "default"],
         });
         Survey.JsonObject.metaData.addProperty("dropdown", {
           dependsOn: "renderAs",
