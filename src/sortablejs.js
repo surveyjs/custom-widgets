@@ -141,10 +141,11 @@ function init(Survey) {
         disabled: question.isReadOnly,
         group: {
           name: question.name,
-          put: function (to) {
+          put: function (to, from) {
             return (
-              question.maxAnswersCount < 0 ||
-              to.el.children.length <= question.maxAnswersCount
+              to.options.group && from.options.group && to.options.group.name === from.options.group.name &&
+              (question.maxAnswersCount < 0 ||
+              to.el.children.length <= question.maxAnswersCount)
             );
           },
         },
