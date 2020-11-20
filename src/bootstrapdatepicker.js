@@ -116,7 +116,7 @@ function init(Survey, $) {
       question.valueChangedCallback = function () {
         // pickerWidget.val(question.value);
         // $el.bootstrapDP('update', moment(question.value, "DD/MM/YYYY").toDate());
-        pickerWidget.datepicker("update", !!question.value ? new Date(question.value) : "");
+        pickerWidget.bootstrapDP("update", !!question.value ? new Date(question.value) : "");
       };
       question.valueChangedCallback();
       question.readOnlyChangedCallback = function () {
