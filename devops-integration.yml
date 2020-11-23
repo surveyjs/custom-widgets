@@ -13,10 +13,10 @@ pool:
   vmImage: "Ubuntu-16.04"
 
 steps:
-  - task: DeleteFiles@1
-    inputs:
-      SourceFolder: '$(System.ArtifactStagingDirectory)'
-      Contents: 'isCustomWidgetOk'
+  # - task: DeleteFiles@1
+  #   inputs:
+  #     SourceFolder: '$(System.ArtifactStagingDirectory)'
+  #     Contents: 'isCustomWidgetOk'
   # - task: PublishBuildArtifacts@1
   #   displayName: publish IsCustomWidgetOk atrifact for the ReleaseAll pipeline
   #   inputs:
@@ -66,12 +66,12 @@ steps:
       ArtifactName: 'SurveyJSWidgetsBuild'
       publishLocation: 'Container'
   
-  # - script: |
-  #    echo "" >  $(Build.ArtifactStagingDirectory)/isCustomWidgetOk
-  #   displayName: "create artifact file for the ReleaseAll pipeline"
-  # - task: PublishBuildArtifacts@1
-  #   displayName: publish IsCustomWidgetOk atrifact for the ReleaseAll pipeline
-  #   inputs:
-  #     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-  #     ArtifactName: 'IsCustomWidgetOk'
-  #     publishLocation: 'Container'
+  - script: |
+     echo "" >  $(Build.ArtifactStagingDirectory)/isCustomWidgetOk
+    displayName: "create artifact file for the ReleaseAll pipeline"
+  - task: PublishBuildArtifacts@1
+    displayName: publish IsCustomWidgetOk atrifact for the ReleaseAll pipeline
+    inputs:
+      PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+      ArtifactName: 'IsCustomWidgetOk'
+      publishLocation: 'Container'
