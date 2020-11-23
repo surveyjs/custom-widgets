@@ -49,8 +49,8 @@ steps:
       SourceFolder: '$(Build.Repository.LocalPath)/package'
       targetFolder: $(Build.ArtifactStagingDirectory)/packages/survey-widgets
 
-  # - task: PublishBuildArtifacts@1
-  #   inputs:
-  #     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-  #     ArtifactName: 'SurveyJSWidgetsBuild'
-  #     publishLocation: 'Container'
+  - task: PublishBuildArtifacts@1
+    inputs:
+      PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+      ArtifactName: 'SurveyJSWidgetsBuild'
+      publishLocation: 'Container'
