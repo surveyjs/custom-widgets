@@ -67,7 +67,7 @@ steps:
       publishLocation: 'Container'
   
   - script: |
-     echo "" >  $(System.ArtifactStagingDirectory)/isCustomWidgetOk
+     echo "" >  $(Build.ArtifactStagingDirectory)/isCustomWidgetOk
     displayName: "create artifact file for the ReleaseAll pipeline"
   # - task: PublishBuildArtifacts@1
   #   displayName: publish IsCustomWidgetOk atrifact for the ReleaseAll pipeline
