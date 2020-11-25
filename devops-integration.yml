@@ -15,7 +15,7 @@ pool:
 steps:
   - task: NodeTool@0
     inputs:
-      versionSpec: "12.x"
+      versionSpec: "14.x"
     displayName: "Install Node.js"
 
   - script: |
@@ -39,6 +39,25 @@ steps:
       Contents: "**"
       TargetFolder: "$(Build.Repository.LocalPath)/node_modules/survey-core"
       OverWrite: true
+
+# npm run release with version
+  - task: CopyFiles@2
+    inputs:
+      SourceFolder: '$(System.ArtifactsDirectory)/SurveyJSLibraryBuild/'
+      Contents: 'version.txt'
+      TargetFolder: '$(Build.SourcesDirectory)/'
+      OverWrite: true
+    displayName: 'Copy Build Artifact - SurveyJSVersion File'
+
+  - powershell: |
+      $version = Get-Content $(Build.SourcesDirectory)/version.txt
+      Write-Host "##vso[task.setvariable variable=SurveyJSVersion;]$version"
+    displayName: 'setup SurveyJSVersion variable from SurveyJSVersionFile'
+
+  - powershell: |
+      npm run release -- --release-as $(SurveyJSVersion)
+    displayName: 'npm run release specific version'
+#####################################################
   
   - script: |
       npm run build
