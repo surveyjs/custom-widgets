@@ -102,20 +102,16 @@ function init(Survey, $) {
           daysOfWeekHighlighted: question.daysOfWeekHighlighted,
           disableTouchKeyboard: question.disableTouchKeyboard,
         })
-        // .on("changeDate", function (e) {
-        //     question.value = moment(e.date).format("DD/MM/YYYY");
-        //     // `e` here contains the extra attributes
-        // })
         .on("change", function (e) {
-          var newValue = pickerWidget.val();
+          var newDate = pickerWidget.bootstrapDP("getUTCDate");
+          var newValue = newDate && newDate.toUTCString();
           if (question.value != newValue) {
             question.value = newValue;
           }
         });
 
       question.valueChangedCallback = function () {
-        pickerWidget.val(question.value);
-        // $el.bootstrapDP('update', moment(question.value, "DD/MM/YYYY").toDate());
+        pickerWidget.bootstrapDP("setUTCDate", !!question.value ? new Date(question.value) : "");
       };
       question.valueChangedCallback();
       question.readOnlyChangedCallback = function () {

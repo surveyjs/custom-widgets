@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.8.17](https://github.com/surveyjs/custom-widgets/compare/v1.8.16...v1.8.17) (2020-11-26)
+
+### [1.8.16](https://github.com/surveyjs/custom-widgets/compare/v1.8.14...v1.8.16) (2020-11-24)
+
+### [1.8.14](https://github.com/surveyjs/custom-widgets/compare/v1.8.13...v1.8.14) (2020-11-19)
+
+### [1.8.13](https://github.com/surveyjs/custom-widgets/compare/v1.8.12...v1.8.13) (2020-11-09)
+
 ### [1.8.12](https://github.com/surveyjs/custom-widgets/compare/v1.8.11...v1.8.12) (2020-10-28)
 
 ### [1.8.11](https://github.com/surveyjs/custom-widgets/compare/v1.8.10...v1.8.11) (2020-10-23)
