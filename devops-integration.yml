@@ -69,10 +69,10 @@ steps:
   - task: CopyFiles@2
     inputs:
       SourceFolder: '$(Build.Repository.LocalPath)/package'
-      targetFolder: $(Build.ArtifactStagingDirectory)/packages/survey-widgets
+      targetFolder: $(Build.ArtifactStagingDirectory)/SurveyJSWidgetsBuild/packages/survey-widgets
 
   - task: PublishBuildArtifacts@1
     inputs:
-      PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+      PathtoPublish: '$(Build.ArtifactStagingDirectory)/SurveyJSWidgetsBuild/'
       ArtifactName: 'SurveyJSWidgetsBuild'
       publishLocation: 'Container'
