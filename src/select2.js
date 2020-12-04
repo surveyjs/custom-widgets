@@ -76,7 +76,7 @@ function init(Survey, $) {
       var updateValueHandler = function () {
         if (isSettingValue) return;
         isSettingValue = true;
-        if ($el.find("option[value='" + question.value + "']").length) {
+        if ($el.find("option[value='" + (question.value || "")  + "']").length) {
           $el.val(question.value).trigger("change");
         } else {
           if (question.value !== null && question.value !== undefined) {
@@ -118,6 +118,7 @@ function init(Survey, $) {
               };
             })
           );
+          question.clearIncorrectValues();
           $el.select2(settings);
         }
         // fixed width accrording to https://stackoverflow.com/questions/45276778/select2-not-responsive-width-larger-than-container
