@@ -28,7 +28,11 @@ function init(Survey) {
         {
           name: "prefix",
           category: "general",
-
+          visible: false,
+        },
+        {
+          name: "suffix",
+          category: "general",
           visible: false,
         },
         {
@@ -93,6 +97,7 @@ function init(Survey) {
         options.digits = rootWidget.numericDigits;
         options.digitsOptional = rootWidget.numericDigitsOptional;
         options.prefix = surveyElement.prefix || "";
+        options.suffix = surveyElement.suffix || "";
         options.placeholder = rootWidget.numericPlaceholder;
       }
       // if (surveyElement.inputMask == "datetime") {
