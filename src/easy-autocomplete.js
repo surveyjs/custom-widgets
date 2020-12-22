@@ -44,8 +44,10 @@ function init(Survey, $) {
       var questionRootClasses = getCssSelectorFromClassesString(
         question.cssRoot
       );
-      if (!!questionRootClasses) {
-        $el.parents(questionRootClasses)[0].style.overflow = "visible";
+
+      var questionRoot = $el.parents(questionRootClasses)[0];
+      if (!!questionRootClasses && !!questionRoot) {
+        questionRoot.style.overflow = "visible";
       }
       var options = {
         data: (question.choices || []).map(function (item) {
