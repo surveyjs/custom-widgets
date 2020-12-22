@@ -145,22 +145,38 @@ function init(Survey, $) {
       );
       updateChoices();
       $el.on("select2:select", function (e) {
-        question.renderedValue = e.target.value;
-        updateComment();
+        setTimeout(function() {
+          question.renderedValue = e.target.value;
+          updateComment();
+        }, 1);
+      });
+      $el.on('select2:opening', function(e) {
+          if ($(this).data('unselecting')) {
+              $(this).removeData('unselecting');
+              e.preventDefault();
+          }
       });
       $el.on("select2:unselecting", function (e) {
-        question.renderedValue = null;
-        updateComment();
+        $(this).data('unselecting', true);
+        setTimeout(function() {
+          question.renderedValue = null;
+          updateComment();
+        }, 1);
       });
       question.valueChangedCallback = updateValueHandler;
       updateValueHandler();
     },
     willUnmount: function (question, el) {
+      question.readOnlyChangedCallback = null;
+      question.valueChangedCallback = null;
       var $select2 = $(el).find("select");
       if (!!$select2.data("select2")) {
-        $select2.off("select2:select").select2("destroy");
+        $select2
+          .off("select2:select")
+          .off("select2:unselecting")
+          .off("select2:opening")
+          .select2("destroy");
       }
-      question.readOnlyChangedCallback = null;
     },
   };
 
