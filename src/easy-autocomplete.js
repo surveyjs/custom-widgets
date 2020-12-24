@@ -27,6 +27,11 @@ function init(Survey, $) {
         category: "choicesByUrl",
         categoryIndex: 2,
       });
+      Survey.JsonObject.metaData.addProperty("text", {
+        name: "config",
+        category: "general",
+        default: null,
+      });
       Array.prototype.push.apply(
         Survey.matrixDropdownColumnTypes.text.properties,
         ["choices", "choicesOrder", "choicesByUrl", "otherText"]
@@ -49,21 +54,32 @@ function init(Survey, $) {
       if (!!questionRootClasses && !!questionRoot) {
         questionRoot.style.overflow = "visible";
       }
-      var options = {
-        data: (question.choices || []).map(function (item) {
-          return item.text;
-        }),
-        adjustWidth: false,
-        list: {
+
+      var config = question.config;
+      var options =
+        config && typeof config == "string" ? JSON.parse(config) : config;
+      if (!options) options = {};
+
+      options.data = (question.choices || []).map(function (item) {
+        return item.text;
+      });
+      if (options.adjustWidth === undefined) {
+        options.adjustWidth = false;
+      }
+      if (!options.list) {
+        options.list = {
           sort: {
             enabled: true,
           },
           match: {
             enabled: true,
           },
-        },
-        placeholder: question.placeholder,
-      };
+        };
+      }
+      if (!options.placeholder) {
+        options.placeholder = question.placeholder;
+      }
+
       if (!!question.choicesByUrl) {
         options.url = function (phrase) {
           return question.choicesByUrl.url;
