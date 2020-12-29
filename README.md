@@ -46,8 +46,8 @@ Install the library using npm.
 npm install surveyjs-widgets
 ```
 
-Or use Azure CDN:
-https://surveyjs.azureedge.net/0.95.0/surveyjs-widgets.min.js
+Or use unpkg CDN:
+https://unpkg.com/surveyjs-widgets@{version-number}/surveyjs-widgets.min.js
 
 You find all versions/builds in the [surveyjs/build repo](https://github.com/surveyjs/builds).
 
