@@ -36,6 +36,11 @@ function init(Survey) {
           visible: false,
         },
         {
+          name: "numericDigits",
+          category: "general",
+          visible: false,
+        },
+        {
           name: "autoUnmask:boolean",
           category: "general",
           default: true,
@@ -94,7 +99,7 @@ function init(Survey) {
         options.autoGroup = rootWidget.numericAutoGroup;
       }
       if (surveyElement.inputMask == "currency") {
-        options.digits = rootWidget.numericDigits;
+        options.digits = surveyElement.numericDigits || rootWidget.numericDigits;
         options.digitsOptional = rootWidget.numericDigitsOptional;
         options.prefix = surveyElement.prefix || "";
         options.suffix = surveyElement.suffix || "";
