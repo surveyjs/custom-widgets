@@ -1,4 +1,5 @@
 import Inputmask from "inputmask";
+import { type } from "jquery";
 
 function init(Survey) {
   var widget = {
@@ -24,22 +25,6 @@ function init(Survey) {
     activatedByChanged: function (activatedBy) {
       if (Survey.JsonObject.metaData.findProperty("text", "inputMask")) return;
       var properties = [
-        { name: "inputFormat", category: "general" },
-        {
-          name: "prefix",
-          category: "general",
-          visible: false,
-        },
-        {
-          name: "suffix",
-          category: "general",
-          visible: false,
-        },
-        {
-          name: "numericDigits",
-          category: "general",
-          visible: false,
-        },
         {
           name: "autoUnmask:boolean",
           category: "general",
@@ -50,6 +35,7 @@ function init(Survey) {
           category: "general",
           default: true,
         },
+        { name: "inputFormat", category: "general" },
         {
           name: "inputMask",
           category: "general",
@@ -64,6 +50,26 @@ function init(Survey) {
             "ip",
           ],
         },
+        {
+          name: "numericDigits",
+          category: "general",
+          visible: false,
+        },
+        {
+          name: "options",
+          category: "general",
+          visible: false,
+        },
+        {
+          name: "prefix",
+          category: "general",
+          visible: false,
+        },
+        {
+          name: "suffix",
+          category: "general",
+          visible: false,
+        },
       ];
       Survey.JsonObject.metaData.addProperties("text", properties);
       Survey.JsonObject.metaData.addProperties(
@@ -75,30 +81,32 @@ function init(Survey) {
     applyInputMask: function (surveyElement, el) {
       var rootWidget = this;
       var mask =
-        surveyElement.inputMask != "none"
+        surveyElement.inputMask !== "none"
           ? surveyElement.inputMask
           : surveyElement.inputFormat;
-      var options = {
-        autoUnmask:
-          typeof surveyElement.autoUnmask !== "undefined"
-            ? surveyElement.autoUnmask
-            : rootWidget.autoUnmask,
-        clearIncomplete:
-            typeof surveyElement.clearIncomplete !== "undefined"
-              ? surveyElement.clearIncomplete
-              : rootWidget.clearIncomplete,
-        };
-      if (surveyElement.inputMask != "none")
+      var options = {};
+      if (typeof surveyElement.options === "object") {
+        for (var option in surveyElement.options) {
+          options[option] = surveyElement.options[option];
+        }
+      }
+      options.autoUnmask = typeof surveyElement.autoUnmask !== "undefined"
+        ? surveyElement.autoUnmask
+        : rootWidget.autoUnmask;
+      options.clearIncomplete = typeof surveyElement.clearIncomplete !== "undefined"
+        ? surveyElement.clearIncomplete
+        : rootWidget.clearIncomplete;
+      if (surveyElement.inputMask !== "none") {
         options.inputFormat = surveyElement.inputFormat;
-
+      }
       if (
-        surveyElement.inputMask == "currency" ||
-        surveyElement.inputMask == "decimal"
+        surveyElement.inputMask === "currency" ||
+        surveyElement.inputMask === "decimal"
       ) {
         options.groupSeparator = rootWidget.numericGroupSeparator;
         options.autoGroup = rootWidget.numericAutoGroup;
       }
-      if (surveyElement.inputMask == "currency") {
+      if (surveyElement.inputMask === "currency") {
         options.digits = surveyElement.numericDigits || rootWidget.numericDigits;
         options.digitsOptional = rootWidget.numericDigitsOptional;
         options.prefix = surveyElement.prefix || "";
@@ -108,7 +116,7 @@ function init(Survey) {
       // if (surveyElement.inputMask == "datetime") {
       //   mask = surveyElement.inputFormat;
       // }
-      if (surveyElement.inputMask == "phone" && !!surveyElement.inputFormat) {
+      if (surveyElement.inputMask === "phone" && !!surveyElement.inputFormat) {
         mask = surveyElement.inputFormat;
       }
 
