@@ -1,5 +1,4 @@
 import Inputmask from "inputmask";
-import { type } from "jquery";
 
 function init(Survey) {
   var widget = {
