@@ -75,6 +75,9 @@ function init(Survey, $) {
       settings.tags = question.allowAddNewTag;
       settings.disabled = question.isReadOnly;
       settings.theme = "classic";
+      if (!!question.maxSelectedChoices) {
+        settings.maximumSelectionLength = question.maxSelectedChoices;
+      }
 
       $el.select2(settings);
 
