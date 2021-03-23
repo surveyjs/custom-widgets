@@ -74,6 +74,10 @@ function init(Survey, $) {
           match: {
             enabled: true,
           },
+          onSelectItemEvent: function() {
+            var selectedData = $el.getSelectedItemData();
+            question.value = selectedData;
+          }
         };
       }
       if (!options.placeholder) {
