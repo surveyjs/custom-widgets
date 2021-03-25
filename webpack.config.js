@@ -9,9 +9,12 @@ var CleanWebpackPlugin = require("clean-webpack-plugin");
 
 var packageJson = require("./package.json");
 
+const today = new Date();
+const year = today.getFullYear();
+
 var copyright = [
   "surveyjs-widgets - Widgets for the SurveyJS library v" + packageJson.version,
-  "Copyright (c) 2015-2021 Devsoft Baltic OÜ  - http://surveyjs.io/",
+  "Copyright (c) 2015-" + year + " Devsoft Baltic OÜ  - http://surveyjs.io/",
   "License: MIT (http://www.opensource.org/licenses/mit-license.php)"
 ].join("\n");
 
