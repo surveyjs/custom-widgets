@@ -63,11 +63,15 @@ function init(Survey) {
     },
     pdfRender: function (survey, options) {
       if (options.question.getType() === "editor") {
-        var loc = new Survey.LocalizableString(survey, true);
+        const loc = new Survey.LocalizableString(survey, true);
         loc.text = options.question.value || options.question.defaultValue;
         options.question["locHtml"] = loc;
-        options.question["renderAs"] = "auto";
-        var flatHtml = options.repository.create(
+        if (options.question.renderAs === "standard" ||
+            options.question.renderAs === "image") {
+          options.question["renderAs"] = options.question.renderAs;
+        }
+        else options.question["renderAs"] = "auto";
+        const flatHtml = options.repository.create(
           survey,
           options.question,
           options.controller,
