@@ -20,7 +20,7 @@ function init(Survey) {
       });
     },
     afterRender: function (question, el) {
-      var name = question.name;
+      var name = question.inputId;
       CKEDITOR.editorConfig = function (config) {
         config.language = "es";
         config.height = question.height;
@@ -59,18 +59,19 @@ function init(Survey) {
     },
     willUnmount: function (question, el) {
       question.readOnlyChangedCallback = null;
-      CKEDITOR.instances[question.name].destroy(false);
+      CKEDITOR.instances[question.inputId].destroy(false);
     },
     pdfRender: function (survey, options) {
       if (options.question.getType() === "editor") {
         const loc = new Survey.LocalizableString(survey, true);
         loc.text = options.question.value || options.question.defaultValue;
         options.question["locHtml"] = loc;
-        if (options.question.renderAs === "standard" ||
-            options.question.renderAs === "image") {
+        if (
+          options.question.renderAs === "standard" ||
+          options.question.renderAs === "image"
+        ) {
           options.question["renderAs"] = options.question.renderAs;
-        }
-        else options.question["renderAs"] = "auto";
+        } else options.question["renderAs"] = "auto";
         const flatHtml = options.repository.create(
           survey,
           options.question,
