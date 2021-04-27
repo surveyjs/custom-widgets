@@ -1,6 +1,11 @@
 function init(Survey, $) {
   $ = $ || window.$;
-  if (!$.fn.bootstrapDP && !!$.fn.datepicker && !!$.fn.datepicker.noConflict) {
+  if (
+    !!$ &&
+    !$.fn.bootstrapDP &&
+    !!$.fn.datepicker &&
+    !!$.fn.datepicker.noConflict
+  ) {
     $.fn.bootstrapDP = $.fn.datepicker.noConflict();
     if (!$.fn.datepicker) {
       $.fn.datepicker = $.fn.bootstrapDP;
