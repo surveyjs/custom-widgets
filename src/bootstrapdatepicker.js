@@ -1,7 +1,12 @@
 function init(Survey, $) {
   $ = $ || window.$;
 
-  if (!$.fn.bootstrapDP && !!$.fn.datepicker && !!$.fn.datepicker.noConflict) {
+  if (
+    !!$ &&
+    !$.fn.bootstrapDP &&
+    !!$.fn.datepicker &&
+    !!$.fn.datepicker.noConflict
+  ) {
     $.fn.bootstrapDP = $.fn.datepicker.noConflict();
     if (!$.fn.datepicker) {
       $.fn.datepicker = $.fn.bootstrapDP;
@@ -12,7 +17,7 @@ function init(Survey, $) {
     title: "Date picker",
     iconName: "icon-datepicker",
     widgetIsLoaded: function () {
-      return !!$.fn.bootstrapDP;
+      return !!$ && !!$.fn.bootstrapDP;
     },
     isFit: function (question) {
       return question.getType() === "bootstrapdatepicker";
@@ -111,7 +116,10 @@ function init(Survey, $) {
         });
 
       question.valueChangedCallback = function () {
-        pickerWidget.bootstrapDP("setUTCDate", !!question.value ? new Date(question.value) : "");
+        pickerWidget.bootstrapDP(
+          "setUTCDate",
+          !!question.value ? new Date(question.value) : ""
+        );
       };
       question.valueChangedCallback();
       question.readOnlyChangedCallback = function () {
