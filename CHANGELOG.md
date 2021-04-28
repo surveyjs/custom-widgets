@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.8.45](https://github.com/surveyjs/custom-widgets/compare/v1.8.44...v1.8.45) (2021-04-28)
+
+
+### Bug Fixes
+
+* Ck-Editor plugin doesn't work in panel dynamic [#251](https://github.com/surveyjs/custom-widgets/issues/251) ([2f41e8a](https://github.com/surveyjs/custom-widgets/commit/2f41e8a603f73666e1bb853ef9cfcaee070cdf12))
+* jquery date picker generates error if jQuery is not included [#250](https://github.com/surveyjs/custom-widgets/issues/250) ([66598e2](https://github.com/surveyjs/custom-widgets/commit/66598e21c335be39fb620130910a185bddd3af36))
+
 ### [1.8.44](https://github.com/surveyjs/custom-widgets/compare/v1.8.43...v1.8.44) (2021-04-20)
 
 ### [1.8.43](https://github.com/surveyjs/custom-widgets/compare/v1.8.42...v1.8.43) (2021-04-14)
