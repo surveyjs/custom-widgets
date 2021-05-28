@@ -98,8 +98,10 @@ function init(Survey, $) {
         .bootstrapDP({
           enableOnReadonly: false,
           format: question.dateFormat,
-          startDate: question.startDate,
-          endDate: question.endDate,
+          startDate: !!question.startDate
+            ? question.startDate
+            : question.renderedMin,
+          endDate: !!question.endDate ? question.endDate : question.renderedMax,
           todayHighlight: question.todayHighlight,
           weekStart: question.weekStart,
           clearBtn: question.clearBtn,

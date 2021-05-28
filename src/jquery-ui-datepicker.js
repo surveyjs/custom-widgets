@@ -79,6 +79,12 @@ function init(Survey, $) {
       if (!!question.maxDate) {
         config.maxDate = question.maxDate;
       }
+      if (!!question.renderedMin) {
+        config.minDate = question.renderedMin;
+      }
+      if (!!question.renderedMax) {
+        config.maxDate = question.renderedMax;
+      }
       config.disabled = question.isReadOnly;
       if (config.onSelect === undefined) {
         config.onSelect = function (dateText) {
