@@ -12,7 +12,7 @@ function init(Survey) {
       return question.getType() === "nouislider";
     },
     htmlTemplate:
-      "<div><div></div></div><style>.noUi-origin { width: 0; }</style>",
+      "<div><div></div></div>",
     activatedByChanged: function (activatedBy) {
       Survey.JsonObject.metaData.addClass("nouislider", [], null, "empty");
       Survey.JsonObject.metaData.addProperties("nouislider", [
