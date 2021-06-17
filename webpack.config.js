@@ -45,7 +45,7 @@ var dependencies = {
   icheck: "^1.0.2",
   "jquery-ui": "^1.12.1",
   sortablejs: "^1.6.1",
-  nouislider: "^10.1.0",
+  nouislider: "^14.6.3",
   inputmask: "^5.0.3",
   "jquery-bar-rating": "^1.2.2",
   "easy-autocomplete": "^1.3.5",
