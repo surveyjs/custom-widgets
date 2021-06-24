@@ -76,7 +76,7 @@ function init(Survey, $) {
       var updateValueHandler = function () {
         if (isSettingValue) return;
         isSettingValue = true;
-        if ($el.find("option[value='" + (question.value || "")  + "']").length) {
+        if ($el.find('option[value="' + (question.value || "") + '"]').length) {
           $el.val(question.value).trigger("change");
         } else {
           if (question.value !== null && question.value !== undefined) {
