@@ -89,6 +89,7 @@ function init(Survey, $) {
       ) {
         $otherElement.addClass(question.survey.css.checkbox.other);
       }
+      $otherElement.placeholder = question.otherPlaceHolder;
       $otherElement.bind("input propertychange", function () {
         question.comment = $otherElement.val();
       });
