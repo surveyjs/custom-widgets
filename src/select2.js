@@ -144,6 +144,12 @@ function init(Survey, $) {
         }
       );
       updateChoices();
+      $el.on("change", function (e) {
+        setTimeout(function() {
+          question.renderedValue = e.target.value;
+          updateComment();
+        }, 1);
+      });
       $el.on("select2:select", function (e) {
         setTimeout(function() {
           question.renderedValue = e.target.value;
