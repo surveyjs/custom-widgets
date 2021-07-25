@@ -79,7 +79,11 @@ function init(Survey, $) {
         if ($el.find('option[value="' + (question.value || "") + '"]').length) {
           $el.val(question.value).trigger("change");
         } else {
-          if (question.value !== null && question.value !== undefined) {
+          if (
+            question.value !== null &&
+            question.value !== undefined &&
+            !question.isOtherSelected
+          ) {
             var newOption = new Option(
               question.value, //TODO if question value is object then need to improve
               question.value,
@@ -145,26 +149,26 @@ function init(Survey, $) {
       );
       updateChoices();
       $el.on("change", function (e) {
-        setTimeout(function() {
+        setTimeout(function () {
           question.renderedValue = e.target.value;
           updateComment();
         }, 1);
       });
       $el.on("select2:select", function (e) {
-        setTimeout(function() {
+        setTimeout(function () {
           question.renderedValue = e.target.value;
           updateComment();
         }, 1);
       });
-      $el.on('select2:opening', function(e) {
-          if ($(this).data('unselecting')) {
-              $(this).removeData('unselecting');
-              e.preventDefault();
-          }
+      $el.on("select2:opening", function (e) {
+        if ($(this).data("unselecting")) {
+          $(this).removeData("unselecting");
+          e.preventDefault();
+        }
       });
       $el.on("select2:unselecting", function (e) {
-        $(this).data('unselecting', true);
-        setTimeout(function() {
+        $(this).data("unselecting", true);
+        setTimeout(function () {
           question.renderedValue = null;
           updateComment();
         }, 1);
