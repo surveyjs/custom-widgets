@@ -93,29 +93,35 @@ function init(Survey, $) {
       var $el = $(el).is(".widget-datepicker")
         ? $(el)
         : $(el).find(".widget-datepicker");
-
-      var pickerWidget = $el
-        .bootstrapDP({
-          enableOnReadonly: false,
-          format: question.dateFormat,
-          startDate: !!question.startDate
-            ? question.startDate
-            : question.renderedMin,
-          endDate: !!question.endDate ? question.endDate : question.renderedMax,
-          todayHighlight: question.todayHighlight,
-          weekStart: question.weekStart,
-          clearBtn: question.clearBtn,
-          autoclose: question.autoClose,
-          daysOfWeekHighlighted: question.daysOfWeekHighlighted,
-          disableTouchKeyboard: question.disableTouchKeyboard,
-        })
-        .on("change", function (e) {
-          var newDate = pickerWidget.bootstrapDP("getUTCDate");
-          var newValue = newDate && newDate.toUTCString();
-          if (question.value != newValue) {
-            question.value = newValue;
-          }
-        });
+      const options = {
+        enableOnReadonly: false,
+        format: question.dateFormat,
+        todayHighlight: question.todayHighlight,
+        weekStart: question.weekStart,
+        clearBtn: question.clearBtn,
+        autoclose: question.autoClose,
+        daysOfWeekHighlighted: question.daysOfWeekHighlighted,
+        disableTouchKeyboard: question.disableTouchKeyboard,
+      };
+      if (!!question.startDate || !!question.renderedMin) {
+        options.startDate = !!question.startDate
+          ? question.startDate
+          : question.renderedMin;
+      }
+      var renderedMax = question.renderedMax;
+      if (!!renderedMax && new Date(renderedMax).getFullYear() >= 2999) {
+        renderedMax = undefined;
+      }
+      if (!!question.endDate || !!renderedMax) {
+        options.endDate = !!question.endDate ? question.endDate : renderedMax;
+      }
+      const pickerWidget = $el.bootstrapDP(options).on("change", function (e) {
+        var newDate = pickerWidget.bootstrapDP("getUTCDate");
+        var newValue = newDate && newDate.toUTCString();
+        if (question.value != newValue) {
+          question.value = newValue;
+        }
+      });
 
       question.valueChangedCallback = function () {
         pickerWidget.bootstrapDP(
