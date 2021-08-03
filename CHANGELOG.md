@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.8.59](https://github.com/surveyjs/custom-widgets/compare/v1.8.58...v1.8.59) (2021-08-03)
+
+
+### Bug Fixes
+
+* EasyAutocomplete doesn't work with goNextPageAutomatic: true [#266](https://github.com/surveyjs/custom-widgets/issues/266) ([d56dfe0](https://github.com/surveyjs/custom-widgets/commit/d56dfe06224b8db959dc1b461626988e9bd61fd4))
+
 ### [1.8.58](https://github.com/surveyjs/custom-widgets/compare/v1.8.57...v1.8.58) (2021-07-28)
 
 
