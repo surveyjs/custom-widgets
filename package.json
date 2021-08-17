@@ -8,6 +8,10 @@
     "build": "webpack --env.buildType prod",
     "release": "standard-version --message \"Release: %s [skip ci]\""
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/surveyjs/custom-widgets.git"
+  },
   "private": true,
   "devDependencies": {
     "bootstrap-slider": "^10.6.2",
