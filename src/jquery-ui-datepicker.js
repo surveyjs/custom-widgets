@@ -105,7 +105,9 @@ function init(Survey, $) {
         this.fixFocusIE = false;
         return result;
       };
-      var pickerWidget = $el.datepicker(config);
+      var pickerWidget = $el.datepicker(config).on("change", function (e) {
+        question.value = $(this).val();
+      });
 
       $el.keyup(function (e) {
         if (e.keyCode == 8 || e.keyCode == 46) {
