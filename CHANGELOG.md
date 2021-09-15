@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.8.66](https://github.com/surveyjs/custom-widgets/compare/v1.8.65...v1.8.66) (2021-09-15)
+
+
+### Bug Fixes
+
+* subscribe on jquery datepicker manual input change ([462160e](https://github.com/surveyjs/custom-widgets/commit/462160ef2a68675434801fe63c4e62bafde289ef))
+
 ### [1.8.65](https://github.com/surveyjs/custom-widgets/compare/v1.8.64...v1.8.65) (2021-09-07)
 
 ### [1.8.64](https://github.com/surveyjs/custom-widgets/compare/v1.8.63...v1.8.64) (2021-08-31)
