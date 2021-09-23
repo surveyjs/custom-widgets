@@ -7,8 +7,8 @@
     "prebuild": "webpack --env.buildType dev",
     "build": "webpack --env.buildType prod",
     "release": "standard-version --message \"Release: %s [skip ci]\"",
-    "testcafe": "concurrently \"http-server --silent\" \"testcafe -c 4 chrome testCafe/ --selector-timeout 1500\"",
-    "testcafe:ci": "http-server --silent & testcafe chrome:headless testCafe/ --selector-timeout 1500 "
+    "testcafe": "concurrently \"http-server --silent\" \"testcafe -c 4 chrome testcafe/ --selector-timeout 1500\"",
+    "testcafe:ci": "http-server --silent & testcafe chrome:headless testcafe/ --selector-timeout 1500 "
   },
   "repository": {
     "type": "git",
