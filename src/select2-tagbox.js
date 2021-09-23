@@ -158,13 +158,20 @@ function init(Survey, $) {
         updateComment();
       });
       $el.on("select2:unselect", function (e) {
-        var index = (question.value || []).indexOf(e.params.data.id);
-        if (isAllItemSelected(e.params.data.id)) {
+        const select2Val = e.params.data.id;
+        if (isAllItemSelected(select2Val)) {
           question.clearValue();
-        } else if (index !== -1) {
-          var val = [].concat(question.value);
-          val.splice(index, 1);
-          question.value = val;
+        } else {        
+          const val = [].concat(question.value);
+          if(Array.isArray(val)) {
+            for(var i = 0; i < val.length; i ++) {
+              if(val[i] == select2Val || (!!val[i] && val[i].toString() == select2Val)) {
+                val.splice(i, 1);
+                question.value = val;
+                break;
+              }
+            }
+          }
         }
         updateComment();
       });

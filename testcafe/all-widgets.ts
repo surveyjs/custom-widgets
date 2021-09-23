@@ -17,7 +17,7 @@ var json = {
         {
             type: "dropdown",
             renderAs: "select2",
-            choicesByUrl: { url: "https://restcountries.eu/rest/v1/all" },
+            choicesByUrl: { url: "https://surveyjs.io/api/CountriesExample" },
             name: "countries",
         },
         {

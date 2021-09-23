@@ -57,4 +57,7 @@ export const initSurvey = ClientFunction(
     window.survey = model;
   }
 );
+export const getData = ClientFunction(() => {
+  return survey.data;
+});
 
