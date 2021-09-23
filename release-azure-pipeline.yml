@@ -61,6 +61,10 @@ steps:
     npm run build
   displayName: "build"
 
+- script: |
+    npm run testcafe:ci
+  displayName: "run functional tests"
+
 - powershell: |
     git pull origin master
     git push --follow-tags origin master;
