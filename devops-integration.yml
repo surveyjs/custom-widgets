@@ -66,6 +66,10 @@ steps:
       npm run build
     displayName: "build"
 
+  - script: |
+      npm run testcafe:ci
+    displayName: "run functional tests"
+
   - task: CopyFiles@2
     inputs:
       SourceFolder: '$(Build.Repository.LocalPath)/package'
