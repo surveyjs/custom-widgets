@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.8.69](https://github.com/surveyjs/custom-widgets/compare/v1.8.68...v1.8.69) (2021-09-28)
+
+
+### Bug Fixes
+
+* tagbox doesn't remove items if value is number [#273](https://github.com/surveyjs/custom-widgets/issues/273) ([6e1c17a](https://github.com/surveyjs/custom-widgets/commit/6e1c17a742b655b7918aa347d63840184b43a9d1))
+
 ### [1.8.68](https://github.com/surveyjs/custom-widgets/compare/v1.8.67...v1.8.68) (2021-09-21)
 
 ### [1.8.67](https://github.com/surveyjs/custom-widgets/compare/v1.8.66...v1.8.67) (2021-09-17)
