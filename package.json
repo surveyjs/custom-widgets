@@ -9,7 +9,7 @@
     "release": "standard-version --message \"Release: %s [skip ci]\"",
     "testcafe": "concurrently \"http-server --silent\" \"testcafe -c 4 chrome testcafe/ --selector-timeout 1500\"",
     "testcafe:ci": "http-server --silent & testcafe chrome:headless testcafe/ --selector-timeout 1500 ",
-    "testcafe_file": "concurrently \"http-server --silent\" \"testcafe chrome testCafe/tagbox.ts --selector-timeout 1500 --reporter minimal\""    
+    "testcafe_file": "concurrently \"http-server --silent\" \"testcafe chrome testCafe/matrix.ts --selector-timeout 1500 --reporter minimal\""    
   },
   "repository": {
     "type": "git",
