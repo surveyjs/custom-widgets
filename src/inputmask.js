@@ -4,6 +4,7 @@ function init(Survey) {
   var widget = {
     name: "maskedit",
     numericGroupSeparator: ",",
+    numericRadixPoint: "",
     numericAutoGroup: true,
     numericDigits: 2,
     numericDigitsOptional: false,
@@ -103,6 +104,7 @@ function init(Survey) {
         surveyElement.inputMask === "decimal"
       ) {
         options.groupSeparator = rootWidget.numericGroupSeparator;
+        options.radixPoint = rootWidget.numericRadixPoint;
         options.autoGroup = rootWidget.numericAutoGroup;
       }
       if (surveyElement.inputMask === "currency") {
