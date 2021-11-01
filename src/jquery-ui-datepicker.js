@@ -119,8 +119,12 @@ function init(Survey, $) {
         $el.datepicker("option", "disabled", question.isReadOnly);
       };
       function updateDate() {
-        if (question.value) {
-          pickerWidget.datepicker("setDate", question.value);
+        if (!question.isEmpty()) {
+          var val = question.value;
+          if(typeof val === "string") {
+            val = new Date(val);
+          }
+          pickerWidget.datepicker("setDate", val);
         } else {
           pickerWidget.datepicker("setDate", null);
         }
