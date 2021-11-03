@@ -81,7 +81,8 @@ function init(Survey) {
         el.style.height = "250px";
       }
       var slider = noUiSlider.create(el, {
-        start: question.value || (question.rangeMin + question.rangeMax) / 2,
+        start: question.rangeMin <= question.value && question.value <= question.rangeMax ? 
+                    question.value : (question.rangeMin + question.rangeMax) / 2,
         connect: [true, false],
         step: question.step,
         tooltips: question.tooltips,
@@ -117,6 +118,40 @@ function init(Survey) {
       slider.on("change", function () {
         question.value = Number(slider.get());
       });
+      var updateSliderProperties = function () {
+        const elems = document.getElementsByClassName("noUi-pips");
+        elems[elems.length - 1].style.display = "none";
+        slider.updateOptions(
+          { start: question.rangeMin <= question.value && question.value <= question.rangeMax ? 
+                            question.value : (question.rangeMin + question.rangeMax) / 2,
+            range: {
+              min: question.rangeMin,
+              max: question.rangeMax
+            }
+          }, true);
+          slider.pips(
+            { mode: question.pipsMode || "positions",
+              values: question.pipsValues.map(function (pVal) {
+                var pipValue = pVal;
+                if (pVal.value !== undefined) {
+                  pipValue = pVal.value;
+                }
+                return parseInt(pipValue);
+              }),
+              density: question.pipsDensity || 5,
+              format: {
+                  to: function (pVal) {
+                    var pipText = pVal;
+                    question.pipsText.map(function (el) {
+                      if (el.text !== undefined && pVal === el.value) {
+                        pipText = el.text;
+                      }
+                    });
+                    return pipText;
+                },
+              },
+            });
+      };
       var updateValueHandler = function () {
         slider.set(question.value);
       };
@@ -125,6 +160,10 @@ function init(Survey) {
       }
       updateValueHandler();
       question.noUiSlider = slider;
+      question.registerFunctionOnPropertiesValueChanged(
+        ["rangeMin", "rangeMax", "pipsMode", "pipsDensity"],
+        updateSliderProperties
+      );
       question.valueChangedCallback = updateValueHandler;
       question.readOnlyChangedCallback = function () {
         if (question.isReadOnly) {
@@ -140,6 +179,11 @@ function init(Survey) {
         question.noUiSlider = null;
       }
       question.readOnlyChangedCallback = null;
+      question.valueChangedCallback = null;
+      question.unRegisterFunctionOnPropertiesValueChanged(
+        ["rangeMin", "rangeMax", "pipsMode", "pipsDensity"],
+        updateSliderProperties
+      );
     },
     pdfRender: function (_, options) {
       if (options.question.getType() === "nouislider") {
@@ -170,7 +214,6 @@ function init(Survey) {
       }
     },
   };
-
   Survey.CustomWidgetCollection.Instance.addCustomWidget(widget, "customtype");
 }
 
