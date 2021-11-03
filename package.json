@@ -29,7 +29,7 @@
     "inputmask": "^5.0.3",
     "jquery": "^3.5.0",
     "jquery-bar-rating": "^1.2.2",
-    "jquery-ui": "^1.12.1",
+    "jquery-ui": "^1.13.0",
     "live-server": "^1.2.0",
     "nouislider": "latest",
     "pretty-checkbox": "^3.0.3",
