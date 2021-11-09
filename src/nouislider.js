@@ -120,10 +120,15 @@ function init(Survey) {
       });
       var updateSliderProperties = function () {
         const elems = document.getElementsByClassName("noUi-pips");
-        elems[elems.length - 1].style.display = "none";
+        if (elems.length > 0) elems[elems.length - 1].style.display = "none";
+        if (elems.length > 1) elems[elems.length - 2].style.display = "none";
+        var getStart = function(currentStart) {
+          return question.rangeMin + Math.round((currentStart - question.rangeMin) / question.step) * question.step;
+        }
         slider.updateOptions(
-          { start: question.rangeMin <= question.value && question.value <= question.rangeMax ? 
-                            question.value : (question.rangeMin + question.rangeMax) / 2,
+          { step: question.step,
+            start: question.rangeMin <= question.value && question.value <= question.rangeMax ? 
+                            getStart(question.value) : getStart((question.rangeMin + question.rangeMax) / 2),
             range: {
               min: question.rangeMin,
               max: question.rangeMax
@@ -161,7 +166,7 @@ function init(Survey) {
       updateValueHandler();
       question.noUiSlider = slider;
       question.registerFunctionOnPropertiesValueChanged(
-        ["rangeMin", "rangeMax", "pipsMode", "pipsDensity"],
+        ["step", "rangeMin", "rangeMax", "pipsMode", "pipsDensity"],
         updateSliderProperties
       );
       question.valueChangedCallback = updateValueHandler;
@@ -181,7 +186,7 @@ function init(Survey) {
       question.readOnlyChangedCallback = null;
       question.valueChangedCallback = null;
       question.unRegisterFunctionOnPropertiesValueChanged(
-        ["rangeMin", "rangeMax", "pipsMode", "pipsDensity"],
+        ["step", "rangeMin", "rangeMax", "pipsMode", "pipsDensity"],
         updateSliderProperties
       );
     },
