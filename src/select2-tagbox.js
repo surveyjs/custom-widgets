@@ -73,6 +73,9 @@ function init(Survey, $) {
       if (!settings) settings = {};
       settings.placeholder = question.placeholder;
       settings.tags = question.allowAddNewTag;
+      if (question.allowAddNewTag) {
+        question.keepIncorrectValues = true;
+      }
       settings.disabled = question.isReadOnly;
       settings.theme = "classic";
       if (!!question.maxSelectedChoices) {
