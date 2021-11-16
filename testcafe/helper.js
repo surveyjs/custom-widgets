@@ -57,6 +57,37 @@ export const initSurvey = ClientFunction(
     window.survey = model;
   }
 );
+
+export const initCreator = ClientFunction((json, creatorOptions) => {
+  console.error = (msg) => {
+    throw new Error(msg);
+  };
+  console.warn = (msg) => {
+    throw new Error(msg);
+  };
+  console.log("surveyjs console.error and console.warn override");
+
+  const body = document.querySelector("body");
+  body.innerHTML = '<div id="surveyContainer"><div id="creatorElement"></div></div>'
+
+  Survey.Survey.cssType = "bootstrap";
+  Survey.defaultBootstrapCss.navigationButton = "btn btn-green";
+  if (!creatorOptions) creatorOptions = null;
+  const creator = new SurveyCreator.SurveyCreator(
+    "creatorElement",
+    creatorOptions
+  );
+  creator.saveSurveyFunc = function (saveNo, callback) {
+    alert("ok");
+    callback(saveNo, true);
+  };
+  creator.JSON = json;
+  creator.showOptions = true;
+  creator.showState = true;
+
+  window.creator = creator;
+});
+
 export const getData = ClientFunction(() => {
   return survey.data;
 });
