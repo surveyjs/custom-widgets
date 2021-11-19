@@ -118,7 +118,7 @@ function init(Survey) {
       slider.on("change", function () {
         question.value = Number(slider.get());
       });
-      var updateSliderProperties = function () {
+      question.updateSliderProperties = function () {
         const elems = document.getElementsByClassName("noUi-pips");
         if (elems.length > 0) elems[elems.length - 1].style.display = "none";
         if (elems.length > 1) elems[elems.length - 2].style.display = "none";
@@ -166,8 +166,8 @@ function init(Survey) {
       updateValueHandler();
       question.noUiSlider = slider;
       question.registerFunctionOnPropertiesValueChanged(
-        ["step", "rangeMin", "rangeMax", "pipsMode", "pipsDensity"],
-        updateSliderProperties
+        ["pipsValues", "step", "rangeMin", "rangeMax", "pipsMode", "pipsDensity"],
+        question.updateSliderProperties
       );
       question.valueChangedCallback = updateValueHandler;
       question.readOnlyChangedCallback = function () {
@@ -185,10 +185,13 @@ function init(Survey) {
       }
       question.readOnlyChangedCallback = null;
       question.valueChangedCallback = null;
+      
+      if (!question.updateSliderProperties) return;
       question.unRegisterFunctionOnPropertiesValueChanged(
-        ["step", "rangeMin", "rangeMax", "pipsMode", "pipsDensity"],
-        updateSliderProperties
+        ["pipsValues", "step", "rangeMin", "rangeMax", "pipsMode", "pipsDensity"],
+        question.updateSliderProperties
       );
+      question.updateSliderProperties = undefined
     },
     pdfRender: function (_, options) {
       if (options.question.getType() === "nouislider") {
