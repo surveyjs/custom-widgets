@@ -4,7 +4,7 @@ function init(Survey) {
   var widget = {
     name: "maskedit",
     numericGroupSeparator: ",",
-    numericRadixPoint: "",
+    numericRadixPoint: undefined,
     numericAutoGroup: true,
     numericDigits: 2,
     numericDigitsOptional: false,
