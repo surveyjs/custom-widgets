@@ -7,9 +7,9 @@
     "prebuild": "webpack --env.buildType dev",
     "build": "webpack --env.buildType prod",
     "release": "standard-version --message \"Release: %s [skip ci]\"",
-    "testcafe": "concurrently \"http-server --silent\" \"testcafe -c 4 chrome testcafe/ --selector-timeout 1500\"",
-    "testcafe:ci": "http-server --silent & testcafe chrome:headless testcafe/ --selector-timeout 1500 ",
-    "testcafe_file": "concurrently \"http-server --silent\" \"testcafe chrome testCafe/tagbox.ts --selector-timeout 1500 --reporter minimal\""
+    "testcafe": "testcafe -c 4 chrome --app \"http-server\" testcafe/ --selector-timeout 1500",
+    "testcafe:ci": "testcafe chrome:headless --app \"http-server\" testcafe/ --selector-timeout 1500 ",
+    "testcafe_file": "testcafe chrome --app \"http-server\" testCafe/tagbox.ts --selector-timeout 1500 --reporter minimal"
   },
   "repository": {
     "type": "git",
@@ -42,7 +42,7 @@
     "survey-knockout": "^1.5.0",
     "survey-react": "^1.5.0",
     "survey-vue": "^1.5.0",
-    "testcafe": "^1.16.0",
+    "testcafe": "1.16.1",
     "virtual-module-webpack-plugin": "^0.3.0",
     "webpack": "^3.6.0"
   }
