@@ -51,6 +51,10 @@ function init(Survey, $) {
         name: "minDate",
         category: "general",
       });
+      Survey.JsonObject.metaData.addProperty("datepicker", {
+        name: "disableInput:boolean",
+        category: "general",
+      });
     },
     afterRender: function (question, el) {
       var $el = $(el).is(".widget-datepicker")
@@ -114,6 +118,9 @@ function init(Survey, $) {
           $.datepicker._clearDate(this);
         }
       });
+      if(question.disableInput) {
+        $el.attr("readOnly", "true");
+      }
 
       question.readOnlyChangedCallback = function () {
         $el.datepicker("option", "disabled", question.isReadOnly);
