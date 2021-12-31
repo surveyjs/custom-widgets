@@ -37,7 +37,8 @@ var widgets = [
   "pretty-checkbox",
   "bootstrap-slider",
   "microphone",
-  "emotionsratings"
+  "emotionsratings",
+  "leaflet"
 ];
 
 var dependencies = {
@@ -52,7 +53,8 @@ var dependencies = {
   "pretty-checkbox": "^3.0.3",
   "bootstrap-slider": "^10.0.0",
   recordrtc: "^5.4.6",
-  "emotion-ratings": "^2.0.1"
+  "emotion-ratings": "^2.0.1",
+  "leaflet": "^1.7.1"
 };
 
 var entry = {};
@@ -92,6 +94,7 @@ module.exports = function(options) {
       targetPackageJson.files.push(`widgets/${widget}.min.js`);
       targetPackageJson.files.push(`widgets/${widget}.min.js.map`);
       entry["widgets/" + widget] = path.join(__dirname, `./src/${widget}.js`);
+
     } else {
       targetPackageJson.files.push(`${widget}.js`);
       targetPackageJson.files.push(`${widget}.min.js`);
@@ -133,6 +136,12 @@ module.exports = function(options) {
         commonjs: "nouislider",
         amd: "nouislider"
       },
+      leaflet: {
+        root: "L",
+        commonjs2: "L",
+        commonjs: "L",
+        amd: "L"
+      },
       sortablejs: {
         root: "Sortable",
         commonjs2: "sortablejs",
@@ -161,6 +170,7 @@ module.exports = function(options) {
     config.plugins = config.plugins.concat([
       new CleanWebpackPlugin([outputFolder], { verbose: true })
     ]);
+
   }
 
   if (options.buildType === "prod") {
