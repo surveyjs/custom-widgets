@@ -12,10 +12,8 @@ var widget = {
   },
  
   activatedByChanged: function (activatedBy) {
-      Survey.JsonObject.metaData.addClass("leaflet", [], null, "text");
+      Survey.JsonObject.metaData.addClass("leaflet", [], null, "empty");
     
-      //Survey.JsonObject.metaData.addClass("signaturepad", [], null, "empty");
-
       Survey.JsonObject.metaData.addProperties("leaflet", [
           {name: "height", default: 200},
           { name: "zoom", default: 13},
