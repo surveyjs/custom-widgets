@@ -1,4 +1,5 @@
-## Widgets 
+## Widgets
+
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat)](LICENSE)
 
 - select2: [site](https://select2.org/), [repo](https://github.com/select2/select2), license: MIT
@@ -28,6 +29,8 @@
 - recordrtc: [site](http://recordrtc.org/), [repo](https://github.com/muaz-khan/RecordRTC), license [MIT](http://spdx.org/licenses/MIT.html)
 
 - imageHotArea [repo](https://github.com/TheNetworg/surveyjs-plugin-hotarea), licence: MIT
+
+- leaflet [site](https://leafletjs.com/), license [MIT](http://spdx.org/licenses/MIT.html)
 
 ## Getting started
 
