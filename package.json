@@ -45,6 +45,6 @@
     "testcafe": "1.16.1",
     "virtual-module-webpack-plugin": "^0.3.0",
     "webpack": "^3.6.0",
-    "colors": "1.4.1"
+    "colors": "1.4.0"
   }
 }
