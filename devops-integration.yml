@@ -18,9 +18,19 @@ steps:
       versionSpec: "14.x"
     displayName: "Install Node.js"
 
-  - script: |
-      npm install
-    displayName: "npm install"
+  - task: Cache@2
+    inputs:
+      key: 'npm-cache-custom-widgets | "$(Agent.OS)" | $(Build.SourcesDirectory)/package.json'
+      path: $(Build.SourcesDirectory)/node_modules
+      cacheHitVar: NPM_CACHE_RESTORED
+    displayName: Cache NPM
+
+  - task: Npm@1
+    displayName: 'NPM install'
+    inputs:
+      command: install
+      verbose: false
+    condition: ne(variables.NPM_CACHE_RESTORED, 'true')
 
   - task: DownloadBuildArtifacts@0
     inputs:
