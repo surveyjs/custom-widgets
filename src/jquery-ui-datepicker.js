@@ -93,7 +93,7 @@ function init(Survey, $) {
       if (config.onSelect === undefined) {
         config.onSelect = function (dateText) {
           isSelecting = true;
-          question.value = dateText;
+          setDateIntoQuestion();
           isSelecting = false;
           this.fixFocusIE = true;
         };
@@ -109,8 +109,11 @@ function init(Survey, $) {
         this.fixFocusIE = false;
         return result;
       };
+      function setDateIntoQuestion() {
+        question.value = $el.datepicker('getDate');
+      }
       var pickerWidget = $el.datepicker(config).on("change", function (e) {
-        question.value = $(this).val();
+        setDateIntoQuestion();
       });
 
       $el.keyup(function (e) {
