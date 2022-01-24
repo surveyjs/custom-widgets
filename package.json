@@ -1,6 +1,6 @@
 {
   "name": "surveyjs-widgets",
-  "version": "1.9.2",
+  "version": "1.9.6",
   "scripts": {
     "start": "npm run build && live-server",
     "watch": "webpack --env.buildType dev --watch",
@@ -44,6 +44,7 @@
     "survey-vue": "^1.5.0",
     "testcafe": "1.16.1",
     "virtual-module-webpack-plugin": "^0.3.0",
-    "webpack": "^3.6.0"
+    "webpack": "^3.6.0",
+    "colors": "1.4.0"
   }
 }
