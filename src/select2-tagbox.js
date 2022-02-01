@@ -46,16 +46,6 @@ function init(Survey, $) {
         category: "general",
         default: false,
       });
-      Survey.matrixDropdownColumnTypes.tagbox = {
-        properties: [
-          "choices",
-          "choicesOrder",
-          "choicesByUrl",
-          "optionsCaption",
-          "otherText",
-          "choicesVisibleIf",
-        ],
-      };
     },
     fixStyles: function (el) {
       el.parentElement.querySelector(".select2-search__field").style.border =

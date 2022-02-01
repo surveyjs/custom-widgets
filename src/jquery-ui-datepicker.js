@@ -170,7 +170,6 @@ function init(Survey, $) {
     pdfQuestionType: "text",
   };
 
-  Survey.matrixDropdownColumnTypes.datepicker = { properties: ["placeHolder"] };
   Survey.CustomWidgetCollection.Instance.addCustomWidget(widget, "customtype");
 }
 

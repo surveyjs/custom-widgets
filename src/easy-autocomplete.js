@@ -32,10 +32,6 @@ function init(Survey, $) {
         category: "general",
         default: null,
       });
-      Array.prototype.push.apply(
-        Survey.matrixDropdownColumnTypes.text.properties,
-        ["choices", "choicesOrder", "choicesByUrl", "otherText"]
-      );
     },
     afterRender: function (question, el) {
       var $el = $(el).is("input") ? $(el) : $(el).find("input");
