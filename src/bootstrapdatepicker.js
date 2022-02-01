@@ -78,6 +78,11 @@ function init(Survey, $) {
           default: true,
         },
         {
+          name: "daysOfWeekDisabled:string",
+          category: "general",
+          default: "",
+        },
+        {
           name: "daysOfWeekHighlighted:string",
           category: "general",
           default: "",
@@ -100,6 +105,7 @@ function init(Survey, $) {
         weekStart: question.weekStart,
         clearBtn: question.clearBtn,
         autoclose: question.autoClose,
+        daysOfWeekDisabled: question.daysOfWeekDisabled,
         daysOfWeekHighlighted: question.daysOfWeekHighlighted,
         disableTouchKeyboard: question.disableTouchKeyboard,
       };
