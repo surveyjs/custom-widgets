@@ -1,4 +1,6 @@
 function init(Survey, $) {
+  const iconId = "icon-datepicker";
+  Survey.SvgRegistry.registerIconFromSvg(iconId, require('svg-inline-loader?classPrefix!./images/datepicker.svg'), "");
   $ = $ || window.$;
 
   if (
@@ -15,7 +17,7 @@ function init(Survey, $) {
   var widget = {
     name: "bootstrapdatepicker",
     title: "Date picker",
-    iconName: "icon-datepicker",
+    iconName: iconId,
     widgetIsLoaded: function () {
       return !!$ && !!$.fn.bootstrapDP;
     },
