@@ -1,9 +1,11 @@
 function init(Survey, $) {
+  const iconId = "icon-barrating";
+  Survey.SvgRegistry && Survey.SvgRegistry.registerIconFromSvg(iconId, require('svg-inline-loader?classPrefix!./images/barrating.svg'), "");
   $ = $ || window.$;
   var widget = {
     name: "barrating",
     title: "Bar rating",
-    iconName: "icon-barrating",
+    iconName: iconId,
     widgetIsLoaded: function () {
       return typeof $ == "function" && !!$.fn.barrating;
     },

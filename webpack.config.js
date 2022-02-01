@@ -146,6 +146,10 @@ module.exports = function(options) {
         amd: "bootstrap-slider"
       }
     },
+    optimization:{
+      minimize: options.buildType === "prod"
+    },
+    mode:  options.buildType === "prod" ? "production" : "development",
     plugins: [
       new webpack.NoEmitOnErrorsPlugin(),
       new FriendlyErrorsWebpackPlugin()
@@ -165,10 +169,6 @@ module.exports = function(options) {
 
   if (options.buildType === "prod") {
     config.plugins = config.plugins.concat([
-      new webpack.optimize.UglifyJsPlugin({
-        unused: true,
-        dead_code: true
-      }),
       new webpack.BannerPlugin(copyright),
       new GenerateJsonPlugin("package.json", targetPackageJson, undefined, 2),
       new CopyWebpackPlugin([

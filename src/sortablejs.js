@@ -1,10 +1,12 @@
 import Sortable from "sortablejs";
 
 function init(Survey) {
+  const iconId = "icon-sortablejs";
+  Survey.SvgRegistry && Survey.SvgRegistry.registerIconFromSvg(iconId, require('svg-inline-loader?classPrefix!./images/sortablejs.svg'), "");
   var widget = {
     name: "sortablelist",
     title: "Sortable list",
-    iconName: "icon-sortablejs",
+    iconName: iconId,
     widgetIsLoaded: function () {
       return typeof Sortable != "undefined";
     },
