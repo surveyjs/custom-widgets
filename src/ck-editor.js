@@ -1,6 +1,6 @@
 function init(Survey) {
   const iconId = "icon-editor";
-  Survey.SvgRegistry && Survey.SvgRegistry.registerIconFromSvgViaElement(iconId, require('svg-inline-loader!./images/editor.svg'), "");
+  Survey.SvgRegistry && Survey.SvgRegistry.registerIconFromSvg(iconId, require('svg-inline-loader!./images/editor.svg'), "");
   var widget = {
     name: "editor",
     title: "Editor",
