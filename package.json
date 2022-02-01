@@ -17,6 +17,7 @@
   },
   "private": true,
   "devDependencies": {
+    "@babel/core": "^7.16.12",
     "bootstrap-slider": "^10.6.2",
     "clean-webpack-plugin": "^0.1.17",
     "colors": "1.4.0",
