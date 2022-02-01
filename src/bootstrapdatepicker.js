@@ -1,6 +1,6 @@
 function init(Survey, $) {
   const iconId = "icon-datepicker";
-  Survey.SvgRegistry.registerIconFromSvg(iconId, require('svg-inline-loader?classPrefix!./images/datepicker.svg'), "");
+  Survey.SvgRegistry && Survey.SvgRegistry.registerIconFromSvg(iconId, require('svg-inline-loader?classPrefix!./images/datepicker.svg'), "");
   $ = $ || window.$;
 
   if (

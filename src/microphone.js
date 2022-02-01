@@ -2,7 +2,7 @@ import RecordRTC from "recordrtc";
 
 function init(Survey) {
   const iconId = "icon-microphone";
-  Survey.SvgRegistry.registerIconFromSvg(iconId, require('svg-inline-loader?classPrefix!./images/microphone.svg'), "");
+  Survey.SvgRegistry && Survey.SvgRegistry.registerIconFromSvg(iconId, require('svg-inline-loader?classPrefix!./images/microphone.svg'), "");
   var widget = {
     name: "microphone",
     title: "Microphone",

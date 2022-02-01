@@ -2,7 +2,7 @@ import noUiSlider from "nouislider";
 
 function init(Survey) {
   const iconId = "icon-nouislider";
-  Survey.SvgRegistry.registerIconFromSvg(iconId, require('svg-inline-loader?classPrefix!./images/nouislider.svg'), "");
+  Survey.SvgRegistry && Survey.SvgRegistry.registerIconFromSvg(iconId, require('svg-inline-loader?classPrefix!./images/nouislider.svg'), "");
   var widget = {
     name: "nouislider",
     title: "noUiSlider",

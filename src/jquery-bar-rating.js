@@ -1,6 +1,6 @@
 function init(Survey, $) {
   const iconId = "icon-barrating";
-  Survey.SvgRegistry.registerIconFromSvg(iconId, require('svg-inline-loader?classPrefix!./images/barrating.svg'), "");
+  Survey.SvgRegistry && Survey.SvgRegistry.registerIconFromSvg(iconId, require('svg-inline-loader?classPrefix!./images/barrating.svg'), "");
   $ = $ || window.$;
   var widget = {
     name: "barrating",

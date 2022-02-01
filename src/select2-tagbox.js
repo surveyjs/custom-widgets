@@ -1,6 +1,6 @@
 function init(Survey, $) {
   const iconId = "icon-tagbox";
-  Survey.SvgRegistry.registerIconFromSvg(iconId, require('svg-inline-loader?classPrefix!./images/tagbox.svg'), "");
+  Survey.SvgRegistry && Survey.SvgRegistry.registerIconFromSvg(iconId, require('svg-inline-loader?classPrefix!./images/tagbox.svg'), "");
   $ = $ || window.$;
   var widget = {
     name: "tagbox",
