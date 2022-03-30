@@ -66,6 +66,12 @@ function init(Survey, $) {
         options.list = {
           sort: {
             enabled: true,
+            method: (aStr, bStr) => {
+              const inputStr = $el.val().toLowerCase();
+              const aIndex = aStr.toLowerCase().indexOf(inputStr);
+              const bIndex = bStr.toLowerCase().indexOf(inputStr);
+              return aIndex - bIndex;
+            }
           },
           match: {
             enabled: true,
