@@ -81,6 +81,7 @@ function init(Survey) {
       el.style.marginBottom = "60px";
       if (question.orientation === "vertical") {
         el.style.height = "250px";
+        el.style.marginLeft = "60px";
       }
       var slider = noUiSlider.create(el, {
         start: question.rangeMin <= question.value && question.value <= question.rangeMax ? 

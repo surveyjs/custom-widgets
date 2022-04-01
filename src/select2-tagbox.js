@@ -156,13 +156,13 @@ function init(Survey, $) {
         const select2Val = e.params.data.id;
         if (isAllItemSelected(select2Val)) {
           question.clearValue();
-        } else {        
-          const val = [].concat(question.value);
-          if(Array.isArray(val)) {
-            for(var i = 0; i < val.length; i ++) {
-              if(val[i] == select2Val || (!!val[i] && val[i].toString() == select2Val)) {
+        } else {
+          const val = [].concat(question.renderedValue);
+          if (Array.isArray(val)) {
+            for (var i = 0; i < val.length; i++) {
+              if (val[i] == select2Val || (!!val[i] && val[i].toString() == select2Val)) {
                 val.splice(i, 1);
-                question.value = val;
+                question.renderedValue = val;
                 break;
               }
             }
