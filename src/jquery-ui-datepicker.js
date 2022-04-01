@@ -86,10 +86,10 @@ function init(Survey, $) {
         config.maxDate = question.maxDate;
       }
       if (!!question.renderedMin) {
-        config.minDate = question.renderedMin;
+        config.minDate = new Date(question.renderedMin);
       }
       if (!!question.renderedMax) {
-        config.maxDate = question.renderedMax;
+        config.maxDate = new Date(question.renderedMax);
       }
       config.disabled = question.isReadOnly;
       if (config.onSelect === undefined) {
