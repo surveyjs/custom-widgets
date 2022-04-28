@@ -111,7 +111,7 @@ function init(Survey, $) {
         sender,
         options
       ) {
-        if (options.name == "ratingTheme") {
+        if (options.name === "ratingTheme" || options.name === "showValues") {
           $customSelect.barrating("destroy");
           renderBarrating();
         }
