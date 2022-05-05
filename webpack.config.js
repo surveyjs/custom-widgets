@@ -36,8 +36,9 @@ var widgets = [
   "easy-autocomplete",
   "pretty-checkbox",
   "bootstrap-slider",
-  "microphone",
-  "emotionsratings"
+ // "microphone",
+  "emotionsratings",
+  "summernote"
 ];
 
 var dependencies = {
