@@ -32,6 +32,7 @@
     "jquery": "^3.5.0",
     "jquery-bar-rating": "^1.2.2",
     "jquery-ui": "^1.13.0",
+    "leaflet": "^1.7.1",
     "live-server": "^1.2.0",
     "nouislider": "latest",
     "pretty-checkbox": "^3.0.3",
