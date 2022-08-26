@@ -78,9 +78,9 @@ To build library yourself:
 
 4.  **Add your own custom widget**
 
-    Please go to [this plunker](https://plnkr.co/edit/HdnYE5?p=preview) and select customwidget.js to review the code and comments.
+    Please go to [this plunker](https://plnkr.co/edit/dL5LwrEmGZsCfsPW) and select `customwidget.js` to review the code and comments.
 
-    The [same plunker example](https://plnkr.co/edit/fUTjd8JcTFLxtr2tkTJf?p=preview), but for Survey Creator / Form Builder
+    The [same plunker example](https://plnkr.co/edit/8092Z3gQseG32fOA), but for Survey Creator / Form Builder
 
 ## License
 
