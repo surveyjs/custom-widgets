@@ -1,10 +1,9 @@
 function init() {
     var json = { questions: [
-        { type: "dropdown", renderAs: "select2", choicesByUrl: { url: "https://restcountries.eu/rest/v1/all" }, name: "countries", title: "Please select the country you have arrived from:"}
+        { type: "dropdown", renderAs: "select2", choicesByUrl: { url: "https://surveyjs.io/api/CountriesExample" }, name: "countries", title: "Please select the country you have arrived from:"}
     ]};
-
-    Survey.defaultBootstrapCss.navigationButton = "btn btn-primary";
-    Survey.Survey.cssType = "bootstrap";
+Survey.defaultBootstrapCss.navigationButton = "btn btn-primary";
+Survey.StylesManager.applyTheme("defaultV2");
 
     var model = new Survey.Model(json);
     window.survey = model;
