@@ -1,4 +1,6 @@
 ## Widgets 
+[![Build.Node.js CI](https://github.com/surveyjs/custom-widgets/actions/workflows/build.node.js.yml/badge.svg)](https://github.com/surveyjs/custom-widgets/actions/workflows/build.node.js.yml)
+
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat)](LICENSE)
 
 - select2: [site](https://select2.org/), [repo](https://github.com/select2/select2), license: MIT
