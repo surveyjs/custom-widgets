@@ -4,7 +4,7 @@ var webpack = require("webpack");
 var path = require("path");
 var FriendlyErrorsWebpackPlugin = require("friendly-errors-webpack-plugin");
 var CopyWebpackPlugin = require("copy-webpack-plugin");
-var GenerateJsonPlugin = require("generate-json-webpack-plugin");
+const GeneratePackageJsonPlugin = require('generate-package-json-webpack-plugin');
 var CleanWebpackPlugin = require("clean-webpack-plugin");
 
 var packageJson = require("./package.json");
@@ -57,7 +57,7 @@ var dependencies = {
 
 var entry = {};
 
-module.exports = function(options) {
+module.exports = function (options) {
   var packagePath = `./${outputFolder}`;
 
   var targetPackageJson = {
@@ -86,7 +86,7 @@ module.exports = function(options) {
     peerDependencies: {}
   };
 
-  widgets.forEach(function(widget) {
+  widgets.forEach(function (widget) {
     if (widget !== main) {
       targetPackageJson.files.push(`widgets/${widget}.js`);
       targetPackageJson.files.push(`widgets/${widget}.min.js`);
@@ -146,10 +146,10 @@ module.exports = function(options) {
         amd: "bootstrap-slider"
       }
     },
-    optimization:{
+    optimization: {
       minimize: options.buildType === "prod"
     },
-    mode:  options.buildType === "prod" ? "production" : "development",
+    mode: options.buildType === "prod" ? "production" : "development",
     plugins: [
       new webpack.NoEmitOnErrorsPlugin(),
       new FriendlyErrorsWebpackPlugin()
@@ -170,13 +170,15 @@ module.exports = function(options) {
   if (options.buildType === "prod") {
     config.plugins = config.plugins.concat([
       new webpack.BannerPlugin(copyright),
-      new GenerateJsonPlugin("package.json", targetPackageJson, undefined, 2),
-      new CopyWebpackPlugin([
-        {
-          from: path.join(__dirname, "./src/targetREADME.md"),
-          to: path.join(__dirname, `${packagePath}/README.md`)
-        }
-      ])
+      new GeneratePackageJsonPlugin(targetPackageJson),
+      new CopyWebpackPlugin({
+        patterns: [
+          {
+            from: path.join(__dirname, "./src/targetREADME.md"),
+            to: path.join(__dirname, `${packagePath}/README.md`)
+          }
+        ]
+      })
     ]);
   }
 
