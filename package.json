@@ -5,7 +5,7 @@
     "start": "npm run build && live-server",
     "watch": "webpack --env buildType=dev --watch",
     "prebuild": "webpack --env buildType=dev",
-    "build": "webpack --env buildType=prod",
+    "build": "NODE_OPTIONS=--openssl-legacy-provider webpack --env buildType=prod",
     "release": "standard-version --message \"Release: %s [skip ci]\"",
     "testcafe": "testcafe -c 4 chrome --app \"http-server\" testcafe/ --selector-timeout 1500",
     "testcafe:ci": "testcafe chrome:headless --app \"http-server\" testcafe/ --selector-timeout 1500 ",
