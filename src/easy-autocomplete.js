@@ -25,6 +25,7 @@ function init(Survey, $) {
         name: "choicesByUrl:restfull",
         className: "ChoicesRestfull",
         category: "choicesByUrl",
+        visible: false,
         categoryIndex: 2,
       });
       Survey.JsonObject.metaData.addProperty("text", {
