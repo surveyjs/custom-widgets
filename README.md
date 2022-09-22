@@ -1,4 +1,6 @@
 ## Widgets 
+[![Build.Node.js CI](https://github.com/surveyjs/custom-widgets/actions/workflows/build.node.js.yml/badge.svg)](https://github.com/surveyjs/custom-widgets/actions/workflows/build.node.js.yml)
+
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat)](LICENSE)
 
 - select2: [site](https://select2.org/), [repo](https://github.com/select2/select2), license: MIT
@@ -78,9 +80,9 @@ To build library yourself:
 
 4.  **Add your own custom widget**
 
-    Please go to [this plunker](https://plnkr.co/edit/HdnYE5?p=preview) and select customwidget.js to review the code and comments.
+    Please go to [this plunker](https://plnkr.co/edit/dL5LwrEmGZsCfsPW) and select `customwidget.js` to review the code and comments.
 
-    The [same plunker example](https://plnkr.co/edit/fUTjd8JcTFLxtr2tkTJf?p=preview), but for Survey Creator / Form Builder
+    The [same plunker example](https://plnkr.co/edit/8092Z3gQseG32fOA), but for Survey Creator / Form Builder
 
 ## License
 
