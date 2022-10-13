@@ -112,7 +112,12 @@ function init(Survey, $) {
         return result;
       };
       function setDateIntoQuestion() {
-        question.value = $el.datepicker('getDate');
+        var val = $el.datepicker('getDate');
+        var d = new Date();
+        val.setHours(d.getHours());
+        val.setMinutes(d.getMinutes());
+        val.setSeconds(d.getSeconds());
+        question.value = val;
       }
       var pickerWidget = $el.datepicker(config).on("change", function (e) {
         setDateIntoQuestion();
