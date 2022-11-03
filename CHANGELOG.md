@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.9.56](https://github.com/surveyjs/custom-widgets/compare/v1.9.55...v1.9.56) (2022-11-01)
+
+### [1.9.55](https://github.com/surveyjs/custom-widgets/compare/v1.9.54...v1.9.55) (2022-10-25)
+
+### [1.9.54](https://github.com/surveyjs/custom-widgets/compare/v1.9.53...v1.9.54) (2022-10-18)
+
+### [1.9.53](https://github.com/surveyjs/custom-widgets/compare/v1.9.52...v1.9.53) (2022-10-11)
+
+### [1.9.52](https://github.com/surveyjs/custom-widgets/compare/v1.9.51...v1.9.52) (2022-10-04)
+
 ### [1.9.51](https://github.com/surveyjs/custom-widgets/compare/v1.9.50...v1.9.51) (2022-09-29)
 
 ### [1.9.50](https://github.com/surveyjs/custom-widgets/compare/v1.9.49...v1.9.50) (2022-09-20)
