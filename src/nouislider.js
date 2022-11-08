@@ -1,6 +1,6 @@
 import noUiSlider from "nouislider";
 
-function init(Survey) {
+export function init(Survey) {
   const iconId = "icon-nouislider";
   Survey.SvgRegistry && Survey.SvgRegistry.registerIconFromSvg(iconId, require('svg-inline-loader?classPrefix!./images/nouislider.svg'), "");
   var widget = {
@@ -123,8 +123,6 @@ function init(Survey) {
       });
       question.updateSliderProperties = function () {
         const elems = document.getElementsByClassName("noUi-pips");
-        if (elems.length > 0) elems[elems.length - 1].style.display = "none";
-        if (elems.length > 1) elems[elems.length - 2].style.display = "none";
         var getStart = function(currentStart) {
           return question.rangeMin + Math.round((currentStart - question.rangeMin) / question.step) * question.step;
         }
@@ -227,9 +225,3 @@ function init(Survey) {
   };
   Survey.CustomWidgetCollection.Instance.addCustomWidget(widget, "customtype");
 }
-
-if (typeof Survey !== "undefined") {
-  init(Survey);
-}
-
-export default init;
