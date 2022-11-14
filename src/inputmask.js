@@ -11,6 +11,7 @@ function init(Survey) {
     numericPlaceholder: "0",
     autoUnmask: true,
     clearIncomplete: true,
+    showMaskOnHover: true,
     widgetIsLoaded: function () {
       return typeof Inputmask != "undefined";
     },
@@ -32,6 +33,11 @@ function init(Survey) {
         },
         {
           name: "clearIncomplete:boolean",
+          category: "general",
+          default: true,
+        },
+        {
+          name: "showMaskOnHover:boolean",
           category: "general",
           default: true,
         },
@@ -96,6 +102,9 @@ function init(Survey) {
       options.clearIncomplete = typeof surveyElement.clearIncomplete !== "undefined"
         ? surveyElement.clearIncomplete
         : rootWidget.clearIncomplete;
+      options.showMaskOnHover = typeof surveyElement.showMaskOnHover !== "undefined"
+        ? surveyElement.showMaskOnHover
+        : rootWidget.showMaskOnHover;
       if (surveyElement.inputMask !== "none") {
         options.inputFormat = surveyElement.inputFormat;
       }
@@ -112,7 +121,7 @@ function init(Survey) {
         options.digitsOptional = rootWidget.numericDigitsOptional;
         options.prefix = surveyElement.prefix || "";
         options.suffix = surveyElement.suffix || "";
-        options.placeholder = rootWidget.numericPlaceholder;
+        options.placeholder = rootWidget.numericPlaceholder;        
       }
       // if (surveyElement.inputMask == "datetime") {
       //   mask = surveyElement.inputFormat;
@@ -120,7 +129,6 @@ function init(Survey) {
       if (surveyElement.inputMask === "phone" && !!surveyElement.inputFormat) {
         mask = surveyElement.inputFormat;
       }
-
       Inputmask(mask, options).mask(el);
 
       el.onblur = function () {
@@ -138,7 +146,7 @@ function init(Survey) {
         customWidgetData.isNeedRender = true;
       };
 
-      var pushValueHandler = function () {
+      var pushValueHandler = function () {        
         if (!el.inputmask) return;
         if (el.inputmask.isComplete()) {
           surveyElement.value = options.autoUnmask
@@ -159,7 +167,7 @@ function init(Survey) {
       surveyElement.valueChangedCallback = updateHandler;
       updateHandler();
     },
-    afterRender: function (question, el) {
+    afterRender: function (question, el) {      
       if (question.getType() != "multipletext") {
         var input = el.querySelector("input") || el;
         this.applyInputMask(question, input);
