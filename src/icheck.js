@@ -167,7 +167,7 @@ function init(Survey, $) {
 }
 
 if (typeof Survey !== "undefined") {
-  init(Survey, window.$);
+  init(Survey, window.jQuery);
 }
 
 export default init;
