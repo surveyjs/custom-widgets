@@ -107,6 +107,7 @@ function init(Survey, $) {
         weekStart: question.weekStart,
         clearBtn: question.clearBtn,
         autoclose: question.autoClose,
+        zIndexOffset: 20,
         daysOfWeekDisabled: question.daysOfWeekDisabled,
         daysOfWeekHighlighted: question.daysOfWeekHighlighted,
         disableTouchKeyboard: question.disableTouchKeyboard,
@@ -129,7 +130,7 @@ function init(Survey, $) {
         if (question.value != newValue) {
           question.value = newValue;
         }
-      });
+      })
 
       question.valueChangedCallback = function () {
         pickerWidget.bootstrapDP(

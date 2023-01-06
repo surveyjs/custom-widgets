@@ -1,12 +1,12 @@
 {
   "name": "surveyjs-widgets",
-  "version": "1.9.53",
+  "version": "1.9.67",
   "scripts": {
     "start": "npm run build && live-server",
     "watch": "webpack --env buildType=dev --watch",
     "prebuild": "webpack --env buildType=dev",
     "build": "webpack --env buildType=prod",
-    "release": "standard-version --message \"Release: %s [skip ci]\"",
+    "release": "standard-version --message \"Release: %s [azurepipelines skip]\"",
     "testcafe": "testcafe -c 4 chrome --app \"http-server\" testcafe/ --selector-timeout 1500",
     "testcafe:ci": "testcafe chrome:headless --app \"http-server\" testcafe/ --selector-timeout 1500 ",
     "testcafe_file": "testcafe chrome --app \"http-server\" testCafe/tagbox.ts --selector-timeout 1500 --reporter minimal"
