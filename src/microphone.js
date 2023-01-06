@@ -31,13 +31,15 @@ function init(Survey) {
     activatedByChanged: function(activatedBy) {
       Survey.JsonObject.metaData.addClass("microphone", [], null, "empty");
     },
-
     afterRender: function(question, el) {
       var rootWidget = this;
       var buttonStartEl = el.getElementsByTagName("button")[0];
       var buttonStopEl = el.getElementsByTagName("button")[1];
       var audioEl = el.getElementsByTagName("audio")[0];
-
+      var log = function(msg) {
+        //console.log(msg);
+      };
+  
       //////////  RecordRTC logic
 
       var successCallback = function(stream) {
@@ -49,14 +51,15 @@ function init(Survey) {
           bufferSize: 16384,
           numberOfAudioChannels: 1
         };
-        console.log("successCallback");
+        log("successCallback");
         question.survey.mystream = stream;
         question.survey.recordRTC = RecordRTC(
           question.survey.mystream,
           options
         );
         if (typeof question.survey.recordRTC != "undefined") {
-          console.log("startRecording");
+          log("startRecording");
+          question.recordingStartedAt = new Date();
           question.survey.recordRTC.startRecording();
         }
       };
@@ -68,17 +71,17 @@ function init(Survey) {
       };
 
       var processAudio = function(audioVideoWebMURL) {
-        console.log("processAudio");
+        log("processAudio");
         var recordedBlob = question.survey.recordRTC.getBlob();
 
         var fileReader = new FileReader();
         fileReader.onload = function(event) {
           var dataUri = event.target.result;
-          console.log("dataUri: " + dataUri);
+          log("dataUri: " + dataUri);
           question.value = dataUri;
           audioEl.src = dataUri;
 
-          console.log("cleaning");
+          log("cleaning");
           question.survey.recordRTC = undefined;
           question.survey.mystream = undefined;
         };
@@ -86,6 +89,9 @@ function init(Survey) {
       };
 
       var startRecording = function() {
+        question.recordingStartedAt = undefined;
+        question.recordingEndedAt = undefined;
+        question.recordingDuration = undefined;
         // erase previous data
         question.value = undefined;
 
@@ -110,7 +116,10 @@ function init(Survey) {
       };
 
       var stopRecording = function() {
-        console.log("stopRecording");
+        log("stopRecording");
+        var eD = new Date();
+        question.recordingEndedAt = eD;
+        question.recordingDuration = eD - question.recordingStartedAt;
         if (typeof question.survey.recordRTC != "undefined") {
           question.survey.recordRTC.stopRecording(processAudio.bind(this));
           if (typeof question.survey.mystream != "undefined") {
@@ -145,7 +154,6 @@ function init(Survey) {
       updateValueHandler();
     },
     willUnmount: function(question, el) {
-      console.log("unmount microphone no record ");
       if (typeof question.survey.recordRTC != "undefined") {
         question.survey.recordRTC.stopRecording(doNothingHandler);
         if (typeof question.survey.mystream != "undefined") {
