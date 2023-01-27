@@ -115,6 +115,7 @@ function init(Survey) {
         options.groupSeparator = rootWidget.numericGroupSeparator;
         options.radixPoint = rootWidget.numericRadixPoint;
         options.autoGroup = rootWidget.numericAutoGroup;
+        options.placeholder = rootWidget.numericPlaceholder;        
       }
       if (surveyElement.inputMask === "currency") {
         options.digits = surveyElement.numericDigits || rootWidget.numericDigits;
