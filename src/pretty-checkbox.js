@@ -46,18 +46,6 @@ function init(Survey) {
     activatedByChanged: function (value) {
       if (this.widgetIsLoaded()) {
         widget.activatedBy = value;
-        widget.settings.supportedTypes.forEach(function (supportedType) {
-          Survey.JsonObject.metaData.removeProperty(supportedType, "renderAs");
-
-          if (value === "property") {
-            Survey.JsonObject.metaData.addProperty(supportedType, {
-              name: "renderAs",
-              category: "general",
-              default: "default",
-              choices: ["default", "prettycheckbox"],
-            });
-          }
-        });
       }
     },
     isDefaultRender: false,
