@@ -150,9 +150,18 @@ function init(Survey) {
       var pushValueHandler = function () {        
         if (!el.inputmask) return;
         if (el.inputmask.isComplete()) {
-          surveyElement.value = options.autoUnmask
-            ? el.inputmask.unmaskedvalue()
-            : el.value;
+          if(options.autoUnmask) {
+			if ("currency" === surveyElement.inputMask) {
+              // Use a dot instead of the configured radix point, since we want a floating point
+              // number for the internal representation of the currency value.
+              const floatValue = el.inputmask.unmaskedvalue().replace(options.radixPoint, '.');
+              surveyElement.value = parseFloat(floatValue);
+            } else {
+              surveyElement.value = el.inputmask.unmaskedvalue();
+            }
+          } else {
+            surveyElement.value = el.value;
+          }
         } else {
           surveyElement.value = null;
         }
