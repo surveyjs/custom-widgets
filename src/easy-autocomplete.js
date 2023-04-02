@@ -10,28 +10,23 @@ function init(Survey, $) {
     },
     isDefaultRender: true,
     activatedByChanged: function (activatedBy) {
-      if (
-        Survey.JsonObject.metaData.findProperty("text", "choices") !== null ||
-        Survey.JsonObject.metaData.findProperty("text", "choicesByUrl") !== null
-      ) {
-        return;
-      }
-      Survey.JsonObject.metaData.addProperty("text", {
+      if (!!Survey.Serializer.findProperty("text", "choices") || !!Survey.Serializer.findProperty("text", "choicesByUrl")) return;
+      Survey.Serializer.addProperty("text", {
         name: "choices:itemvalues",
         category: "choices",
         categoryIndex: 1,
       });
-      Survey.JsonObject.metaData.addProperty("text", {
+      Survey.Serializer.addProperty("text", {
         name: "choicesByUrl:restfull",
         className: "ChoicesRestfull",
         category: "choicesByUrl",
         visible: false,
         categoryIndex: 2,
       });
-      Survey.JsonObject.metaData.addProperty("text", {
+      Survey.Serializer.addProperty("text", {
         name: "config",
         category: "general",
-        default: null,
+        visible: false,
       });
     },
     afterRender: function (question, el) {
@@ -118,7 +113,7 @@ function init(Survey, $) {
     },
   };
 
-  Survey.CustomWidgetCollection.Instance.addCustomWidget(widget, "type");
+  Survey.CustomWidgetCollection.Instance.addCustomWidget(widget);
 }
 
 if (typeof Survey !== "undefined") {
