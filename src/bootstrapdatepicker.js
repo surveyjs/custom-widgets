@@ -46,6 +46,12 @@ function init(Survey, $) {
           default: "mm/dd/yyyy",
         },
         {
+          // Can take a string
+          name: "language",
+          category: "general",
+          default: "en",
+        },
+        {
           // Can take a Date or a string
           // https://bootstrap-datepicker.readthedocs.io/en/latest/options.html#options
           name: "startDate",
@@ -68,6 +74,21 @@ function init(Survey, $) {
           name: "weekStart:number",
           category: "general",
           default: 0,
+        },
+        {
+          name: "startView:number",
+          category: "general",
+          default: 0,
+        },
+        {
+          name: "minViewMode:number",
+          category: "general",
+          default: 0,
+        },
+        {
+          name: "maxViewMode:number",
+          category: "general",
+          default: 4,
         },
         {
           name: "clearBtn:boolean",
@@ -103,8 +124,12 @@ function init(Survey, $) {
       const options = {
         enableOnReadonly: false,
         format: question.dateFormat,
+        language: question.language,
         todayHighlight: question.todayHighlight,
         weekStart: question.weekStart,
+        startView: question.startView,
+        minViewMode: question.minViewMode,
+        maxViewMode: question.maxViewMode,
         clearBtn: question.clearBtn,
         autoclose: question.autoClose,
         zIndexOffset: 20,

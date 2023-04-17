@@ -8,9 +8,9 @@ function escValue(val) {
 function init(Survey, $) {
   $ = $ || window.$;
   var widget = {
-    className: "iradio_square-blue",
-    checkboxClass: "iradio_square-blue",
-    radioClass: "iradio_square-blue",
+    className: "iradio_flat-green",
+    checkboxClass: "icheckbox_flat-green",
+    radioClass: "iradio_flat-green",
     name: "icheck",
     widgetIsLoaded: function () {
       return typeof $ == "function" && !!$.fn.iCheck;
