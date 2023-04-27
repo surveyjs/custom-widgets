@@ -1,5 +1,6 @@
 function init(Survey, $) {
   const iconId = "icon-datepicker";
+  const componentName = "datepicker";
   Survey.SvgRegistry && Survey.SvgRegistry.registerIconFromSvg(iconId, require('svg-inline-loader?classPrefix!./images/datepicker.svg'), "");
   $ = $ || window.$;
   if (
@@ -14,19 +15,19 @@ function init(Survey, $) {
     }
   }
   var widget = {
-    name: "datepicker",
+    name: componentName,
     title: "Date picker",
     iconName: iconId,
     widgetIsLoaded: function () {
       return !!$ && !!$.fn.datepicker && !$.fn.datepicker.noConflict;
     },
     isFit: function (question) {
-      return question.getType() === "datepicker";
+      return question.getType() === componentName;
     },
     htmlTemplate: "<input class='form-control widget-datepicker' type='text'>",
     activatedByChanged: function (activatedBy) {
-      Survey.JsonObject.metaData.addClass(
-        "datepicker",
+      Survey.Serializer.addClass(
+        componentName,
         [
           { name: "inputType", visible: false },
           { name: "inputFormat", visible: false },
@@ -35,25 +36,27 @@ function init(Survey, $) {
         null,
         "text"
       );
-      Survey.JsonObject.metaData.addProperty("datepicker", {
+      let registerQuestion = Survey.ElementFactory.Instance.registerCustomQuestion;
+      if(!!registerQuestion) registerQuestion(componentName);
+      Survey.Serializer.addProperty(componentName, {
         name: "dateFormat",
         category: "general",
       });
-      Survey.JsonObject.metaData.addProperty("datepicker", {
+      Survey.Serializer.addProperty(componentName, {
         name: "config",
         category: "general",
         visible: false,
         default: null,
       });
-      Survey.JsonObject.metaData.addProperty("datepicker", {
+      Survey.Serializer.addProperty(componentName, {
         name: "maxDate",
         category: "general",
       });
-      Survey.JsonObject.metaData.addProperty("datepicker", {
+      Survey.Serializer.addProperty(componentName, {
         name: "minDate",
         category: "general",
       });
-      Survey.JsonObject.metaData.addProperty("datepicker", {
+      Survey.Serializer.addProperty(componentName, {
         name: "disableInput:boolean",
         category: "general",
       });

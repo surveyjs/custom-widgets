@@ -155,11 +155,11 @@ function init(Survey, $) {
     },
   };
 
-  Survey.JsonObject.metaData.addProperty("radiogroup", {
+  Survey.Serializer.addProperty("radiogroup", {
     name: "radioClass",
     category: "general",
   });
-  Survey.JsonObject.metaData.addProperty("checkbox", {
+  Survey.Serializer.addProperty("checkbox", {
     name: "checkboxClass",
     category: "general",
   });

@@ -1,20 +1,24 @@
 var Slider = require("bootstrap-slider");
 
+const componentName = "bootstrapslider";
+
 function init(Survey) {
   var widget = {
-    name: "bootstrapslider",
+    name: componentName,
     title: "Bootstrap Slider",
     iconName: "icon-bootstrap-slider",
     widgetIsLoaded: function () {
       return typeof Slider !== "undefined";
     },
     isFit: function (question) {
-      return question.getType() === "bootstrapslider";
+      return question.getType() === componentName;
     },
     htmlTemplate: "<div></div>",
     activatedByChanged: function (activatedBy) {
-      Survey.JsonObject.metaData.addClass("bootstrapslider", [], null, "empty");
-      Survey.JsonObject.metaData.addProperties("bootstrapslider", [
+      Survey.Serializer.addClass(componentName, [], null, "empty");
+      let registerQuestion = Survey.ElementFactory.Instance.registerCustomQuestion;
+      if(!!registerQuestion) registerQuestion(componentName);
+      Survey.Serializer.addProperties(componentName, [
         {
           name: "step:number",
           default: 1,
@@ -37,7 +41,7 @@ function init(Survey) {
           category: "general"
         },
       ]);
-      Survey.JsonObject.metaData.addProperty("bootstrapslider", {
+      Survey.Serializer.addProperty(componentName, {
         name: "config",
         default: null,
         category: "general",
@@ -114,7 +118,7 @@ function init(Survey) {
       question.readOnlyChangedCallback = null;
     },
     pdfRender: function (_, options) {
-      if (options.question.getType() === "bootstrapslider") {
+      if (options.question.getType() === componentName) {
         var point = options.module.SurveyHelper.createPoint(
           options.module.SurveyHelper.mergeRects.apply(null, options.bricks)
         );

@@ -1,9 +1,10 @@
 function init(Survey, $) {
   const iconId = "icon-tagbox";
+  const componentName = "tagbox";
   Survey.SvgRegistry && Survey.SvgRegistry.registerIconFromSvg(iconId, require('svg-inline-loader?classPrefix!./images/tagbox.svg'), "");
   $ = $ || window.$;
   var widget = {
-    name: "tagbox",
+    name: componentName,
     title: "Tag box",
     iconName: iconId,
     widgetIsLoaded: function () {
@@ -15,11 +16,12 @@ function init(Survey, $) {
     htmlTemplate:
       "<div><select multiple='multiple' style='width: 100%;'></select><textarea></textarea></div>",
     isFit: function (question) {
-      return question.getType() === "tagbox";
+      return question.getType() === componentName;
     },
     activatedByChanged: function (activatedBy) {
-      Survey.JsonObject.metaData.addClass(
-        "tagbox",
+      if(Survey.Serializer.findClass(componentName)) return;
+      Survey.Serializer.addClass(
+        componentName,
         [
           { name: "hasOther:boolean", visible: false },
           { name: "hasSelectAll:boolean", visible: false },
@@ -31,17 +33,19 @@ function init(Survey, $) {
         null,
         "checkbox"
       );
-      Survey.JsonObject.metaData.addProperty("tagbox", {
+      let registerQuestion = Survey.ElementFactory.Instance.registerCustomQuestion;
+      if(!!registerQuestion) registerQuestion(componentName);
+      Survey.Serializer.addProperty(componentName, {
         name: "select2Config",
         category: "general",
         default: null,
       });
-      Survey.JsonObject.metaData.addProperty("tagbox", {
+      Survey.Serializer.addProperty(componentName, {
         name: "placeholder",
         category: "general",
         default: "",
       });
-      Survey.JsonObject.metaData.addProperty("tagbox", {
+      Survey.Serializer.addProperty(componentName, {
         name: "allowAddNewTag:boolean",
         category: "general",
         default: false,

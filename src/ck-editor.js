@@ -1,21 +1,24 @@
 function init(Survey) {
   const iconId = "icon-editor";
+  const componentName = "editor";
   Survey.SvgRegistry && Survey.SvgRegistry.registerIconFromSvg(iconId, require('svg-inline-loader!./images/editor.svg'), "");
   var widget = {
-    name: "editor",
+    name: componentName,
     title: "Editor",
     iconName: iconId,
     widgetIsLoaded: function () {
       return typeof CKEDITOR != "undefined";
     },
     isFit: function (question) {
-      return question.getType() === "editor";
+      return question.getType() === componentName;
     },
     htmlTemplate:
       "<textarea rows='10' cols='80' style: {width:'100%'}></textarea>",
     activatedByChanged: function (activatedBy) {
-      Survey.JsonObject.metaData.addClass("editor", [], null, "empty");
-      Survey.JsonObject.metaData.addProperty("editor", {
+      Survey.Serializer.addClass(componentName, [], null, "empty");
+      let registerQuestion = Survey.ElementFactory.Instance.registerCustomQuestion;
+      if(!!registerQuestion) registerQuestion(componentName);
+      Survey.Serializer.addProperty(componentName, {
         name: "height",
         default: 300,
         category: "general",
@@ -64,7 +67,7 @@ function init(Survey) {
       CKEDITOR.instances[question.inputId].destroy(false);
     },
     pdfRender: function (survey, options) {
-      if (options.question.getType() === "editor") {
+      if (options.question.getType() === componentName) {
         const loc = new Survey.LocalizableString(survey, true);
         loc.text = options.question.value || options.question.defaultValue;
         options.question["locHtml"] = loc;

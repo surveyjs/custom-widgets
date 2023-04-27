@@ -2,16 +2,17 @@ import RecordRTC from "recordrtc";
 
 function init(Survey) {
   const iconId = "icon-microphone";
+  const componentName = "microphone";
   Survey.SvgRegistry && Survey.SvgRegistry.registerIconFromSvg(iconId, require('svg-inline-loader?classPrefix!./images/microphone.svg'), "");
   var widget = {
-    name: "microphone",
+    name: componentName,
     title: "Microphone",
     iconName: iconId,
     widgetIsLoaded: function() {
       return typeof RecordRTC != "undefined";
     },
     isFit: function(question) {
-      return question.getType() === "microphone";
+      return question.getType() === componentName;
     },
     htmlTemplate:
       "<div style='height: 39px'>" +
@@ -29,7 +30,9 @@ function init(Survey) {
       "</audio>" +
       "</div>",
     activatedByChanged: function(activatedBy) {
-      Survey.JsonObject.metaData.addClass("microphone", [], null, "empty");
+      Survey.Serializer.addClass(componentName, [], null, "empty");
+      let registerQuestion = Survey.ElementFactory.Instance.registerCustomQuestion;
+      if(!!registerQuestion) registerQuestion(componentName);
     },
     afterRender: function(question, el) {
       var rootWidget = this;

@@ -1,8 +1,8 @@
 function init(Survey, $) {
   $ = $ || window.$;
-
+  const componentName = "emotionsratings";
   var widget = {
-    name: "emotionsratings",
+    name: componentName,
     title: "Emotions Ratings",
     iconName: "icon-emotionsratings",
     widgetIsLoaded: function () {
@@ -12,13 +12,13 @@ function init(Survey, $) {
       choices: [1, 2, 3, 4, 5],
     },
     isFit: function (question) {
-      return question.getType() === "emotionsratings";
+      return question.getType() === componentName;
     },
     isDefaultRender: false,
     htmlTemplate: "<div style='height: 33px'></div>",
     activatedByChanged: function (activatedBy) {
-      Survey.JsonObject.metaData.addClass(
-        "emotionsratings",
+      Survey.Serializer.addClass(
+        componentName,
         [
           {
             name: "hasOther",
@@ -48,7 +48,9 @@ function init(Survey, $) {
         null,
         "dropdown"
       );
-      Survey.JsonObject.metaData.addProperties("emotionsratings", [
+      let registerQuestion = Survey.ElementFactory.Instance.registerCustomQuestion;
+      if(!!registerQuestion) registerQuestion(componentName);
+      Survey.Serializer.addProperties(componentName, [
         {
           name: "emotions:itemvalues",
           category: "emotions",

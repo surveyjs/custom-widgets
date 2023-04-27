@@ -1,5 +1,6 @@
 function init(Survey, $) {
   const iconId = "icon-datepicker";
+  const componentName = "bootstrapdatepicker";
   Survey.SvgRegistry && Survey.SvgRegistry.registerIconFromSvg(iconId, require('svg-inline-loader?classPrefix!./images/datepicker.svg'), "");
   $ = $ || window.$;
 
@@ -15,20 +16,20 @@ function init(Survey, $) {
     }
   }
   var widget = {
-    name: "bootstrapdatepicker",
+    name: componentName,
     title: "Date picker",
     iconName: iconId,
     widgetIsLoaded: function () {
       return !!$ && !!$.fn.bootstrapDP;
     },
     isFit: function (question) {
-      return question.getType() === "bootstrapdatepicker";
+      return question.getType() === componentName;
     },
     htmlTemplate:
       "<input class='form-control widget-datepicker' type='text' style='width: 100%;'>",
     activatedByChanged: function (activatedBy) {
-      Survey.JsonObject.metaData.addClass(
-        "bootstrapdatepicker",
+      Survey.Serializer.addClass(
+        componentName,
         [
           { name: "inputType", visible: false },
           { name: "inputFormat", visible: false },
@@ -37,7 +38,9 @@ function init(Survey, $) {
         null,
         "text"
       );
-      Survey.JsonObject.metaData.addProperties("bootstrapdatepicker", [
+      let registerQuestion = Survey.ElementFactory.Instance.registerCustomQuestion;
+      if(!!registerQuestion) registerQuestion(componentName);
+      Survey.Serializer.addProperties(componentName, [
         {
           // Can take a string or an Object.
           // https://bootstrap-datepicker.readthedocs.io/en/latest/options.html#format

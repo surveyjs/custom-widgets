@@ -2,9 +2,10 @@ import Sortable from "sortablejs";
 
 function init(Survey) {
   const iconId = "icon-sortablejs";
+  const componentName = "sortablelist";
   Survey.SvgRegistry && Survey.SvgRegistry.registerIconFromSvg(iconId, require('svg-inline-loader?classPrefix!./images/sortablejs.svg'), "");
   var widget = {
-    name: "sortablelist",
+    name: componentName,
     title: "Sortable list",
     iconName: iconId,
     widgetIsLoaded: function () {
@@ -16,12 +17,12 @@ function init(Survey) {
       "border: 1px solid #1ab394; width:100%; min-height:50px; margin-top:10px;",
     itemStyle: "background-color:#1ab394;color:#fff;margin:5px;padding:10px;",
     isFit: function (question) {
-      return question.getType() === "sortablelist";
+      return question.getType() === componentName;
     },
     htmlTemplate: "<div></div>",
     activatedByChanged: function (activatedBy) {
-      Survey.JsonObject.metaData.addClass(
-        "sortablelist",
+      Survey.Serializer.addClass(
+        componentName,
         [
           { name: "hasOther", visible: false },
           { name: "storeOthersAsComment", visible: false },
@@ -35,17 +36,19 @@ function init(Survey) {
         null,
         "checkbox"
       );
-      Survey.JsonObject.metaData.addProperty("sortablelist", {
+      let registerQuestion = Survey.ElementFactory.Instance.registerCustomQuestion;
+      if(!!registerQuestion) registerQuestion(componentName);
+      Survey.Serializer.addProperty(componentName, {
         name: "emptyText",
         default: "Move items here.",
         category: "general",
       });
-      Survey.JsonObject.metaData.addProperty("sortablelist", {
+      Survey.Serializer.addProperty(componentName, {
         name: "useDefaultTheme:switch",
         default: true,
         category: "general",
       });
-      Survey.JsonObject.metaData.addProperty("sortablelist", {
+      Survey.Serializer.addProperty(componentName, {
         name: "maxAnswersCount:number",
         default: -1,
         category: "general",

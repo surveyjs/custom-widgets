@@ -1,46 +1,50 @@
 function init(Survey, $) {
   $ = $ || window.$;
+  const componentName = "select2";
   var widget = {
     activatedBy: "property",
-    name: "select2",
+    name: componentName,
     widgetIsLoaded: function () {
       return typeof $ == "function" && !!$.fn.select2;
     },
     isFit: function (question) {
       if (widget.activatedBy == "property")
         return (
-          question["renderAs"] === "select2" &&
+          question["renderAs"] === componentName &&
           question.getType() === "dropdown"
         );
       if (widget.activatedBy == "type")
         return question.getType() === "dropdown";
       if (widget.activatedBy == "customtype")
-        return question.getType() === "select2";
+        return question.getType() === componentName;
       return false;
     },
     activatedByChanged: function (activatedBy) {
       if (!this.widgetIsLoaded()) return;
       widget.activatedBy = activatedBy;
-      Survey.JsonObject.metaData.removeProperty("dropdown", "renderAs");
+      Survey.Serializer.removeProperty("dropdown", "renderAs");
       if (activatedBy == "property") {
-        Survey.JsonObject.metaData.addProperty("dropdown", {
+        Survey.Serializer.addProperty("dropdown", {
           name: "renderAs",
           category: "general",
           default: "default",
-          choices: ["select2", "default"],
+          choices: [componentName, "default"],
         });
-        Survey.JsonObject.metaData.addProperty("dropdown", {
+        Survey.Serializer.addProperty("dropdown", {
           dependsOn: "renderAs",
           category: "general",
           name: "select2Config",
           visibleIf: function (obj) {
-            return obj.renderAs == "select2";
+            return obj.renderAs == componentName;
           },
         });
       }
       if (activatedBy == "customtype") {
-        Survey.JsonObject.metaData.addClass("select2", [], null, "dropdown");
-        Survey.JsonObject.metaData.addProperty("select2", {
+        if(Survey.Serializer.findClass(componentName)) return;
+        Survey.Serializer.addClass(componentName, [], null, "dropdown");
+        let registerQuestion = Survey.ElementFactory.Instance.registerCustomQuestion;
+        if(!!registerQuestion) registerQuestion(componentName);
+          Survey.Serializer.addProperty(componentName, {
           name: "select2Config",
           category: "general",
           default: null,
@@ -180,7 +184,7 @@ function init(Survey, $) {
       question.readOnlyChangedCallback = null;
       question.valueChangedCallback = null;
       var $select2 = $(el).find("select");
-      if (!!$select2.data("select2")) {
+      if (!!$select2.data(componentName)) {
         $select2
           .off("select2:select")
           .off("select2:unselecting")

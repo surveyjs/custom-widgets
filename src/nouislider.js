@@ -2,22 +2,25 @@ import noUiSlider from "nouislider";
 
 function init(Survey) {
   const iconId = "icon-nouislider";
+  const componentName = "nouislider";
   Survey.SvgRegistry && Survey.SvgRegistry.registerIconFromSvg(iconId, require('svg-inline-loader?classPrefix!./images/nouislider.svg'), "");
   var widget = {
-    name: "nouislider",
+    name: componentName,
     title: "noUiSlider",
     iconName: iconId,
     widgetIsLoaded: function () {
       return typeof noUiSlider != "undefined";
     },
     isFit: function (question) {
-      return question.getType() === "nouislider";
+      return question.getType() === componentName;
     },
     htmlTemplate:
       "<div><div></div></div>",
     activatedByChanged: function (activatedBy) {
-      Survey.JsonObject.metaData.addClass("nouislider", [], null, "empty");
-      Survey.JsonObject.metaData.addProperties("nouislider", [
+      Survey.Serializer.addClass(componentName, [], null, "empty");
+      let registerQuestion = Survey.ElementFactory.Instance.registerCustomQuestion;
+      if(!!registerQuestion) registerQuestion(componentName);
+      Survey.Serializer.addProperties(componentName, [
         {
           name: "step:number",
           category: "slider",
@@ -197,7 +200,7 @@ function init(Survey) {
       question.updateSliderProperties = undefined
     },
     pdfRender: function (_, options) {
-      if (options.question.getType() === "nouislider") {
+      if (options.question.getType() === componentName) {
         var point = options.module.SurveyHelper.createPoint(
           options.module.SurveyHelper.mergeRects.apply(null, options.bricks)
         );

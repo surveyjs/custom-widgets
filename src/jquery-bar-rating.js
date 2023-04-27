@@ -1,9 +1,10 @@
 function init(Survey, $) {
   const iconId = "icon-barrating";
+  const componentName = "barrating";
   Survey.SvgRegistry && Survey.SvgRegistry.registerIconFromSvg(iconId, require('svg-inline-loader?classPrefix!./images/barrating.svg'), "");
   $ = $ || window.$;
   var widget = {
-    name: "barrating",
+    name: componentName,
     title: "Bar rating",
     iconName: iconId,
     widgetIsLoaded: function () {
@@ -11,12 +12,12 @@ function init(Survey, $) {
     },
     defaultJSON: { choices: [1, 2, 3, 4, 5] },
     isFit: function (question) {
-      return question.getType() === "barrating";
+      return question.getType() === componentName;
     },
     isDefaultRender: true,
     activatedByChanged: function (activatedBy) {
-      Survey.JsonObject.metaData.addClass(
-        "barrating",
+      Survey.Serializer.addClass(
+        componentName,
         [
           { name: "hasOther", visible: false },
           { name: "otherText", visible: false },
@@ -29,12 +30,14 @@ function init(Survey, $) {
         null,
         "dropdown"
       );
-      Survey.JsonObject.metaData.addProperty("barrating", {
+      let registerQuestion = Survey.ElementFactory.Instance.registerCustomQuestion;
+      if(!!registerQuestion) registerQuestion(componentName);
+      Survey.Serializer.addProperty(componentName, {
         name: "showValues:boolean",
         default: false,
         category: "general",
       });
-      Survey.JsonObject.metaData.addProperty("barrating", {
+      Survey.Serializer.addProperty(componentName, {
         name: "ratingTheme",
         category: "general",
         default: "css-stars",

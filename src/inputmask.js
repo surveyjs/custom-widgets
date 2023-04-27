@@ -24,7 +24,7 @@ function init(Survey) {
     },
     isDefaultRender: true,
     activatedByChanged: function (activatedBy) {
-      if (Survey.JsonObject.metaData.findProperty("text", "inputMask")) return;
+      if (Survey.Serializer.findProperty("text", "inputMask")) return;
       var properties = [
         {
           name: "autoUnmask:boolean",
@@ -77,12 +77,12 @@ function init(Survey) {
           visible: false,
         },
       ];
-      Survey.JsonObject.metaData.addProperties("text", properties);
-      Survey.JsonObject.metaData.addProperties(
+      Survey.Serializer.addProperties("text", properties);
+      Survey.Serializer.addProperties(
         "matrixdropdowncolumn",
         properties
       );
-      Survey.JsonObject.metaData.addProperties("multipletextitem", properties);
+      Survey.Serializer.addProperties("multipletextitem", properties);
     },
     applyInputMask: function (surveyElement, el) {
       var rootWidget = this;
