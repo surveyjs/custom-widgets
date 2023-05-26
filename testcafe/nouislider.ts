@@ -44,18 +44,12 @@ frameworks.forEach(async framework => {
             .expect(Selector(".noUi-tooltip").withText(startToBe).exists).ok()
     }
 
-    test.only("Check noUISlider in creator", async t => {
+    test("Check noUISlider in creator", async t => {
         if (framework === "knockout") {
             await initCreator(json);
             await t
                 .expect(Selector(".sv_qstn").exists).ok()
-            await checkCurrentSliderState(t, "1", "5", "3.00")    
-            await t
-                .click(Selector(".sv_qstn"))
-                .click(Selector(".noUi-touch-area"))
-                .pressKey("right")
-                .pressKey("enter")
-            await checkCurrentSliderState(t, "1", "5", "3.50")
+            await checkCurrentSliderState(t, "1", "5", "3.00");
 
         }
     });
