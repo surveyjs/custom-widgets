@@ -70,9 +70,7 @@ export const initCreator = ClientFunction((json, creatorOptions) => {
   const body = document.querySelector("body");
   body.innerHTML = '<div id="surveyContainer"><div id="creatorElement"></div></div>'
 
-  Survey.Survey.cssType = "bootstrap";
-  Survey.defaultBootstrapCss.navigationButton = "btn btn-green";
-  if (!creatorOptions) creatorOptions = null;
+  if (!creatorOptions) creatorOptions = {};
   const creator = new SurveyCreator.SurveyCreator(
     "creatorElement",
     creatorOptions
