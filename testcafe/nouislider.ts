@@ -56,7 +56,7 @@ frameworks.forEach(async framework => {
                 .click(Selector(".noUi-touch-area"))
                 .pressKey("right")
                 .pressKey("enter")
-            await checkCurrentSliderState(t, "4", "5", "3.50")
+            await checkCurrentSliderState(t, "1", "5", "3.50")
 
         }
     });
