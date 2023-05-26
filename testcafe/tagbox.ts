@@ -37,7 +37,7 @@ frameworks.forEach(async framework => {
         await initSurvey(framework, json);
         //await t.debug()
         await t
-            .expect(Selector("h5[aria-label='question1']").exists).ok()
+            .expect(Selector('h5').find('span').withExactText('question1').exists).ok()
             .click(Selector(".select2-container"))
             .typeText(".select2-container", "Item 1")
             .pressKey("enter")

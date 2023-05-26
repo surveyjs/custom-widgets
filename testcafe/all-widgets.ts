@@ -52,15 +52,16 @@ frameworks.forEach(async framework => {
 
     test("Check all widgets are visible", async t => {
         await initSurvey(framework, json);
-        // await t
-        //     .debug()
+        const selCountries = Selector('h5').find('span').withExactText('countries');
+        const selDate = Selector('h5').find('span').withExactText('date');
+        const selAutoComplete = Selector('h5').find('autocomplete').withExactText('date');
         await t
-            .expect(Selector("h5[aria-label='countries']").exists).ok()
-            .expect(Selector("h5[aria-label='countries']").visible).ok()
-            .expect(Selector("h5[aria-label='date']").exists).ok()
-            .expect(Selector("h5[aria-label='date']").visible).ok()
-            .expect(Selector("h5[aria-label='autocomplete']").exists).ok()
-            .expect(Selector("h5[aria-label='autocomplete']").visible).ok()
+            .expect(selCountries.exists).ok()
+            .expect(selCountries.visible).ok()
+            .expect(selDate.exists).ok()
+            .expect(selDate.visible).ok()
+            .expect(selAutoComplete.exists).ok()
+            .expect(selAutoComplete.visible).ok()
     });
 
 });
