@@ -52,7 +52,6 @@ frameworks.forEach(async framework => {
             await checkCurrentSliderState(t, "1", "5", "3.00")    
             await t
                 .click(Selector(".sv_qstn"))
-                .click(Selector(".svd-accordion-tab-header").nth(1))
                 .click(Selector(".noUi-touch-area"))
                 .pressKey("right")
                 .pressKey("enter")
