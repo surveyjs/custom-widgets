@@ -54,7 +54,7 @@ frameworks.forEach(async framework => {
         await initSurvey(framework, json);
         const selCountries = Selector('h5').find('span').withExactText('countries');
         const selDate = Selector('h5').find('span').withExactText('date');
-        const selAutoComplete = Selector('h5').find('autocomplete').withExactText('date');
+        const selAutoComplete = Selector('h5').find('span').withExactText('autocomplete');
         await t
             .expect(selCountries.exists).ok()
             .expect(selCountries.visible).ok()
