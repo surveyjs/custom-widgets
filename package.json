@@ -7,7 +7,7 @@
     "prebuild": "webpack --env buildType=dev",
     "build": "webpack --env buildType=prod",
     "release": "standard-version --message \"Release: %s [azurepipelines skip]\"",
-    "testcafe": "testcafe -c 4 chrome --app \"http-server\" testcafe/ --selector-timeout 1500",
+    "testcafe": "testcafe chrome --app \"http-server\" testcafe/ --selector-timeout 1500",
     "testcafe:ci": "testcafe chrome:headless --app \"http-server\" testcafe/ --selector-timeout 1500 ",
     "testcafe_file": "testcafe chrome --app \"http-server\" testCafe/tagbox.ts --selector-timeout 1500 --reporter minimal"
   },
