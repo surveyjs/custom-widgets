@@ -1,6 +1,17 @@
 import Inputmask from "inputmask";
 
 function init(Survey) {
+  const updateColumnPropInfo = function (propJSON, name) {
+    propJSON.visibleIf = (obj) => {
+      return obj.cellType === "text";
+    };
+    propJSON.onGetValue = (obj) => {
+      return obj.templateQuestion[name];
+    };
+    propJSON.onSetValue = (obj, val) => {
+      obj.templateQuestion[name] = val;
+    }    
+  }
   var widget = {
     name: "maskedit",
     numericGroupSeparator: ",",
@@ -29,21 +40,28 @@ function init(Survey) {
         {
           name: "autoUnmask:boolean",
           category: "general",
+          showMode: "form",
           default: true,
         },
         {
           name: "clearIncomplete:boolean",
           category: "general",
+          showMode: "form",
           default: true,
         },
         {
           name: "showMaskOnHover:boolean",
           category: "general",
+          showMode: "form",
           default: true,
         },
-        { name: "inputFormat", category: "general" },
+        { 
+          name: "inputFormat", 
+          showMode: "form",
+          category: "general" },
         {
           name: "inputMask",
+          showMode: "form",
           category: "general",
           default: "none",
           choices: [
@@ -78,11 +96,16 @@ function init(Survey) {
         },
       ];
       Survey.Serializer.addProperties("text", properties);
+      Survey.Serializer.addProperties("multipletextitem", properties);
+      updateColumnPropInfo(properties[0], "autoUnmask");
+      updateColumnPropInfo(properties[1], "clearIncomplete");
+      updateColumnPropInfo(properties[2], "showMaskOnHover");
+      updateColumnPropInfo(properties[3], "inputFormat");
+      updateColumnPropInfo(properties[4], "inputMask");
       Survey.Serializer.addProperties(
         "matrixdropdowncolumn",
         properties
       );
-      Survey.Serializer.addProperties("multipletextitem", properties);
     },
     applyInputMask: function (surveyElement, el) {
       var rootWidget = this;
