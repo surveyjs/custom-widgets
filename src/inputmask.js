@@ -23,7 +23,7 @@ function init(Survey) {
     autoUnmask: true,
     clearIncomplete: true,
     showMaskOnHover: true,
-    unmaskAsNumber: true,    
+    unmaskAsNumber: false,    
     widgetIsLoaded: function () {
       return typeof Inputmask != "undefined";
     },
@@ -89,7 +89,6 @@ function init(Survey) {
           name: "unmaskAsNumber:boolean",
           category: "general",
           visible: false,
-          default: true,
         },
         {
           name: "prefix",
