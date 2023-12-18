@@ -23,6 +23,7 @@ function init(Survey) {
     autoUnmask: true,
     clearIncomplete: true,
     showMaskOnHover: true,
+    unmaskAsNumber: true,    
     widgetIsLoaded: function () {
       return typeof Inputmask != "undefined";
     },
@@ -85,6 +86,12 @@ function init(Survey) {
           visible: false,
         },
         {
+          name: "unmaskAsNumber:boolean",
+          category: "general",
+          visible: false,
+          default: true,
+        },
+        {
           name: "prefix",
           category: "general",
           visible: false,
@@ -128,6 +135,9 @@ function init(Survey) {
       options.showMaskOnHover = typeof surveyElement.showMaskOnHover !== "undefined"
         ? surveyElement.showMaskOnHover
         : rootWidget.showMaskOnHover;
+      options.unmaskAsNumber = typeof surveyElement.unmaskAsNumber !== "undefined"
+          ? surveyElement.unmaskAsNumber
+          : rootWidget.unmaskAsNumber;
       if (surveyElement.inputMask !== "none") {
         options.inputFormat = surveyElement.inputFormat;
       }
