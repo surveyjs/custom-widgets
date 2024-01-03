@@ -1,7 +1,17 @@
 import Inputmask from "inputmask";
 
 function init(Survey) {
-  const updateColumnPropInfo = function (propJSON, name) {
+  const updateTextItemPropInfo = function (propJSON) {
+    const name = propJSON.name;
+    propJSON.onGetValue = (obj) => {
+      return obj.editor[name];
+    };
+    propJSON.onSetValue = (obj, val) => {
+      obj.editor[name] = val;
+    }    
+  }
+  const updateColumnPropInfo = function (propJSON) {
+    const name = propJSON.name;
     propJSON.visibleIf = (obj) => {
       return obj.cellType === "text";
     };
@@ -38,19 +48,22 @@ function init(Survey) {
       if (Survey.Serializer.findProperty("text", "inputMask")) return;
       var properties = [
         {
-          name: "autoUnmask:boolean",
+          name: "autoUnmask",
+          type: "boolean",
           category: "general",
           showMode: "form",
           default: true,
         },
         {
-          name: "clearIncomplete:boolean",
+          name: "clearIncomplete",
+          type: "boolean",
           category: "general",
           showMode: "form",
           default: true,
         },
         {
-          name: "showMaskOnHover:boolean",
+          name: "showMaskOnHover",
+          type: "boolean",
           category: "general",
           showMode: "form",
           default: true,
@@ -96,16 +109,18 @@ function init(Survey) {
         },
       ];
       Survey.Serializer.addProperties("text", properties);
+      properties.forEach(prop => {
+        if(prop.visible !== false) {
+          updateTextItemPropInfo(prop);
+        }
+      });
       Survey.Serializer.addProperties("multipletextitem", properties);
-      updateColumnPropInfo(properties[0], "autoUnmask");
-      updateColumnPropInfo(properties[1], "clearIncomplete");
-      updateColumnPropInfo(properties[2], "showMaskOnHover");
-      updateColumnPropInfo(properties[3], "inputFormat");
-      updateColumnPropInfo(properties[4], "inputMask");
-      Survey.Serializer.addProperties(
-        "matrixdropdowncolumn",
-        properties
-      );
+      properties.forEach(prop => {
+        if(prop.visible !== false) {
+          updateColumnPropInfo(prop);
+        }
+      });
+      Survey.Serializer.addProperties("matrixdropdowncolumn", properties);
     },
     applyInputMask: function (surveyElement, el) {
       var rootWidget = this;
