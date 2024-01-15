@@ -94,6 +94,12 @@ function init(Survey) {
           visible: false,
         },
         {
+          name: "numericGroupSeparator",
+          category: "general",
+          default: ",",
+          visible: false,
+        },
+        {
           name: "options",
           category: "general",
           visible: false,
@@ -159,7 +165,7 @@ function init(Survey) {
         surveyElement.inputMask === "currency" ||
         surveyElement.inputMask === "decimal"
       ) {
-        options.groupSeparator = rootWidget.numericGroupSeparator;
+        options.groupSeparator = surveyElement.numericGroupSeparator || rootWidget.numericGroupSeparator;
         options.radixPoint = rootWidget.numericRadixPoint;
         options.autoGroup = rootWidget.numericAutoGroup;
         options.placeholder = rootWidget.numericPlaceholder;        
