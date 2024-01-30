@@ -19,7 +19,7 @@ function init(Survey) {
     activatedByChanged: function (activatedBy) {
       Survey.Serializer.addClass(componentName, [], null, "empty");
       let registerQuestion = Survey.ElementFactory.Instance.registerCustomQuestion;
-      if(!!registerQuestion) registerQuestion(componentName);
+      if (!!registerQuestion) registerQuestion(componentName);
       Survey.Serializer.addProperties(componentName, [
         {
           name: "step:number",
@@ -87,8 +87,8 @@ function init(Survey) {
         el.style.marginLeft = "60px";
       }
       var slider = noUiSlider.create(el, {
-        start: question.rangeMin <= question.value && question.value <= question.rangeMax ? 
-                    question.value : (question.rangeMin + question.rangeMax) / 2,
+        start: question.rangeMin <= question.value && question.value <= question.rangeMax ?
+          question.value : (question.rangeMin + question.rangeMax) / 2,
         connect: [true, false],
         step: question.step,
         tooltips: question.tooltips,
@@ -128,40 +128,42 @@ function init(Survey) {
         const elems = document.getElementsByClassName("noUi-pips");
         if (elems.length > 0) elems[elems.length - 1].style.display = "none";
         if (elems.length > 1) elems[elems.length - 2].style.display = "none";
-        var getStart = function(currentStart) {
+        var getStart = function (currentStart) {
           return question.rangeMin + Math.round((currentStart - question.rangeMin) / question.step) * question.step;
         }
         slider.updateOptions(
-          { step: question.step,
-            start: question.rangeMin <= question.value && question.value <= question.rangeMax ? 
-                            getStart(question.value) : getStart((question.rangeMin + question.rangeMax) / 2),
+          {
+            step: question.step,
+            start: question.rangeMin <= question.value && question.value <= question.rangeMax ?
+              getStart(question.value) : getStart((question.rangeMin + question.rangeMax) / 2),
             range: {
               min: question.rangeMin,
               max: question.rangeMax
             }
           }, true);
-          slider.pips(
-            { mode: question.pipsMode || "positions",
-              values: question.pipsValues.map(function (pVal) {
-                var pipValue = pVal;
-                if (pVal.value !== undefined) {
-                  pipValue = pVal.value;
-                }
-                return parseInt(pipValue);
-              }),
-              density: question.pipsDensity || 5,
-              format: {
-                  to: function (pVal) {
-                    var pipText = pVal;
-                    question.pipsText.map(function (el) {
-                      if (el.text !== undefined && pVal === el.value) {
-                        pipText = el.text;
-                      }
-                    });
-                    return pipText;
-                },
+        slider.pips(
+          {
+            mode: question.pipsMode || "positions",
+            values: question.pipsValues.map(function (pVal) {
+              var pipValue = pVal;
+              if (pVal.value !== undefined) {
+                pipValue = pVal.value;
+              }
+              return parseInt(pipValue);
+            }),
+            density: question.pipsDensity || 5,
+            format: {
+              to: function (pVal) {
+                var pipText = pVal;
+                question.pipsText.map(function (el) {
+                  if (el.text !== undefined && pVal === el.value) {
+                    pipText = el.text;
+                  }
+                });
+                return pipText;
               },
-            });
+            },
+          });
       };
       var updateValueHandler = function () {
         slider.set(question.value);
@@ -191,7 +193,7 @@ function init(Survey) {
       }
       question.readOnlyChangedCallback = null;
       question.valueChangedCallback = null;
-      
+
       if (!question.updateSliderProperties) return;
       question.unRegisterFunctionOnPropertiesValueChanged(
         ["pipsValues", "step", "rangeMin", "rangeMax", "pipsMode", "pipsDensity"],
@@ -212,19 +214,28 @@ function init(Survey) {
           point,
           options.controller
         );
-        var textboxBrick = new options.module.TextFieldBrick(
-          options.question,
-          options.controller,
-          rect,
-          true,
-          options.question.id,
-          options.question.value || options.question.defaultValue || "",
-          "",
-          options.question.isReadOnly,
-          false,
-          "text"
-        );
-        options.bricks.push(textboxBrick);
+        if (options.module.SurveyHelper.shouldRenderReadOnly(this.question, this.controller)) {
+          options.bricks.push(new options.module.TextFieldBrick(
+            options.question,
+            options.controller,
+            rect,
+            true,
+            options.question.id,
+            options.question.value || options.question.defaultValue || "",
+            "",
+            options.question.isReadOnly,
+            false,
+            "text"
+          ));
+        } else {
+          return new Promise(resolve => {
+            options.module.SurveyHelper.createCommentFlat(point, options.question,
+              options.controller, true, { rows: options.module.FlatTextbox.MULTILINE_TEXT_ROWS_COUNT }).then((brick) => {
+                options.bricks.push(brick);
+                resolve();
+              })
+          })
+        }
       }
     },
   };
