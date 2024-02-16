@@ -132,7 +132,6 @@ function init(Survey) {
           updateColumnPropInfo(prop);
         }
       });
-      Survey.Serializer.addProperties("matrixdropdowncolumn", properties);
     },
     applyInputMask: function (surveyElement, el) {
       var rootWidget = this;
