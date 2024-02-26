@@ -7,7 +7,6 @@ export { default as nouislider } from "./nouislider.js";
 export { default as select2tagbox } from "./select2-tagbox.js";
 export { default as sortablejs } from "./sortablejs.js";
 export { default as ckeditor } from "./ck-editor.js";
-export { default as autocomplete } from "./easy-autocomplete.js";
 export { default as prettycheckbox } from "./pretty-checkbox.js";
 export { default as bootstrapslider } from "./bootstrap-slider.js";
 export { default as microphone } from "./microphone.js";

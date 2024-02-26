@@ -48,7 +48,6 @@ var dependencies = {
   nouislider: "^14.6.3",
   inputmask: "^5.0.3",
   "jquery-bar-rating": "^1.2.2",
-  "easy-autocomplete": "^1.3.5",
   "pretty-checkbox": "^3.0.3",
   "bootstrap-slider": "^10.0.0",
   recordrtc: "^5.4.6",
@@ -83,7 +82,9 @@ module.exports = function (options) {
     dependencies: {
       jquery: "^3.2.1"
     },
-    peerDependencies: {}
+    peerDependencies: {
+      "easy-autocomplete": "^1.3.5"
+    }
   };
 
   widgets.forEach(function (widget) {
