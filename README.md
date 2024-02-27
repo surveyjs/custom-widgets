@@ -21,8 +21,6 @@
 
 - ckeditor: [site](https://ckeditor.com/ckeditor-4/), [repo](https://github.com/ckeditor/ckeditor-dev), license: https://github.com/ckeditor/ckeditor-dev/blob/major/LICENSE.md
 
-- easyautocomplete: [site](http://easyautocomplete.com/), [repo](https://github.com/pawelczak/EasyAutocomplete), license: https://github.com/pawelczak/EasyAutocomplete/blob/master/LICENSE.txt
-
 - pretty-checkbox: [site](https://lokesh-coder.github.io/pretty-checkbox/), [repo](https://github.com/lokesh-coder/pretty-checkbox/), license: https://github.com/lokesh-coder/pretty-checkbox/blob/master/LICENSE
 
 - bootstrap-slider: [site](http://seiyria.com/bootstrap-slider/), [repo](https://github.com/seiyria/bootstrap-slider), license: https://github.com/seiyria/bootstrap-slider/blob/master/LICENSE.md
