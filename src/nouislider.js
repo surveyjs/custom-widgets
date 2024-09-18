@@ -73,6 +73,10 @@ function init(Survey) {
           category: "slider",
           default: true,
         },
+        {
+          name: "decimals:number",
+          default: 2,
+        },
       ]);
     },
     afterRender: function (question, el) {
@@ -113,6 +117,14 @@ function init(Survey) {
               return pipText;
             },
           },
+        },
+        format: {
+          to: function (value) {
+            return Number(value).toFixed(question.decimals);
+          },
+          from: function (value) {
+            return Number(value).toFixed(question.decimals);
+          }
         },
         range: {
           min: question.rangeMin,
@@ -185,6 +197,7 @@ function init(Survey) {
           el.removeAttribute("disabled");
         }
       };
+      question.value = slider.get();
     },
     willUnmount: function (question, el) {
       if (!!question.noUiSlider) {
