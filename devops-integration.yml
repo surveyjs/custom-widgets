@@ -73,8 +73,8 @@ steps:
 
   - powershell: |
       $env:GIT_REDIRECT_STDERR = '2>&1'
-      git config --global user.email "kurmanov.work@gmail.com"
-      git config --global user.name "dmitrykurmanov"
+      git config --global user.email "surveyjs.org@gmail.com"
+      git config --global user.name "surveyjsdeveloper"
       npm run release -- --release-as $(SurveyJSVersion)
     displayName: "npm run release specific version"
   #####################################################
