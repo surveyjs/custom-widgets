@@ -15,6 +15,7 @@
     "type": "git",
     "url": "https://github.com/surveyjs/custom-widgets.git"
   },
+  "private": true,
   "devDependencies": {
     "@babel/core": "^7.16.12",
     "bootstrap-slider": "^10.6.2",
