@@ -4,10 +4,14 @@ function init(Survey) {
   const updateTextItemPropInfo = function (propJSON) {
     const name = propJSON.name;
     propJSON.onGetValue = (obj) => {
-      return obj.editor[name];
+      return !!obj.editor ? obj.editor[name] : obj[name];
     };
     propJSON.onSetValue = (obj, val) => {
-      obj.editor[name] = val;
+      if(!!obj.editor) {
+        obj.editor[name] = val;
+      } else {
+        obj[name] = val;
+      }
     }    
   }
   const updateColumnPropInfo = function (propJSON) {
