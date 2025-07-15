@@ -1,4 +1,7 @@
-## Widgets 
+# Custom Widgets for SurveyJS
+
+> **IMPORTANT**: Using a custom widget is no longer the recommended approach to customizing SurveyJS forms. For current best practices and available options, refer to the following help topic: [Question Customization Options](https://surveyjs.io/form-library/documentation/customize-question-types/question-customization-options).
+
 [![Build.Node.js CI](https://github.com/surveyjs/custom-widgets/actions/workflows/build.node.js.yml/badge.svg)](https://github.com/surveyjs/custom-widgets/actions/workflows/build.node.js.yml)
 
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat)](LICENSE)
