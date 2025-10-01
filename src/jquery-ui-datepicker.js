@@ -138,6 +138,9 @@ function init(Survey, $) {
       question.readOnlyChangedCallback = function () {
         $el.datepicker("option", "disabled", question.isReadOnly);
       };
+      question.focusCallback = function () {
+        $el.focus();
+      };
       function updateDate() {
         if (!question.isEmpty()) {
           var val = question.value;
