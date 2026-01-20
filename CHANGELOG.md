@@ -2,6 +2,38 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.5.6](https://github.com/surveyjs/custom-widgets/compare/v2.5.5...v2.5.6) (2026-01-15)
+
+### [2.5.5](https://github.com/surveyjs/custom-widgets/compare/v2.5.4...v2.5.5) (2026-01-07)
+
+### [2.5.4](https://github.com/surveyjs/custom-widgets/compare/v2.5.3...v2.5.4) (2025-12-30)
+
+### [2.5.3](https://github.com/surveyjs/custom-widgets/compare/v2.5.2...v2.5.3) (2025-12-25)
+
+### [2.5.2](https://github.com/surveyjs/custom-widgets/compare/v2.5.1...v2.5.2) (2025-12-23)
+
+### [2.5.1](https://github.com/surveyjs/custom-widgets/compare/v2.5.0...v2.5.1) (2025-12-16)
+
+## [2.5.0](https://github.com/surveyjs/custom-widgets/compare/v2.4.1...v2.5.0) (2025-12-10)
+
+### [2.4.1](https://github.com/surveyjs/custom-widgets/compare/v2.4.0...v2.4.1) (2025-12-03)
+
+## [2.4.0](https://github.com/surveyjs/custom-widgets/compare/v2.3.16...v2.4.0) (2025-11-26)
+
+### [2.3.16](https://github.com/surveyjs/custom-widgets/compare/v2.3.15...v2.3.16) (2025-11-19)
+
+### [2.3.15](https://github.com/surveyjs/custom-widgets/compare/v2.3.14...v2.3.15) (2025-11-12)
+
+### [2.3.14](https://github.com/surveyjs/custom-widgets/compare/v2.3.13...v2.3.14) (2025-11-05)
+
+### [2.3.13](https://github.com/surveyjs/custom-widgets/compare/v2.3.12...v2.3.13) (2025-10-28)
+
+### [2.3.12](https://github.com/surveyjs/custom-widgets/compare/v2.3.11...v2.3.12) (2025-10-22)
+
+### [2.3.11](https://github.com/surveyjs/custom-widgets/compare/v2.3.10...v2.3.11) (2025-10-15)
+
+### [2.3.10](https://github.com/surveyjs/custom-widgets/compare/v2.3.9...v2.3.10) (2025-10-07)
+
 ### [2.3.9](https://github.com/surveyjs/custom-widgets/compare/v2.3.8...v2.3.9) (2025-09-30)
 
 ### [2.3.8](https://github.com/surveyjs/custom-widgets/compare/v2.3.7...v2.3.8) (2025-09-23)
