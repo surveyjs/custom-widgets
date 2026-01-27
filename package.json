@@ -45,7 +45,7 @@
     "survey-react": "^1.9.46",
     "survey-vue": "^1.9.46",
     "svg-inline-loader": "^0.8.2",
-    "testcafe": "3.3.0",
+    "testcafe": "3.7.4",
     "minimatch": "^3.1.2",
     "@types/minimatch": "3.0.5",
     "text-loader": "0.0.1",
