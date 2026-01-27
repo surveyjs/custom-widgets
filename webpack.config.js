@@ -2,7 +2,6 @@
 
 var webpack = require("webpack");
 var path = require("path");
-var FriendlyErrorsWebpackPlugin = require("friendly-errors-webpack-plugin");
 var CopyWebpackPlugin = require("copy-webpack-plugin");
 const GeneratePackageJsonPlugin = require('generate-package-json-webpack-plugin');
 var CleanWebpackPlugin = require("clean-webpack-plugin");
@@ -152,8 +151,7 @@ module.exports = function (options) {
     },
     mode: options.buildType === "prod" ? "production" : "development",
     plugins: [
-      new webpack.NoEmitOnErrorsPlugin(),
-      new FriendlyErrorsWebpackPlugin()
+      new webpack.NoEmitOnErrorsPlugin()
     ],
     devtool: options.buildType === "prod" ? "source-map" : "inline-source-map",
     devServer: {

@@ -1,5 +1,5 @@
 import { ClientFunction, Selector } from "testcafe";
-export const frameworks = ["knockout", "react", "vue"];
+export const frameworks = ["react", "vue"];
 export const url = "http://127.0.0.1:8080/examples/";
 export const FLOAT_PRECISION = 0.01;
 
