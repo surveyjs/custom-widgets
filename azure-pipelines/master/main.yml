@@ -1,0 +1,102 @@
+# SurveyJS Widgets integration builds
+
+resources:
+  pipelines:
+    - pipeline: LibraryMain
+      source: Library Main
+      trigger: true
+
+variables:
+  npm_config_cache: $(Pipeline.Workspace)/.npm
+  CurrentBranch: $(Build.SourceBranchName)
+  ProjectId: "d79f2855-7b94-4261-9daf-4cace0a06c03"
+
+trigger:
+  batch: true
+  branches:
+    include:
+      - master
+  tags:
+    exclude:
+      - v*.*.*
+
+pool:
+  vmImage: "Ubuntu-20.04"
+
+steps:
+  - task: NodeTool@0
+    inputs:
+      versionSpec: "14.x"
+    displayName: "Install Node.js"
+
+  - task: CopyFiles@2
+    inputs:
+      SourceFolder: "$(Build.SourcesDirectory)/"
+      Contents: "package.json"
+      TargetFolder: "$(Build.SourcesDirectory)/Temp/"
+      OverWrite: true
+    displayName: "Copy package.json for cache key"
+  - task: Cache@2
+    inputs:
+      key: 'npm-cache-custom-widgets | $(Build.SourcesDirectory)/Temp/package.json'
+      path: $(Build.SourcesDirectory)/node_modules
+      cacheHitVar: NPM_CACHE_RESTORED
+    displayName: Cache NPM
+
+  - task: Npm@1
+    displayName: 'NPM install'
+    inputs:
+      command: install
+      verbose: false
+    condition: ne(variables.NPM_CACHE_RESTORED, 'true')
+
+  - download: LibraryMain
+    artifact: SurveyJSLibraryBuildCoreAngularJquery
+
+  - task: CopyFiles@2
+    inputs:
+      SourceFolder: "$(Pipeline.Workspace)/LibraryMain/SurveyJSLibraryBuildCoreAngularJquery/packages/survey-core"
+      Contents: "**"
+      TargetFolder: "$(Build.Repository.LocalPath)/node_modules/survey-core"
+      OverWrite: true
+
+# npm run release with version
+  - task: CopyFiles@2
+    inputs:
+      SourceFolder: '$(Pipeline.Workspace)/LibraryMain/SurveyJSLibraryBuildCoreAngularJquery/'
+      Contents: 'version.txt'
+      TargetFolder: '$(Build.SourcesDirectory)/'
+      OverWrite: true
+    displayName: 'Copy Build Artifact - SurveyJSVersion File'
+
+  - powershell: |
+      $version = Get-Content $(Build.SourcesDirectory)/version.txt
+      Write-Host "##vso[task.setvariable variable=SurveyJSVersion;]$version"
+    displayName: 'setup SurveyJSVersion variable from SurveyJSVersionFile'
+
+  - powershell: |
+      $env:GIT_REDIRECT_STDERR = '2>&1'
+      git config --global user.email "kurmanov.work@gmail.com"
+      git config --global user.name "dmitrykurmanov"
+      npm run release -- --release-as $(SurveyJSVersion)
+    displayName: 'npm run release specific version'
+#####################################################
+  
+  - script: |
+      npm run build
+    displayName: "build"
+
+  - script: |
+      npm run testcafe:ci
+    displayName: "run functional tests"
+
+  - task: CopyFiles@2
+    inputs:
+      SourceFolder: '$(Build.Repository.LocalPath)/package'
+      targetFolder: $(Build.ArtifactStagingDirectory)/SurveyJSWidgetsBuild/packages/survey-widgets
+
+  - task: PublishBuildArtifacts@1
+    inputs:
+      PathtoPublish: '$(Build.ArtifactStagingDirectory)/SurveyJSWidgetsBuild/'
+      ArtifactName: 'SurveyJSWidgetsBuild'
+      publishLocation: 'Container'
