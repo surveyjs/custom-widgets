@@ -51,11 +51,11 @@ steps:
     condition: ne(variables.NPM_CACHE_RESTORED, 'true')
 
   - download: LibraryMain
-    artifact: SurveyJSLibraryBuildCoreAngularJquery
+    artifact: SurveyJSLibraryBuildCore
 
   - task: CopyFiles@2
     inputs:
-      SourceFolder: "$(Pipeline.Workspace)/LibraryMain/SurveyJSLibraryBuildCoreAngularJquery/packages/survey-core"
+      SourceFolder: "$(Pipeline.Workspace)/LibraryMain/SurveyJSLibraryBuildCore/packages/survey-core"
       Contents: "**"
       TargetFolder: "$(Build.Repository.LocalPath)/node_modules/survey-core"
       OverWrite: true
@@ -63,7 +63,7 @@ steps:
 # npm run release with version
   - task: CopyFiles@2
     inputs:
-      SourceFolder: '$(Pipeline.Workspace)/LibraryMain/SurveyJSLibraryBuildCoreAngularJquery/'
+      SourceFolder: '$(Pipeline.Workspace)/LibraryMain/SurveyJSLibraryBuildCore/'
       Contents: 'version.txt'
       TargetFolder: '$(Build.SourcesDirectory)/'
       OverWrite: true
