@@ -1,5 +1,16 @@
 # SurveyJS Widgets integration builds
 
+resources:
+  pipelines:
+    - pipeline: LibraryMain
+      source: Library Main
+      trigger: true
+
+variables:
+  npm_config_cache: $(Pipeline.Workspace)/.npm
+  CurrentBranch: $(Build.SourceBranchName)
+  ProjectId: "d79f2855-7b94-4261-9daf-4cace0a06c03"
+
 trigger:
   batch: true
   branches:
@@ -27,58 +38,50 @@ steps:
     displayName: "Copy package.json for cache key"
   - task: Cache@2
     inputs:
-      key: "npm-cache-custom-widgets | $(Build.SourcesDirectory)/Temp/package.json"
+      key: 'npm-cache-custom-widgets | $(Build.SourcesDirectory)/Temp/package.json'
       path: $(Build.SourcesDirectory)/node_modules
       cacheHitVar: NPM_CACHE_RESTORED
     displayName: Cache NPM
 
   - task: Npm@1
-    displayName: "NPM install"
+    displayName: 'NPM install'
     inputs:
       command: install
       verbose: false
     condition: ne(variables.NPM_CACHE_RESTORED, 'true')
 
-  - task: DownloadBuildArtifacts@0
-    inputs:
-      buildType: "specific"
-      project: "af2804d2-859a-4705-9ef5-cdf46d1d5d4f"
-      pipeline: "56"
-      specificBuildWithTriggering: true
-      buildVersionToDownload: "latest"
-      downloadType: "single"
-      artifactName: "SurveyJSLibraryBuildCore"
-      downloadPath: "$(System.ArtifactsDirectory)"
+  - download: LibraryMain
+    artifact: SurveyJSLibraryBuildCore
 
   - task: CopyFiles@2
     inputs:
-      SourceFolder: "$(System.ArtifactsDirectory)/SurveyJSLibraryBuildCore/packages/survey-core"
+      SourceFolder: "$(Pipeline.Workspace)/LibraryMain/SurveyJSLibraryBuildCore/packages/survey-core"
       Contents: "**"
       TargetFolder: "$(Build.Repository.LocalPath)/node_modules/survey-core"
       OverWrite: true
 
-  # npm run release with version
+# npm run release with version
   - task: CopyFiles@2
     inputs:
-      SourceFolder: "$(System.ArtifactsDirectory)/SurveyJSLibraryBuildCore/"
-      Contents: "version.txt"
-      TargetFolder: "$(Build.SourcesDirectory)/"
+      SourceFolder: '$(Pipeline.Workspace)/LibraryMain/SurveyJSLibraryBuildCore/'
+      Contents: 'version.txt'
+      TargetFolder: '$(Build.SourcesDirectory)/'
       OverWrite: true
-    displayName: "Copy Build Artifact - SurveyJSVersion File"
+    displayName: 'Copy Build Artifact - SurveyJSVersion File'
 
   - powershell: |
       $version = Get-Content $(Build.SourcesDirectory)/version.txt
       Write-Host "##vso[task.setvariable variable=SurveyJSVersion;]$version"
-    displayName: "setup SurveyJSVersion variable from SurveyJSVersionFile"
+    displayName: 'setup SurveyJSVersion variable from SurveyJSVersionFile'
 
   - powershell: |
       $env:GIT_REDIRECT_STDERR = '2>&1'
-      git config --global user.email "surveyjs.org@gmail.com"
-      git config --global user.name "surveyjsdeveloper"
+      git config --global user.email "kurmanov.work@gmail.com"
+      git config --global user.name "dmitrykurmanov"
       npm run release -- --release-as $(SurveyJSVersion)
-    displayName: "npm run release specific version"
-  #####################################################
-
+    displayName: 'npm run release specific version'
+#####################################################
+  
   - script: |
       npm run build
     displayName: "build"
@@ -89,11 +92,11 @@ steps:
 
   - task: CopyFiles@2
     inputs:
-      SourceFolder: "$(Build.Repository.LocalPath)/package"
+      SourceFolder: '$(Build.Repository.LocalPath)/package'
       targetFolder: $(Build.ArtifactStagingDirectory)/SurveyJSWidgetsBuild/packages/survey-widgets
 
   - task: PublishBuildArtifacts@1
     inputs:
-      PathtoPublish: "$(Build.ArtifactStagingDirectory)/SurveyJSWidgetsBuild/"
-      ArtifactName: "SurveyJSWidgetsBuild"
-      publishLocation: "Container"
+      PathtoPublish: '$(Build.ArtifactStagingDirectory)/SurveyJSWidgetsBuild/'
+      ArtifactName: 'SurveyJSWidgetsBuild'
+      publishLocation: 'Container'
