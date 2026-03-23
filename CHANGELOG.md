@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.0.0-beta.1](https://github.com/surveyjs/custom-widgets/compare/v3.0.0-beta.0...v3.0.0-beta.1) (2026-03-23)
+
 ## [3.0.0-beta.0](https://github.com/surveyjs/custom-widgets/compare/v2.5.9...v3.0.0-beta.0) (2026-03-05)
 
 ### [2.5.9](https://github.com/surveyjs/custom-widgets/compare/v2.5.8...v2.5.9) (2026-02-04)
