@@ -2,8 +2,8 @@
 
 resources:
   pipelines:
-    - pipeline: LibraryMain
-      source: Library Main
+    - pipeline: Library
+      source: Library
       trigger: true
 
 variables:
@@ -50,12 +50,12 @@ steps:
       verbose: false
     condition: ne(variables.NPM_CACHE_RESTORED, 'true')
 
-  - download: LibraryMain
+  - download: Library
     artifact: SurveyJSLibraryBuildCore
 
   - task: CopyFiles@2
     inputs:
-      SourceFolder: "$(Pipeline.Workspace)/LibraryMain/SurveyJSLibraryBuildCore/packages/survey-core"
+      SourceFolder: "$(Pipeline.Workspace)/Library/SurveyJSLibraryBuildCore/packages/survey-core"
       Contents: "**"
       TargetFolder: "$(Build.Repository.LocalPath)/node_modules/survey-core"
       OverWrite: true
