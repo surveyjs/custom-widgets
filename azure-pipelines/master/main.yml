@@ -20,9 +20,6 @@ trigger:
     exclude:
       - v*.*.*
 
-pool:
-  vmImage: "Ubuntu-22.04"
-
 steps:
   - task: NodeTool@0
     inputs:
