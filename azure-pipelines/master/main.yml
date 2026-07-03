@@ -53,12 +53,17 @@ steps:
   - download: Library
     artifact: SurveyJSLibraryBuildCore
 
-  - task: CopyFiles@2
-    inputs:
-      SourceFolder: "$(Pipeline.Workspace)/Library/SurveyJSLibraryBuildCore/packages/survey-core"
-      Contents: "**"
-      TargetFolder: "$(Build.Repository.LocalPath)/node_modules/survey-core"
-      OverWrite: true
+  # - task: CopyFiles@2
+  #   inputs:
+  #     SourceFolder: "$(Pipeline.Workspace)/Library/SurveyJSLibraryBuildCore/packages/survey-core"
+  #     Contents: "**"
+  #     TargetFolder: "$(Build.Repository.LocalPath)/node_modules/survey-core"
+  #     OverWrite: true
+
+  - script: |
+      mkdir -p "$(Build.Repository.LocalPath)/node_modules/survey-core"
+      tar -xf "$(Pipeline.Workspace)/Library/SurveyJSLibraryBuildCore/SurveyJSLibraryBuildCore.tar" -C "$(Build.Repository.LocalPath)/node_modules/survey-core"
+    displayName: "Provide survey-core build"
 
   - script: |
       npm run build
