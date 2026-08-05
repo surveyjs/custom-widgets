@@ -1,15 +1,21 @@
 # SurveyJS Widgets integration builds
 
+variables:
+  npm_config_cache: $(Pipeline.Workspace)/.npm
+  CurrentBranch: $(Build.SourceBranchName)
+  ProjectId: "2cf848f9-83d5-4ec4-b2e3-ef3321ccc99f"
+
 resources:
   pipelines:
     - pipeline: Library
       source: Library
       trigger: true
-
-variables:
-  npm_config_cache: $(Pipeline.Workspace)/.npm
-  CurrentBranch: $(Build.SourceBranchName)
-  ProjectId: "2cf848f9-83d5-4ec4-b2e3-ef3321ccc99f"
+  repositories:
+    - repository: Library
+      type: github
+      endpoint: github.com_surveyjsdeveloper
+      name: surveyjs/survey-library
+      ref: $(CurrentBranch)
 
 trigger:
   batch: true
@@ -21,6 +27,19 @@ trigger:
       - v*.*.*
 
 steps:
+  - checkout: self
+    path: s
+    displayName: "Checkout self"
+    timeoutInMinutes: 5
+    retryCountOnTaskFailure: 5
+
+  - checkout: Library
+    path: s/survey-library
+    displayName: "Checkout survey-library"
+    timeoutInMinutes: 5
+    retryCountOnTaskFailure: 5
+    fetchDepth: 1
+
   - task: NodeTool@0
     inputs:
       versionSpec: "24.x"
@@ -33,6 +52,7 @@ steps:
       TargetFolder: "$(Build.SourcesDirectory)/Temp/"
       OverWrite: true
     displayName: "Copy package.json for cache key"
+
   - task: Cache@2
     inputs:
       key: 'npm-cache-custom-widgets | $(Build.SourcesDirectory)/Temp/package.json'
@@ -47,29 +67,33 @@ steps:
       verbose: false
     condition: ne(variables.NPM_CACHE_RESTORED, 'true')
 
-  - download: Library
-    artifact: SurveyJSLibraryBuildCore
+# build survey-core in place instead of downloading the SurveyJSLibraryBuildCore artifact
+  - script: npm install --no-audit --no-fund
+    workingDirectory: $(Build.SourcesDirectory)/survey-library
+    displayName: "NPM install survey-library"
+
+  - script: npm install --no-audit --no-fund
+    workingDirectory: $(Build.SourcesDirectory)/survey-library/packages/survey-core
+    displayName: "NPM install survey-core"
+
+  - script: npm run build:all
+    workingDirectory: $(Build.SourcesDirectory)/survey-library/packages/survey-core
+    displayName: "Build survey-core"
+
+  - task: CopyFiles@2
+    inputs:
+      SourceFolder: "$(Build.SourcesDirectory)/survey-library/packages/survey-core/build"
+      Contents: "**"
+      TargetFolder: "$(Build.SourcesDirectory)/node_modules/survey-core"
+      OverWrite: true
+    displayName: "Copy survey-core build into node_modules"
 
   - script: |
-      mkdir -p "$(Build.Repository.LocalPath)/node_modules/survey-core"
-      tar -xf "$(Pipeline.Workspace)/Library/SurveyJSLibraryBuildCore/SurveyJSLibraryBuildCore.tar" -C "$(Build.Repository.LocalPath)/node_modules/survey-core"
-    displayName: "Provide survey-core build"
-    
-  - script: |
       npm run build
+    workingDirectory: $(Build.SourcesDirectory)
     displayName: "build"
 
   - script: |
       npm run testcafe:ci
+    workingDirectory: $(Build.SourcesDirectory)
     displayName: "run functional tests"
-
-  - task: CopyFiles@2
-    inputs:
-      SourceFolder: '$(Build.Repository.LocalPath)/package'
-      targetFolder: $(Build.ArtifactStagingDirectory)/SurveyJSWidgetsBuild/packages/survey-widgets
-
-  - task: PublishBuildArtifacts@1
-    inputs:
-      PathtoPublish: '$(Build.ArtifactStagingDirectory)/SurveyJSWidgetsBuild/'
-      ArtifactName: 'SurveyJSWidgetsBuild'
-      publishLocation: 'Container'
