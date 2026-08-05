@@ -1,0 +1,99 @@
+# SurveyJS Widgets integration builds
+
+variables:
+  npm_config_cache: $(Pipeline.Workspace)/.npm
+  CurrentBranch: $(Build.SourceBranchName)
+  ProjectId: "d79f2855-7b94-4261-9daf-4cace0a06c03"
+
+resources:
+  pipelines:
+    - pipeline: Library
+      source: Library
+      trigger: true
+  repositories:
+    - repository: Library
+      type: github
+      endpoint: github.com_surveyjsdeveloper
+      name: surveyjs/survey-library
+      ref: $(CurrentBranch)
+
+trigger:
+  batch: true
+  branches:
+    include:
+      - master
+  tags:
+    exclude:
+      - v*.*.*
+
+steps:
+  - checkout: self
+    path: s
+    displayName: "Checkout self"
+    timeoutInMinutes: 5
+    retryCountOnTaskFailure: 5
+
+  - checkout: Library
+    path: s/survey-library
+    displayName: "Checkout survey-library"
+    timeoutInMinutes: 5
+    retryCountOnTaskFailure: 5
+    fetchDepth: 1
+
+  - task: NodeTool@0
+    inputs:
+      versionSpec: "24.x"
+    displayName: "Install Node.js"
+
+  - task: CopyFiles@2
+    inputs:
+      SourceFolder: "$(Build.SourcesDirectory)/"
+      Contents: "package.json"
+      TargetFolder: "$(Build.SourcesDirectory)/Temp/"
+      OverWrite: true
+    displayName: "Copy package.json for cache key"
+    
+  - task: Cache@2
+    inputs:
+      key: 'npm-cache-custom-widgets | $(Build.SourcesDirectory)/Temp/package.json'
+      path: $(Build.SourcesDirectory)/node_modules
+      cacheHitVar: NPM_CACHE_RESTORED
+    displayName: Cache NPM
+
+  - task: Npm@1
+    displayName: 'NPM install'
+    inputs:
+      command: install
+      verbose: false
+    condition: ne(variables.NPM_CACHE_RESTORED, 'true')
+
+# build survey-core in place instead of downloading the SurveyJSLibraryBuildCore artifact
+  - script: npm install --no-audit --no-fund
+    workingDirectory: $(Build.SourcesDirectory)/survey-library
+    displayName: "NPM install survey-library"
+
+  - script: npm install --no-audit --no-fund
+    workingDirectory: $(Build.SourcesDirectory)/survey-library/packages/survey-core
+    displayName: "NPM install survey-core"
+
+  - script: npm run build:all
+    workingDirectory: $(Build.SourcesDirectory)/survey-library/packages/survey-core
+    displayName: "Build survey-core"
+
+  - task: CopyFiles@2
+    inputs:
+      SourceFolder: "$(Build.SourcesDirectory)/survey-library/packages/survey-core/build"
+      Contents: "**"
+      TargetFolder: "$(Build.SourcesDirectory)/node_modules/survey-core"
+      OverWrite: true
+    displayName: "Copy survey-core build into node_modules"
+
+  - script: |
+      npm run build
+    workingDirectory: $(Build.SourcesDirectory)
+    displayName: "build"
+
+  - script: |
+      npm run testcafe:ci
+    workingDirectory: $(Build.SourcesDirectory)
+    displayName: "run functional tests"

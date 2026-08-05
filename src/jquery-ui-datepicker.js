@@ -116,6 +116,10 @@ function init(Survey, $) {
       };
       function setDateIntoQuestion() {
         var val = $el.datepicker('getDate');
+        if (!val || typeof val.setHours !== 'function') {
+          question.value = '';
+          return;
+        }
         var d = new Date();
         val.setHours(d.getHours());
         val.setMinutes(d.getMinutes());
