@@ -97,3 +97,10 @@ steps:
       npm run testcafe:ci
     workingDirectory: $(Build.SourcesDirectory)
     displayName: "run functional tests"
+
+  - task: PublishBuildArtifacts@1
+    inputs:
+      PathtoPublish: '$(Build.SourcesDirectory)/package'
+      ArtifactName: 'SurveyJSWidgetsBuild'
+      publishLocation: 'Container'
+      StoreAsTar: true
