@@ -62,7 +62,11 @@ steps:
   displayName: "build"
 
 - script: |
-    npm run testcafe:ci
+    npm run pwinst
+  displayName: "Install Playwright browsers"
+
+- script: |
+    npm run e2e:ci
   displayName: "run functional tests"
 
 - powershell: |
