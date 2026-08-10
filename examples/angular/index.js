@@ -31,6 +31,6 @@ Survey.StylesManager.applyTheme("defaultV2");
 
 }
 
-if(!window["%hammerhead%"]) {
+if (location.search.indexOf("noinit") === -1) {
     init();
 }

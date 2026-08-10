@@ -50,6 +50,6 @@ function init() {
   });
 }
 
-if (!window["%hammerhead%"]) {
+if (location.search.indexOf("noinit") === -1) {
   init();
 }

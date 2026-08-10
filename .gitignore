@@ -13,6 +13,10 @@ tmp/*
 project.json
 /lib_typings
 npm-debug.*
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
 _site
 .sass-cache
 Gemfile.lock
