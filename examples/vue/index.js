@@ -46,6 +46,6 @@ function init() {
 
 }
 
-if (location.search.indexOf("noinit") === -1) {
+if(!window["%hammerhead%"]) {
     init();
 }

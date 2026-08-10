@@ -94,30 +94,9 @@ steps:
     displayName: "build"
 
   - script: |
-      npm run pwinst
-    workingDirectory: $(Build.SourcesDirectory)
-    displayName: "Install Playwright browsers"
-
-  - script: |
-      npm run e2e:ci
+      npm run testcafe:ci
     workingDirectory: $(Build.SourcesDirectory)
     displayName: "run functional tests"
-
-  - task: PublishTestResults@2
-    condition: succeededOrFailed()
-    inputs:
-      testResultsFormat: "JUnit"
-      testResultsFiles: "$(Build.SourcesDirectory)/test-results/e2e-junit-results.xml"
-      testRunTitle: "Playwright e2e"
-    displayName: "Publish e2e test results"
-
-  - task: PublishBuildArtifacts@1
-    condition: failed()
-    inputs:
-      PathtoPublish: '$(Build.SourcesDirectory)/playwright-report'
-      ArtifactName: 'PlaywrightReport'
-      publishLocation: 'Container'
-    displayName: "Publish Playwright report on failure"
 
   - task: PublishBuildArtifacts@1
     inputs:

@@ -40,6 +40,6 @@ function init() {
     model.render("surveyElement");
 }
 
-if (location.search.indexOf("noinit") === -1) {
+if(!window["%hammerhead%"]) {
     init();
 }

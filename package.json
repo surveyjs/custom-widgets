@@ -3,14 +3,13 @@
   "version": "2.5.37",
   "scripts": {
     "start": "npm run build && live-server",
-    "serve": "http-server --silent",
     "watch": "webpack --env buildType=dev --watch",
     "prebuild": "webpack --env buildType=dev",
     "build": "webpack --env buildType=prod",
     "release": "standard-version --message \"Release: %s [azurepipelines skip]\"",
-    "e2e": "playwright test --project chromium --ui",
-    "e2e:ci": "playwright test --project chromium",
-    "pwinst": "playwright install --with-deps chromium"
+    "testcafe": "testcafe chrome --disable-native-automation --app \"http-server\" testcafe/ --selector-timeout 1500",
+    "testcafe:ci": "testcafe chrome:headless --disable-native-automation --app \"http-server\" testcafe/ --selector-timeout 1500 ",
+    "testcafe_file": "testcafe chrome --disable-native-automation --app \"http-server\" testCafe/tagbox.ts --selector-timeout 1500 --reporter minimal"
   },
   "repository": {
     "type": "git",
@@ -19,7 +18,6 @@
   "private": true,
   "devDependencies": {
     "@babel/core": "^7.16.12",
-    "@playwright/test": "1.60.0",
     "@babel/plugin-transform-runtime": "7.22.15",
     "bootstrap-slider": "^10.6.2",
     "clean-webpack-plugin": "^0.1.17",
@@ -47,6 +45,7 @@
     "survey-react": "^1.9.46",
     "survey-vue": "^1.9.46",
     "svg-inline-loader": "^0.8.2",
+    "testcafe": "3.7.4",
     "minimatch": "^3.1.2",
     "@types/minimatch": "3.0.5",
     "text-loader": "0.0.1",
